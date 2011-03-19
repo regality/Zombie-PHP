@@ -1,0 +1,2 @@
+<div class="blank">
+</div>

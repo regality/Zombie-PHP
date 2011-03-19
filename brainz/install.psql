@@ -1,0 +1,46 @@
+CREATE FUNCTION sha1(bytea) RETURNS text
+    LANGUAGE sql IMMUTABLE STRICT
+    AS $_$
+SELECT encode(digest($1, 'sha1'), 'hex')
+$_$;
+
+CREATE TABLE groups (
+    id integer NOT NULL PRIMARY KEY,
+    name character varying(50) UNIQUE
+);
+
+CREATE SEQUENCE groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+CREATE TABLE users (
+    id integer NOT NULL PRIMARY KEY,
+    username character varying(100) UNIQUE,
+    firstname character varying(100),
+    lastname character varying(100),
+    password character(40) NOT NULL,
+    groups character varying(1024)
+);
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+INSERT INTO users VALUES (
+   1,
+   'admin',
+   'rob',
+   'zombie',
+   'c95cf3fa429a84ffc1969dc10eac5674a9621e06',
+   'a:2:{i:0;s:5:"admin";i:1;s:5:"users";}'
+);
+
+INSERT INTO groups VALUES
+   (1, 'admin'),
+   (2, 'users');
