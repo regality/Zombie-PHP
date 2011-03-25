@@ -1,8 +1,8 @@
 <?php
-require_once("../brainz/app.php");
+require_once(__DIR__ . "/../../brainz/app.php");
 
 class Csrf extends App {
-   public function execute($action) {
+   public function execute($action, $request) {
       $csrf = $this->get_csrf_token();
       $json = array("status" => "success",
                     "token" => $csrf);

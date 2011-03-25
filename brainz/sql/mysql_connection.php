@@ -19,7 +19,7 @@ class MySqlConnection extends SqlConnection {
         mysql_select_db($database, $this->db);
     }
 
-    public function exec($query, $params = array(), $debug = false) {
+    public function exec($query, $params = array(), $html_safe = true, $debug = false) {
         $p_query = $query;
         $matches = array();
         $key = 0;
@@ -30,7 +30,7 @@ class MySqlConnection extends SqlConnection {
             while (preg_match($match, $p_query, $matches, PREG_OFFSET_CAPTURE) > 0) {
                 $len = strlen($key) + 1;
                 $value = stripslashes($value);
-                $sanitary = "'" . mysql_real_escape_string($value) . "'";
+                $sanitary = "'" . mysql_real_escape_string(htmlspecialchars($value)) . "'";
                 $p_query = substr_replace($p_query, $sanitary, $matches[0][1], $len);
             }
         }
@@ -112,7 +112,7 @@ class MySqlResult extends SqlResult {
 
     public function rewind() {
         $this->position = 0;
-        if ($this->numRows() > 0) {
+        if ($this->num_rows() > 0) {
             mysql_data_seek($this->result, 0);
         }
         $this->row_data = mysql_fetch_assoc($this->result); 

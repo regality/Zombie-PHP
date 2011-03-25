@@ -1,56 +1,66 @@
-<style>
-.edit-users label {
-height: 100%;
-width: 100px;
-display: inline-block;
-}
-
-.edit-users input[type=text],
-.edit-users .foo {
-width: 120px;
-text-align: left;
-}
-
-.edit-users .foo {
-display: inline-block;
-}
-
-.field {
-padding: 2px;
-margin: 2px 20px;
-border-bottom: 1px solid #aaa;
-}
-
-.close-button {
-height: 30px;
-width: 30px;
-background-image: url('/images/close-button.png');
-float: right;
-}
-</style>
-<div class="users-edit">
-   <div class="close-button" id="close-users"></div>
-   <h3>Editing User <i><?= $user['username'] ?></i></h3><br />
-   <div class="field">
-      <label>Username</label>
-      <input type="text" value="<?= $user['username'] ?>">
-   </div>
-   <div class="field">
-      <label>Firstname</label>
-      <input type="text" value="<?= $user['firstname'] ?>">
-   </div>
-   <div class="field">
-      <label>Lastname</label>
-      <input type="text" value="<?= $user['lastname'] ?>">
-   </div>
-   <div class="field">
-      <label>Groups</label>
-      <div class="foo">
+<div class="close-button" id="close-users"></div>
+<div class="form">
+<table>
+   <?php if (isset($users['id'])): ?>
+      <input type="hidden" value="<?= $users['id'] ?>" name="id" />
+   <?php endif ?>
+   <tr>
+      <td>
+         <label>Username</label>
+      </td>
+      <td>
+         <input class="required" type="text" name="username" value="<?= (isset($users['username']) ? htmlentities($users['username']) : '') ?>" />
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <label>Firstname</label>
+      </td>
+      <td>
+         <input  type="text" name="firstname" value="<?= (isset($users['firstname']) ? htmlentities($users['firstname']) : '') ?>" />
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <label>Lastname</label>
+      </td>
+      <td>
+         <input class="required" type="text" name="lastname" value="<?= (isset($users['lastname']) ? htmlentities($users['lastname']) : '') ?>" />
+      </td>
+   </tr>
+   <?php if ($form_action == 'create'): ?>
+   <tr>
+      <td>
+         <label>Password</label>
+      </td>
+      <td>
+         <input class="required" type="password" name="password1" value="" />
+      </td>
+   </tr>
+   <tr>
+      <td>
+         <label>Confirm Password</label>
+      </td>
+      <td>
+         <input class="required" type="password" name="password2" value="" />
+      </td>
+   </tr>
+   <?php endif ?>
+   <tr>
+      <td>
+         <label>Groups</label>
+      </td>
+      <td>
          <?php foreach ($groups as $group): ?>
-            <input type="checkbox" <?= (in_array($group['name'], $user['groups']) ? "checked" : "") ?>>
+            <input  type="checkbox" name="groups[]" value="<?= $group['name'] ?>" <?= (isset($users['groups']) && in_array($group['name'], $users['groups']) ? 'checked' : '') ?> />
             <?= $group['name'] ?><br />
          <?php endforeach ?>
-      </div>
-   </div>
-      <button>Save</button>
+      </td>
+   </tr>
+   <tr>
+      <td colspan='2'>
+         <button class="users-<?= $form_action ?>"><?= $form_action ?></button>
+      </td>
+   </tr>
+</table>
 </div>

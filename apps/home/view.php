@@ -14,14 +14,10 @@
          "url":"<?= $web_root ?>/app.php",
       });
    }
+   <?php foreach ($token_list as $token): ?>
+   addToken("<?= $token ?>");
+   <?php endforeach ?>
    </script>
-   <!-- LOLLMAOROFLCOPTER
-   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
-   <script type="text/javascript">
-   setInterval('cornify_add();', 1000);
-   </script>
-   <script src="http://www.duckmylife.com/javascript" type="text/javascript"></script>
-   -->
 </head>
 <body>
    <div id="header">

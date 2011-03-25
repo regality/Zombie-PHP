@@ -69,6 +69,9 @@ function loadApp(app, cache) {
       $.ajax({"data":{"app":app},
               "dataType":"html",
               success:function(data) {
+                  while($("#app-" + app).length > 0) {
+                     $("#app-" + app).remove();
+                  }
                   div = "<div id=\"app-" + app + "\">" + data + "</div>";
                   $("#content").append(div);
                   $("#app-" + app).addClass("app-content").hide();
@@ -90,6 +93,19 @@ function loadApp(app, cache) {
    }
 }
 
+function verify_form(form) {
+   form_done = true;
+   form.find("input.required, textarea.required, select.required").each(function() {
+      if ($(this).val() == "") {
+         form_done = false;
+         $(this).css({"background":"#fdd"});
+      } else {
+         $(this).css({"background":"#fff"});
+      }
+   });
+   return form_done;
+}
+
 $(document).ready(function() {
    setAjaxUrl();
    resetMenu();
@@ -99,21 +115,25 @@ $(document).ready(function() {
       "dataType":"json",
       "cache":"false",
       "error":function(xhr, status, error) {
-         alert('An error occured:' + error);
+         alert('An error occured:' + error + status);
       },
       "dataFilter":function(rawData, type) {
+         //alert('returned:' + rawData);
          if (type == "json") {
             try {
                data = $.parseJSON(rawData);
                if (data.status == "logged out") {
-                  //window.location.reload();
+                  window.location.reload();
+               }
+               if (data.query != null) {
+                  alert(data.query);
                }
             } catch (e) {
-               alert('error parsing jason');
+               alert('error parsing json:' + rawData);
             }
          } else {
             if (rawData == "logged out") {
-               //window.location.reload();
+               window.location.reload();
             }
          }
          return rawData;
@@ -132,6 +152,12 @@ $(document).ready(function() {
          }
          options.data += csrf;
       }
+      if (options.data != null) {
+         options.data += "&format=" + options.dataType;
+      } else {
+         options.data = "format=" + options.dataType;
+      }
+      //alert(options.data);
    });
 
    $("#console-clear").click(function() {

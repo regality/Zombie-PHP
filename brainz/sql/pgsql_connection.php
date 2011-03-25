@@ -36,6 +36,7 @@ class PgSqlConnection extends SqlConnection {
          // If there are errors, put them in the error list
          if (strlen($pg_error) > 0) {
              $this->errors .= $pg_error;
+             echo $pg_error;
              return false;
          } else {
              return new PgSqlResult($result);
@@ -52,6 +53,10 @@ class PgSqlConnection extends SqlConnection {
 
    public function get_errors() {
       return $this->errors();
+   }
+
+   public function desc($table_name) {
+      return pg_meta_data($this->db, $table_name);
    }
 }
 

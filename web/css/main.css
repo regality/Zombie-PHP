@@ -39,7 +39,7 @@ padding-bottom: 0px;
 }
 
 #header h1 {
-font-family: 'Slackey', serif;
+font-family: 'Slackey', 'Arial';
 font-size: 58px;
 position: relative;
 top: -20px;
@@ -206,6 +206,22 @@ border-right: 1px solid #2955a6;
 .awesome {
 border: 3px solid #2955a6;
 background: white;
+}
+
+.close-button {
+height: 30px;
+width: 30px;
+background-image: url('/images/close-button.png');
+float: right;
+}
+
+.basic-ajax {
+position: absolute;
+top: 100px;
+left: 150px;
+width: 300px;
+min-height: 150px;
+padding: 5px;
 }
 
 .console-mesg {

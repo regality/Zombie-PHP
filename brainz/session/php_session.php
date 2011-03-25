@@ -6,7 +6,7 @@ class PhpSession extends Session {
    public function __construct() {
       if (!isset($_SESSION)) {
          require(__DIR__ . "/../config.php");
-         session_set_cookie_params('1800', '/' . $web_root, $domain, false, true);
+         session_set_cookie_params('3600', '/' . $web_root, $domain, false, true);
          session_start();
       }
    }

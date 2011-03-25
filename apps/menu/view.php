@@ -1,4 +1,4 @@
-<div class="item"><h2>Menu</h2></div>
+<div class="item"><h2><?= $title ?></h2></div>
 <?php foreach ($apps as $app): ?>
    <div app="<?= $app['app'] ?>" 
     class="item app<?= (isset($app['active']) ? " active" : "") ?>"
