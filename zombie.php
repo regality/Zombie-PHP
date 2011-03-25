@@ -32,7 +32,7 @@ function create_form($app, $table) {
       return;
    }
    require('brainz/config.php');
-   require('brainz/sql/pgsql_connection.php');
+   require('brainz/' . $db_file);
    $sql = new $db_class($db_server, $db_user, $db_pass, $database);
    $table_data = $sql->desc($table);
    //print_r($table_data);
@@ -49,6 +49,9 @@ function create_form($app, $table) {
                       "   <tr>\n";
    $ajax_fields = '';
    foreach ($table_data as $column => $meta) {
+      if (is_int($column)) {
+         $column = $meta['Field'];
+      }
       if ($column != 'id') {
          if (ends_in($column, '_id')) {
             $label = slug_to_nice(substr($column, 0, -3));
@@ -66,8 +69,21 @@ function create_form($app, $table) {
          $edit_view .= "      </td>\n";
          $edit_view .= "      <td>\n";
       }
-      $type = $meta['type'];
-      $not_null = $meta['not null'];
+      if (isset($meta['type'])) {
+         $type = $meta['type'];
+      } else if (isset($meta['Type'])) {
+         $type = $meta['Type'];
+      } else {
+         $type = "varchar";
+      }
+
+      if (isset($meta['not null'])) {
+         $not_null = $meta['not null'];
+      } else if (isset($meta['Null'])) {
+         $not_null = ($meta['Null'] == "YES" ? false : true);
+      } else {
+         $not_null = false;
+      }
 
       $ajax_type = (ends_in($column, '_id') ? 'select' : 'input');
       if ($type == "text") {
@@ -79,15 +95,18 @@ function create_form($app, $table) {
       } else if (ends_in($column, "_id")) {
          $foreign = substr($column, 0, -3);
          $edit_view .= select_table($column, $table, $foreign, $not_null);
-      } else if ($type == 'varchar' ||
+      } else if (strpos($type, 'varchar') === 0 ||
+                 strpos($type, 'char') === 0 ||
                  $type == 'bpchar' ||
-                 $type == 'char' ||
                  strpos($type, 'int') === 0) {
          $edit_view .= input_box($column, $table, $not_null);
       } else if ($type == 'bool') {
          $edit_view .= checkbox($column, $table, $not_null);
       } else if ($type == 'text') {
          $edit_view .= textarea($column, $table, $not_null);
+      } else if (strpos($type, 'enum') === 0) {
+         $enum = explode(",",str_replace("'","",substr(substr($type,5),0, -1)));
+         $edit_view .= select_enum($column, $enum, $not_null);
       } else {
          $query = "select enumlabel from pg_enum where enumtypid = $1::regtype";
          $params = array($type);
@@ -291,6 +310,9 @@ function table_class($app, $table, $table_data) {
    
    $i = 0;
    foreach ($table_data as $column => $meta) {
+      if (is_int($column)) {
+         $column = $meta['Field'];
+      }
       ++$i;
 
       $insert_query .= $insert_comma . $column . "\n";
