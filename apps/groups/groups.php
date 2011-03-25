@@ -1,7 +1,8 @@
 <?php
 require_once(__DIR__ . " /../../brainz/app.php");
 
-class Groups extends App {
+class Groups extends SecureApp {
+   public $groups = array('admin');
    public function execute($action, $request) {
       $id = (isset($request['id']) ? $request['id'] : null);
       if ($action != 'new') {
