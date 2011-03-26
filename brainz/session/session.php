@@ -2,6 +2,7 @@
 
 abstract class Session {
    abstract public function __construct();
+   abstract public static function get_session();
    abstract public function save();
    abstract public function create();
    abstract public function set($a, $b = null);

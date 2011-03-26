@@ -3,9 +3,9 @@ require_once(__DIR__ . "/../../brainz/app.php");
 
 class Auth extends App {
    public function execute($action, $request) {
-      $this->session->clear();
       if (isset($request['logout'])) {
          $this->json['status'] = "logged out";
+         $this->session->clear();
       } else if (!isset($request['username']) ||
                  !isset($request['password'])) {
          $this->json['status'] = "failed";

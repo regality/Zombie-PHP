@@ -20,7 +20,6 @@ class Menu extends App {
                                        "cache" => false,
                                        "app" => "login"));
       }
-      $groups = $this->session->get('groups');
       if ($this->in_group('admin')) {
          array_push($this->apps, array("name" => "Users",
                                        "cache" => false,

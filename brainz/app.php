@@ -15,15 +15,16 @@ abstract class App {
       $this->web_root = $web_root;
       $this->domain = $domain;
       if ($db == null) {
-         // Set up database
          require_once($db_file);
          $this->sql = new $db_class($db_server, $db_user,
                                     $db_pass, $database);
+         if (!$this->sql->is_connected()) {
+            echo "ERROR: Could not connect to database";
+         }
       }
       if ($sess == null) {
-         // Set up session
          require_once($sess_file);
-         $this->session = new $sess_class();
+         $this->session = $sess_class::get_session();
       }
    }
 
