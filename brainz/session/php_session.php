@@ -12,6 +12,10 @@ class PhpSession extends Session {
       }
    }
 
+   public function get_array() {
+      return $_SESSION;
+   }
+
    public static function get_session() {
       if (!isset(PhpSession::$instance)) {
          PhpSession::$instance = new PhpSession();

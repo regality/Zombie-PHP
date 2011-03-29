@@ -7,6 +7,7 @@
    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="<?= $web_root ?>/js/jquery.min.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/sha1.js"></script>
+   <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/main.js"></script>
    <script type="text/javascript">
    function setAjaxUrl() {
@@ -15,7 +16,7 @@
       });
    }
    <?php foreach ($token_list as $token): ?>
-   addToken("<?= $token ?>");
+   undead.addToken("<?= $token ?>");
    <?php endforeach ?>
    </script>
 </head>

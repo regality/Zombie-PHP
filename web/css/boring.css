@@ -1,0 +1,198 @@
+* {
+padding: 0px;
+margin: 0px;
+}
+
+body {
+cursor:default;
+}
+
+table {
+border-collapse: collapse;
+}
+
+table tr th {
+padding: 1px 10px;
+}
+
+table tr td {
+border: 1px solid #aaa;
+padding: 2px;
+}
+
+#header {
+width: 100%;
+text-align: center;
+margin: 0px auto;
+height: 90px;
+padding: 5px;
+padding-bottom: 0px;
+border-bottom: 1px solid black;
+}
+
+#header h1 {
+display: inline-block;
+font-size: 60px;
+position: relative;
+top: -20px;
+}
+
+#header img {
+height: 90px;
+}
+
+#wrapper {
+margin: 0px auto;
+}
+
+#main {
+}
+
+#sidenav {
+position: absolute;
+width: 20%;
+height: 100%;
+border-right: 1px solid black;
+background: #b9d1ff;
+left: 0px;
+}
+
+.item {
+height: 20px;
+padding: 5px;
+}
+
+.app.active {
+font-weight: bold;
+}
+
+#content {
+position: absolute;
+top: 115px;
+left: 20%;
+width: 75%;
+height: 100%;
+text-align: center;
+padding: 5px 20px;
+}
+
+#login {
+position: relative;
+top: 15%;
+margin: 0px auto;
+width: 370px;
+height: 300px;
+text-align: center;
+}
+
+#login-title {
+width: 300px;
+margin: 10px auto 0px auto;
+padding: 10px;
+text-align: left;
+}
+
+#login-title span {
+font-size: 2em;
+}
+
+#login-error {
+color: red;
+font-size: small;
+float: right;
+}
+
+#login input[type="text"],
+#login input[type="password"] {
+width: 300px;
+}
+
+#login-btn {
+width: 300px;
+text-align: center;
+margin: 20px auto;
+}
+
+#login-btn input {
+width: 100px;
+}
+
+#login input[type="button"] {
+width: 100px;
+}
+
+#login label {
+margin: 10px auto;
+width: 300px;
+display: block;
+text-align: left;
+font-size: 1.2em;
+}
+
+.modal {
+background-color: rgba(0, 0, 0, 0.5);
+width: 100%;
+height: 100%;
+z-index: 100;
+position: absolute;
+top: 0px;
+left: 0px;
+display: none;
+}
+
+.content-modal {
+top: -20px;
+width: 100%;
+height: 600px;
+}
+
+.awesome {
+border: 3px solid black;
+background: white;
+}
+
+.close-button {
+height: 30px;
+width: 30px;
+background-image: url('/images/close-button.png');
+float: right;
+}
+
+.basic-ajax {
+position: absolute;
+top: 100px;
+left: 150px;
+width: 300px;
+min-height: 150px;
+padding: 5px;
+}
+
+.console-mesg {
+border: 1px solid #999;
+border-top-width: 0px;
+background-color: #eee;
+width: 80%;
+text-align: left;
+margin: 0px auto;
+padding: 2px;
+}
+
+.console-error {
+font-weight: bold;
+color: red;
+}
+
+.console-title {
+font-weight: bold;
+color: blue;
+}
+
+.console-mesg-close {
+float: right;
+font-weight: bold;
+font-family: "Courier";
+}
+
+.console-mesg-close:hover {
+color: #aaa;
+}

@@ -4,8 +4,6 @@ require("session.php");
 
 class SqlSession extends Session {
    private static $instance;
-   public $session;
-   public $session_id;
    public $sql;
    public $state;
 
@@ -41,6 +39,10 @@ class SqlSession extends Session {
 
    public function __destruct() {
       $this->save();
+   }
+
+   public function get_array() {
+      return $this->session;
    }
 
    public function clear_old() {

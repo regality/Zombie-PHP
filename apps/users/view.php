@@ -64,7 +64,7 @@ $(document).ready(function() {
 
    $(".users-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!verify_form($form)) {
+      if (!undead.verify_form($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -94,14 +94,14 @@ $(document).ready(function() {
                       "action":"create"},
               "success":function(data) {
                   $("#users-modal").fadeOut();
-                  loadApp("users", 0);
+                  undead.loadApp("users", 0);
               }
       });
    });
 
    $(".users-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!verify_form($form)) {
+      if (!undead.verify_form($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -123,7 +123,7 @@ $(document).ready(function() {
                       "action":"update"},
               "success":function(data) {
                   $("#users-modal").fadeOut();
-                  loadApp("users", 0);
+                  undead.loadApp("users", 0);
               }
       });
    });

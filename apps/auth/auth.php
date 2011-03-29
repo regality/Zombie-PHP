@@ -33,6 +33,13 @@ class Auth extends App {
       }
       $this->render_json();
    }
+
+   public function test($action, $request) {
+      if (isset($request['logout'])) {
+         $session = $this->session->get_array();
+         assert_true(count($session) == 0, "Session should be empty.");
+      }
+   }
 }
 
 ?>

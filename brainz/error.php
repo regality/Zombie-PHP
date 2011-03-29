@@ -25,7 +25,7 @@ function render_errors() {
 
          mesg = "<i><?= $error['errstr'] ?></i> in <?= $error['errfile'] ?>" +
                 " on line <?= $error['errline'] ?>.";
-         addError(<?= $error['errno'] ?>, mesg);
+         undead.addError(<?= $error['errno'] ?>, mesg);
       <?php endforeach ?>
       });
       </script>

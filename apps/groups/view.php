@@ -57,7 +57,7 @@ $(document).ready(function() {
 
    $(".groups-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!verify_form($form)) {
+      if (!undead.verify_form($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -69,14 +69,14 @@ $(document).ready(function() {
                       "action":"create"},
               "success":function(data) {
                   $("#groups-modal").fadeOut();
-                  loadApp("groups", 0);
+                  undead.loadApp("groups", 0);
               }
       });
    });
 
    $(".groups-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!verify_form($form)) {
+      if (!undead.verify_form($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -88,7 +88,7 @@ $(document).ready(function() {
                       "action":"update"},
               "success":function(data) {
                   $("#groups-modal").fadeOut();
-                  loadApp("groups", 0);
+                  undead.loadApp("groups", 0);
               }
       });
    });
