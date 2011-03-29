@@ -7,6 +7,7 @@ class Home extends App {
       // prefetch 5 tokens
       $this->token_list = $this->get_csrf_token(5);
       require($this->app_root . "/menu/menu.php");
+      $this->menu_action = $action;
       $this->menu = new Menu();
       $this->render("home/view.php");
    }

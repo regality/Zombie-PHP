@@ -1,10 +1,18 @@
 <div class="item"><h2><?= $title ?></h2></div>
-<?php foreach ($apps as $app): ?>
-   <div app="<?= $app['app'] ?>" 
-    class="item app<?= (isset($app['active']) ? " active" : "") ?>"
-    cache="<?= ($app['cache'] ? "1" : "0") ?>" >
-      <?= $app['name'] ?>
-   </div>
+<?php foreach ($apps as $app => $settings): ?>
+   <?php if (isset($settings['name'])): ?>
+      <div app="<?= $app ?>" 
+       class="item app<?= (isset($settings['active']) ? " active" : "") ?>"
+       cache="<?= ($settings['cache'] ? "1" : "0") ?>" >
+         <?= $settings['name'] ?>
+      </div>
+   <?php elseif (isset($settings['active'])): ?>
+      <script type="text/javascript">
+      $(document).ready(function() {
+         undead.loadApp("<?= $app ?>");
+      });
+      </script>
+   <?php endif ?>
 <?php endforeach ?>
 
 <?php if ($session->is_set("username")): ?>

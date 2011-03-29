@@ -28,7 +28,7 @@
    <div id="wrapper">
       <div id="main">
          <div id="sidenav">
-            <?php $menu->run() ?>
+            <?php $menu->run($menu_action) ?>
          </div>
          <div id="content">
             <div id="app-console" class="app-content" style="display:none;">

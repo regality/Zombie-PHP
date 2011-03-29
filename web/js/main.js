@@ -2,7 +2,9 @@ $(document).ready(function() {
    setAjaxUrl();
    undead.setupAjax();
    undead.resetMenu();
-   undead.loadApp($(".active").attr("app"), false);
+   if (typeof $(".active").attr("app") != "undefined") {
+      undead.loadApp($(".active").attr("app"), false);
+   }
 
    $("#console-clear").click(function() {
       $("#console-messages").html("");
