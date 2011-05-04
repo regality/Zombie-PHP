@@ -41,7 +41,7 @@ $(document).ready(function() {
                       "password":hex_sha1($("#password").val())},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.loadApp("welcome", false);
+                     undead.loadApp(data.app, false);
                      $.ajax({"data":{"app":"menu"},
                              "dataType":"html",
                              "success":function(data) {

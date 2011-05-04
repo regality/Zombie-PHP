@@ -2,8 +2,8 @@
 require_once(__DIR__ . "/../../brainz/app.php");
 
 class Menu extends App {
-   public function execute($action, $request) {
-      $active = (isset($action) ? $action : "welcome");
+   public function index_run($request) {
+      $active = (isset($request['action']) ? $request['action'] : "welcome");
       if ($this->session->is_set('username')) {
          $this->title = "Welcome, " . $this->session->get('username');
       } else {
@@ -21,8 +21,6 @@ class Menu extends App {
       }
 
       $this->apps[$active]['active'] = true;
-
-      $this->render("menu/view.php");
    }
 }
 

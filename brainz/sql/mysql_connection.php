@@ -61,6 +61,7 @@ class MySqlConnection extends SqlConnection {
          // If there are errors, put them in the error list
          if (strlen($my_error) > 0) {
              $this->errors .= $my_error;
+             trigger_error("Mysql Error: " . $my_error, E_USER_WARNING);
              return false;
          } else {
              return new MySqlResult($result);

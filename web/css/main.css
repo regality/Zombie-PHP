@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Slackey';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Slackey'), url('/css/Slackey.ttf') format('woff');
+}
+
 * {
 padding: 0px;
 margin: 0px;
@@ -14,11 +21,16 @@ border-collapse: collapse;
 
 table tr th {
 padding: 1px 10px;
+border-bottom: 1px solid white;
+background-color: #b9c9fe;
+color: #001f6b;
+font-weight:normal;
 }
 
 table tr td {
-border: 1px solid #aaa;
-padding: 2px;
+border-bottom: 1px solid white;
+padding: 4px 10px;
+background-color: #e8edff;
 }
 
 /* jqueyr ui stuff */
@@ -213,6 +225,9 @@ height: 30px;
 width: 30px;
 background-image: url('/images/close-button.png');
 float: right;
+position: relative;
+top: -20px;
+left: 20px;
 }
 
 .basic-ajax {

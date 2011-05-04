@@ -4,7 +4,6 @@
    <title>Zombie PHP</title>
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
    <link rel="stylesheet" href="<?= $web_root ?>/css/main.css" type="text/css" />
-   <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="<?= $web_root ?>/js/jquery.min.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/sha1.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
@@ -28,7 +27,7 @@
    <div id="wrapper">
       <div id="main">
          <div id="sidenav">
-            <?php $menu->run($menu_action) ?>
+            <?php $menu->run("index", $request) ?>
          </div>
          <div id="content">
             <div id="app-console" class="app-content" style="display:none;">
@@ -39,6 +38,6 @@
          </div>
       </div>
    </div>
-   <? render_errors() ?>
+   <? render_errors_js() ?>
 </body>
 </html>

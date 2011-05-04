@@ -2,6 +2,20 @@ var undead = {};
 
 undead.debug = false;
 undead.short = false;
+undead.default_app = "welcome";
+undead.tokens = Array();
+
+undead.error = function(mesg) {
+   alert(mesg);
+}
+
+undead.warn = function(mesg) {
+   alert(mesg);
+}
+
+undead.message = function(mesg) {
+   alert(mesg);
+}
 
 undead.addMessage = function(title, mesg) {
    html = "<div class=\"console-title\">" + title + "</div>" + mesg;
@@ -37,8 +51,6 @@ undead.resetMenu = function() {
    $(".active").next().addClass("next");
    $(".active").prev().addClass("prev");
 }
-
-undead.tokens = Array();
 
 undead.addToken = function(token) {
    undead.tokens.push(token);
@@ -126,11 +138,11 @@ undead.setupAjax = function() {
       "dataType":"json",
       "cache":"false",
       "error":function(xhr, status, error) {
-         alert('An error occured:' + error + status);
+         undead.warn('An error occured:' + error + status);
       },
       "dataFilter":function(rawData, type) {
          if (undead.debug) {
-            alert('raw data:' + rawData);
+            undead.warn('raw data:' + rawData);
          }
          if (type == "json") {
             try {
@@ -139,10 +151,25 @@ undead.setupAjax = function() {
                   window.location.reload();
                }
                if (data.query != null) {
-                  alert(data.query);
+                  undead.warn(data.query);
+               }
+               if (typeof data.errors == "object") {
+                  for (i = 0; i < data.errors.length; ++i) {
+                     mesg = "<i>" + data.errors[i].errstr + "</i> in " +
+                            data.errors[i].errfile + " on line " +
+                            data.errors[i].errline + ".";
+                     undead.addError(data.errors[i].errno, mesg);
+                  }
+               }
+               if (typeof data.alert == "object") {
+                  for (i = 0; i < data.alert.length; ++i) {
+                     undead.warn(data.alert[i]);
+                  }
+               } else if (data.alert != null) {
+                  undead.warn(data.alert);
                }
             } catch (e) {
-               alert('error parsing json:' + rawData);
+               undead.warn('error parsing json:' + rawData);
             }
          } else {
             if (rawData == "logged out") {
@@ -171,7 +198,7 @@ undead.setupAjax = function() {
          options.data = "format=" + options.dataType;
       }
       if (undead.debug) {
-         alert("ajax data:" + options.data);
+         undead.warn("ajax data:" + options.data);
       }
    });
 }

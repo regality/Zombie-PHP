@@ -1,10 +1,9 @@
 <?php
 
-function js_error($errno, $errstr, $errfile, $errline) {
-   global $_ERRORS;
-   if (!is_array($_ERRORS)) {
-      $_ERRORS = array();
-   }
+global $_ERRORS;
+$_ERRORS = array();
+
+function error_store($errno, $errstr, $errfile, $errline) {
    if (!(error_reporting() & $errno)) {
       return;
    }
@@ -12,10 +11,18 @@ function js_error($errno, $errstr, $errfile, $errline) {
               "errstr" => $errstr,
               "errfile" => $errfile,
               "errline" => $errline);
-   array_push($_ERRORS, $e);
+   array_push($GLOBALS['_ERRORS'], $e);
 }
 
-function render_errors() {
+function get_error_array() {
+   return $GLOBALS['_ERRORS'];
+}
+
+function clear_errors() {
+   $GLOBALS['_ERRORS'] = array();
+}
+
+function render_errors_js() {
    $errors = $GLOBALS['_ERRORS'];
    if (count($errors) > 0) {
       ?>
@@ -34,6 +41,6 @@ function render_errors() {
    $GLOBALS['_ERRORS'] = array();
 }
 
-set_error_handler("js_error");
+set_error_handler("error_store");
 
 ?>

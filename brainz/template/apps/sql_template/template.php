@@ -1,26 +1,26 @@
 <?php
-require_once(__DIR__ . " /../../brainz/app.php");
+require_once(dirname(__FILE__) . "/../../brainz/app.php");
 
-class Groups extends SecureApp {
-//class Groups extends App {
-   public $groups = array('admin');
+class <CLASS_NAME> extends App {
 
    /*********************************************
     * run functions
     *********************************************/
 
    public function index_run($request) {
-      $groups_model = $this->get_model("groups");
-      $this->groups = $groups_model->get_all();
+      $<SLUG>_model = $this->get_model("<SLUG>");
+      $this-><SLUG> = $<SLUG>_model->get_all();
    }
 
    public function edit_run($request) {
-      $groups_model = $this->get_model("groups");
-      $this->groups = $groups_model->get_one($request['id']);
+<MODEL_GET_ALL>
+      $<SLUG>_model = $this->get_model("<SLUG>");
+      $this-><SLUG> = $<SLUG>_model->get_one($request['id']);
       $this->form_action = 'update';
    }
 
    public function new_run($request) {
+<MODEL_GET_ALL>
       $this->view = 'edit';
       $this->form_action = 'create';
    }
@@ -39,8 +39,8 @@ class Groups extends SecureApp {
     *********************************************/
 
    public function create_save($request) {
-      $groups_model = $this->get_model("groups");
-      if ($groups_model->insert($request)) {
+      $<SLUG>_model = $this->get_model("<SLUG>");
+      if ($<SLUG>_model->insert($request)) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
@@ -48,8 +48,8 @@ class Groups extends SecureApp {
    }
 
    public function update_save($request) {
-      $groups_model = $this->get_model("groups");
-      if ($groups_model->update($request['id'], $request)) {
+      $<SLUG>_model = $this->get_model("<SLUG>");
+      if ($<SLUG>_model->update($request['id'], $request)) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
@@ -57,8 +57,8 @@ class Groups extends SecureApp {
    }
 
    public function delete_save($request) {
-      $groups_model = $this->get_model("groups");
-      if ($groups_model->delete($request['id'])) {
+      $<SLUG>_model = $this->get_model("<SLUG>");
+      if ($<SLUG>_model->delete($request['id'])) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";

@@ -1,27 +1,21 @@
 <?php
 
 require_once("error.php");
+require_once("util.php");
 
 abstract class App {
    protected $session;
    protected $save_status;
    protected $json;
 
-   function __construct($db = null, $sess = null) {
+   function __construct($sess = null) {
       require("config.php");
 
       $this->zombie_root = $zombie_root;
       $this->app_root = $app_root;
       $this->web_root = $web_root;
       $this->domain = $domain;
-      if ($db == null) {
-         require_once($db_file);
-         $this->sql = new $db_class($db_server, $db_user,
-                                    $db_pass, $database);
-         if (!$this->sql->is_connected()) {
-            echo "ERROR: Could not connect to database";
-         }
-      }
+      $this->json = array();
       if ($sess == null) {
          require_once($sess_file);
          $this->session = $sess_class::get_session();
@@ -31,23 +25,24 @@ abstract class App {
    function __destruct() {
    }
 
-   /*
-    * You must implement this function.
-    */
-   public abstract function execute($action, $request);
-
-   /*
-    * You must implement this function if you want to.
-    */
-   public function save($action, $request) {
-   }
-
-   public function render($filename) {
-      foreach (get_object_vars($this) as $var => $val) {
-         $$var = $val;
+   public function render() {
+      if ($this->format == 'json') {
+         $errors = get_error_array();
+         if (is_array($errors) && isset($this->json['errors'])) {
+            $this->json['errors'] = array_merge($this->json['errors'], $errors);
+         }
+         $this->render_json();
+      } else {
+         $file = $this->app_root . "/" . strtolower(get_class($this)) . 
+                 "/views/" . $this->view . ".php";
+         if (file_exists($file)) {
+            foreach (get_object_vars($this) as $var => $val) {
+               $$var = $val;
+            }
+            include($file);
+         }
+         render_errors_js();
       }
-      include($this->app_root . "/" . $filename);
-      render_errors();
    }
 
    public function render_json() {
@@ -64,17 +59,38 @@ abstract class App {
    }
 
    public function run($action = null, $request = null) {
-      if ($action == null && isset($_REQUEST['action'])) {
-         $action = $_REQUEST['action'];
-      }
-      if (is_null($request)) {
-         $request = $_REQUEST;
-      }
-      $this->safe_save($action, $request);
-      $this->execute($action, $request);
+      $this->prepare($action, $request);
+      $this->execute();
    }
 
-   public function safe_save($action, $request) {
+   public function prepare($action, $request) {
+      if (is_null($action) && isset($_REQUEST['action'])) {
+         $this->action = $_REQUEST['action'];
+      } else if (is_null($action)) {
+         $this->action = 'index';
+      } else {
+         $this->action = $action;
+      }
+      $this->view = $this->action;
+
+      if (is_null($request)) {
+         $this->request = $_REQUEST;
+      } else {
+         $this->request = $request;
+      }
+      $this->format = (isset($this->request['format']) ? $this->request['format'] : 'html');
+   }
+
+   public function execute() {
+      $run_func = $this->action . "_run";
+      $this->save_safe($this->action, $this->request);
+      if (method_exists($this, $run_func)) {
+         $this->$run_func($this->request);
+      }
+      $this->render();
+   }
+
+   public function save_safe($action, $request) {
       if (isset($_REQUEST['csrf'])) {
          $tokens = $this->session->get('csrf_tokens');
          if (!is_array($tokens)) {
@@ -108,7 +124,10 @@ abstract class App {
          return;
       }
       $this->save_status = "success";
-      $this->save($action, $request);
+      $save_func = $action . "_save";
+      if (method_exists($this, $save_func)) {
+         $this->$save_func($request);
+      }
    }
 
    public function get_csrf_token($num = 1) {
@@ -138,6 +157,12 @@ abstract class App {
       return ($num > 1 ? $token_list : $token);
    }
 
+   public function get_model($model) {
+      require(dirname(__FILE__) . "/../model/$model.php");
+      $class = underscore_to_class($model) . "Model";
+      return new $class();
+   }
+
    public function dynamic_url() {
       return "http://" . $this->domain . "/";
    }
@@ -146,55 +171,6 @@ abstract class App {
       return "http://" . $this->domain . "/";
    }
 
-}
-
-abstract class SecureApp extends App {
-   public function run($action = null) {
-      $format = (isset($_REQUEST['format']) ? $_REQUEST['format'] : 'html');
-      if ($action == null && isset($_REQUEST['action'])) {
-         $action = $_REQUEST['action'];
-      }
-
-      if (!$this->session->is_set('username')) {
-         if ($format == 'json') {
-            $this->json['status'] = 'logged out';
-            $this->render_json();
-         } else {
-            echo "logged out";
-         }
-         return;
-      }
-      if (isset($this->groups)) {
-         $user_groups = $this->session->get('groups');
-         if (!is_array($user_groups)) {
-            if ($format == 'json') {
-               $this->json['status'] = 'access denied';
-               $this->render_json();
-            } else {
-               echo 'access denied';
-            }
-            return;
-         }
-         foreach ($this->groups as $group) {
-            foreach ($user_groups as $user_group) {
-               if ($user_group == $group) {
-                  $this->safe_save($action, $_REQUEST);
-                  $this->execute($action, $_REQUEST);
-                  return;
-               }
-            }
-         }
-         if ($format == 'json') {
-            $this->json['status'] = 'access denied';
-            $this->render_json();
-         } else {
-            echo 'access denied';
-         }
-      } else {
-         $this->safe_save($action, $_REQUEST);
-         $this->execute($action, $_REQUEST);
-      }
-   }
 }
 
 ?>
