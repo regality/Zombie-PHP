@@ -1,13 +1,13 @@
 <?php
 
-require_once("app.php");
+require_once(dirname(__FILE__) . "/app.php");
 
 abstract class SecureApp extends App {
    public function run($action = null, $request = null) {
       $this->prepare($action, $request);
       
       if (!$this->session->is_set('username')) {
-         if ($format == 'json') {
+         if ($this->format == 'json') {
             $this->json['status'] = 'logged out';
             $this->render_json();
          } else {
@@ -18,7 +18,7 @@ abstract class SecureApp extends App {
       if (isset($this->groups)) {
          $user_groups = $this->session->get('groups');
          if (!is_array($user_groups)) {
-            if ($format == 'json') {
+            if ($this->format == 'json') {
                $this->json['status'] = 'access denied';
                $this->render_json();
             } else {
@@ -34,7 +34,7 @@ abstract class SecureApp extends App {
                }
             }
          }
-         if ($format == 'json') {
+         if ($this->format == 'json') {
             $this->json['status'] = 'access denied';
             $this->render_json();
          } else {
