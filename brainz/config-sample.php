@@ -7,7 +7,7 @@ $domain = 'zombiephp.com';
 
 $db_class = 'PgSqlConnection';
 $db_file = 'sql/pgsql_connection.php';
-$db_server = 'localhost';
+$db_host = 'localhost';
 $db_user = 'postgres';
 $db_pass = 'postgres';
 $database = 'zombie';
