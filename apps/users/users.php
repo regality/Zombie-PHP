@@ -1,8 +1,7 @@
 <?php
-require_once(__DIR__ . " /../../brainz/app.php");
+require_once(__DIR__ . " /../../brainz/secure_app.php");
 
-//class Users extends SecureApp {
-class Users extends App {
+class Users extends SecureApp {
    public $groups = array('admin');
 
    public function index_run($request) {
