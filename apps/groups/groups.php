@@ -1,8 +1,7 @@
 <?php
-require_once(__DIR__ . " /../../brainz/app.php");
+require_once(__DIR__ . " /../../brainz/secure_app.php");
 
 class Groups extends SecureApp {
-//class Groups extends App {
    public $groups = array('admin');
 
    /*********************************************
