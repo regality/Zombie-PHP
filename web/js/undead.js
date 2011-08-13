@@ -2,7 +2,7 @@ var undead = {};
 
 undead.debug = false;
 undead.default_app = "welcome";
-undead.tokens = Array();
+undead.token = "";
 
 undead.error = function(mesg) {
    alert(mesg);
@@ -51,27 +51,22 @@ undead.resetMenu = function() {
    $(".active").prev().addClass("prev");
 }
 
-undead.addToken = function(token) {
-   undead.tokens.push(token);
-   if (undead.tokens.length > 10) {
-      undead.tokens.splice(0, undead.tokens.length - 10);
-   }
+undead.setToken = function(token) {
+   undead.token = token;
 }
 
 undead.getToken = function() {
-   if (undead.tokens.length == 0) {
+   if (undead.token == "") {
       undead.requestToken();
    }
-   token = undead.tokens[0];
-   undead.tokens.splice(0, 1);
-   return token;
+   return undead.token;
 }
 
 undead.requestToken = function() {
    $.ajax({"data":{"app":"csrf"},
            "async":false,
            "success":function(data) {
-               undead.addToken(data.token);
+               undead.setToken(data.token);
            }
    });
 }
@@ -104,7 +99,7 @@ undead.popStack = function(appStack) {
 
 undead.refreshStack = function(appStack) {
    topFrame = $("#" + appStack + "-stack").find(".app-content").last();
-   data = JSON.parse(decodeURIComponent(topFrame.attr("json")));
+   data = JSON.parse(unescape(topFrame.attr("json")));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
@@ -137,7 +132,7 @@ undead.pushStack = function(appStack, action, data) {
       $("#content").append('<div app="' + appStack + '" class="app-stack" id="' + appStack + '-stack"></div>');
       stackDiv = $("#" + appStack + "-stack");
    }
-   jsonStr = encodeURIComponent(JSON.stringify(data));
+   jsonStr = escape(JSON.stringify(data));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {

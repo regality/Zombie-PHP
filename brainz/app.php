@@ -91,21 +91,14 @@ abstract class App {
    }
 
    public function save_safe($action, $request) {
+      $save_func = $action . "_save";
+      if (!method_exists($this, $save_func)) {
+         return;
+      }
       if (isset($_REQUEST['csrf'])) {
-         $tokens = $this->session->get('csrf_tokens');
-         if (!is_array($tokens)) {
-            $tokens = array();
-         }
+         $token = $this->session->get('csrf_token');
          $req_token = $_REQUEST['csrf'];
-         $match = false;
-         foreach ($tokens as $key => $token) {
-            if ($req_token == $token) {
-               $match = true;
-               unset($tokens[$key]);
-               $this->session->set('csrf_tokens', $tokens);
-               break;
-            }
-         }
+         $match = ($req_token == $token ? true : false);
          if (!$match) {
             $this->save_status = "bad csrf";
             return;
@@ -124,37 +117,16 @@ abstract class App {
          return;
       }
       $this->save_status = "success";
-      $save_func = $action . "_save";
-      if (method_exists($this, $save_func)) {
          $this->$save_func($request);
-      }
    }
 
-   public function get_csrf_token($num = 1) {
-      $tokens = $this->session->get('csrf_tokens');
-      if (!is_array($tokens)) {
-         $tokens = array();
-      }
-      if ($num == 1) {
+   public function get_csrf_token() {
+      $token = $this->session->get('csrf_token');
+      if (!$token) {
          $token = md5(rand() . time());
-         $tokens[] = $token;
-         array_push($tokens, $token);
-      } else if ($num > 1) {
-         if ($num > 10) {
-            $num = 10;
-         }
-         $token_list = array();
-         for ($i = 0; $i < $num; ++$i) {
-            $token = md5(rand() . time());
-            $token_list[] = $token;
-            array_push($tokens, $token);
-         }
+         $this->session->set('csrf_token', $token);
       }
-      if (count($tokens) > 10) {
-         $tokens = array_slice($tokens, 1, 10);
-      }
-      $this->session->set('csrf_tokens', $tokens);
-      return ($num > 1 ? $token_list : $token);
+      return $token;
    }
 
    public function get_model($model) {

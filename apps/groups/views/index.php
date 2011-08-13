@@ -38,7 +38,7 @@ $(document).ready(function() {
    $("#groups-new").click(function(e) {
       e.preventDefault();
       undead.pushStack("groups","new");
-   G});
+   });
 
    $(".groups-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");

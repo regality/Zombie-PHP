@@ -14,9 +14,7 @@
          "url":"<?= $web_root ?>/app.php",
       });
    }
-   <?php foreach ($token_list as $token): ?>
-   undead.addToken("<?= $token ?>");
-   <?php endforeach ?>
+   undead.setToken("<?= $token ?>");
    </script>
 </head>
 <body>
