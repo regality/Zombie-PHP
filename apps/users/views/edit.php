@@ -1,4 +1,3 @@
-<div class="close-button" id="close-users"></div>
 <div class="form">
 <table>
    <?php if (isset($users['id'])): ?>
@@ -58,8 +57,11 @@
       </td>
    </tr>
    <tr>
-      <td colspan='2'>
+      <td>
          <button class="users-<?= $form_action ?>"><?= $form_action ?></button>
+      </td>
+      <td>
+         <button class="pop-active">Cancel</button>
       </td>
    </tr>
 </table>

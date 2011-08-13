@@ -3,8 +3,6 @@ var undead = {};
 undead.debug = false;
 undead.default_app = "welcome";
 undead.tokens = Array();
-undead.stackJSON = {};
-undead.stackId = 0;
 
 undead.error = function(mesg) {
    alert(mesg);
@@ -86,9 +84,14 @@ undead.focusApp = function(appStack) {
 }
 
 undead.popActiveStack = function() {
-   activeStack = $(".app-stack[active=true]");
+   activeStack = $(".app-stack[active=true]").attr("app");
    undead.popStack(activeStack);
 }
+
+$(".pop-active").live('click', function(e) {
+   e.preventDefault();
+   undead.popActiveStack();
+});
 
 undead.stackSize = function(appStack) {
    return $("#" + appStack + "-stack").find(".app-content").length;
@@ -101,7 +104,7 @@ undead.popStack = function(appStack) {
 
 undead.refreshStack = function(appStack) {
    topFrame = $("#" + appStack + "-stack").find(".app-content").last();
-   data = undead.stackJSON[ topFrame.attr("sid") ];
+   data = JSON.parse(decodeURIComponent(topFrame.attr("json")));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
@@ -131,16 +134,14 @@ undead.pushStack = function(appStack, action, data) {
    }
    stackDiv = $("#" + appStack + "-stack");
    if (stackDiv.length == 0) {
-      $("#content").append('<div class="app-stack" id="' + appStack + '-stack"></div>');
+      $("#content").append('<div app="' + appStack + '" class="app-stack" id="' + appStack + '-stack"></div>');
       stackDiv = $("#" + appStack + "-stack");
    }
-   jsonStr = JSON.stringify(data).replace(/"/g, "\\\"");
-   sid = ++undead.stackId;
-   undead.stackJSON[sid] = data;
+   jsonStr = encodeURIComponent(JSON.stringify(data));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
-               div = '<div class="app-content" sid="' + sid + '" action="' + action + '">' + data + '</div>';
+               div = '<div class="app-content" json="' + jsonStr + '" action="' + action + '">' + data + '</div>';
                stackDiv.append(div);
                stackDiv.show();
                undead.focusApp(appStack);
