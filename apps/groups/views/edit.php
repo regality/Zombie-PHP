@@ -1,4 +1,3 @@
-<div class="close-button" id="close-groups"></div>
 <div class="form">
 <table>
    <tr>

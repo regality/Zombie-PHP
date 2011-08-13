@@ -1,6 +1,3 @@
-<div class="modal content-modal" id="<SLUG>-modal">
-   <div id="<SLUG>-ajax" class="awesome basic-ajax"></div>
-</div>
 <a href="#" id="<SLUG>-new">New +</a>
 <table>
    <tr>
@@ -38,7 +35,7 @@ $(document).ready(function() {
    $("#<SLUG>-new").click(function(e) {
       e.preventDefault();
       undead.pushStack("<SLUG>","new");
-   G});
+   });
 
    $(".<SLUG>-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");

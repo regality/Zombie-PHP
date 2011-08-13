@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . "/../../brainz/app.php");
+require_once(dirname(__FILE__) . "/../../brainz/app/app.php");
 
 class <CLASS_NAME> extends App {
 

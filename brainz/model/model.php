@@ -2,8 +2,8 @@
 
 abstract class Model {
    public function __construct() {
-      require("config.php");
-      require_once(dirname(__FILE__) . "/" . $db_file);
+      require(__DIR__ . "/../config.php");
+      require_once($db_file);
       $this->db = new $db_class($db_host, $db_user, $db_pass, $database);
    }
 

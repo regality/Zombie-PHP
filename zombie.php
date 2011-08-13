@@ -6,8 +6,8 @@ if (count($argv) < 2) {
 }
 
 require("brainz/config.php");
-require("brainz/util.php");
-require("brainz/$db_file");
+require("brainz/util/util.php");
+require($db_file);
 $db = new $db_class($db_host, $db_user, $db_pass, $database);
 
 $slug = strtolower($argv[1]);

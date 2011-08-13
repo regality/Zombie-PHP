@@ -1,7 +1,7 @@
 <?php
 
-require_once("error.php");
-require_once("util.php");
+require_once(__DIR__ . "/../util/error.php");
+require_once(__DIR__ . "/../util/util.php");
 
 abstract class App {
    protected $session;
@@ -9,13 +9,14 @@ abstract class App {
    protected $json;
 
    function __construct($sess = null) {
-      require("config.php");
+      require(__DIR__ . "/../config.php");
 
       $this->zombie_root = $zombie_root;
       $this->app_root = $app_root;
       $this->web_root = $web_root;
       $this->domain = $domain;
       $this->json = array();
+      $this->is_page = false;
       if ($sess == null) {
          require_once($sess_file);
          $this->session = $sess_class::get_session();
@@ -33,13 +34,26 @@ abstract class App {
          }
          $this->render_json();
       } else {
-         $file = $this->app_root . "/" . strtolower(get_class($this)) . 
+         $file = $this->app_root . "/" . class_to_underscore(get_class($this)) . 
                  "/views/" . $this->view . ".php";
          if (file_exists($file)) {
             foreach (get_object_vars($this) as $var => $val) {
                $$var = $val;
             }
-            include($file);
+            if ($this->is_page) {
+               if (!method_exists($menu, 'run')) {
+                  require_once($this->app_root . '/menu/menu.php');
+                  $menu = new Menu(); 
+               }
+               if (isset($token)) {
+                  $token= $this->get_csrf_token();
+               }
+               include($this->app_root . "/home/views/open.php");
+               include($file);
+               include($this->app_root . "/home/views/close.php");
+            } else {
+               include($file);
+            }
          }
          render_errors_js();
       }
@@ -130,7 +144,7 @@ abstract class App {
    }
 
    public function get_model($model) {
-      require(dirname(__FILE__) . "/../model/$model.php");
+      require(dirname(__FILE__) . "/../../model/$model.php");
       $class = underscore_to_class($model) . "Model";
       return new $class();
    }

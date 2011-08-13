@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . " /../../brainz/secure_app.php");
+require_once(__DIR__ . " /../../brainz/app/secure_app.php");
 
 class Users extends SecureApp {
    public $groups = array('admin');

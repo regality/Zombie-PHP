@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../brainz/model.php");
+require_once(dirname(__FILE__) . "/../brainz/model/model.php");
 
 class UsersModel extends Model {
    public function get_all() {
