@@ -1,8 +1,7 @@
 <?php
-require_once(__DIR__ . " /../../brainz/secure_app.php");
+require_once(dirname(__FILE__) . "/../../brainz/app.php");
 
-class Groups extends SecureApp {
-   public $groups = array('admin');
+class Groups extends App {
 
    /*********************************************
     * run functions
@@ -14,12 +13,14 @@ class Groups extends SecureApp {
    }
 
    public function edit_run($request) {
+
       $groups_model = $this->get_model("groups");
       $this->groups = $groups_model->get_one($request['id']);
       $this->form_action = 'update';
    }
 
    public function new_run($request) {
+
       $this->view = 'edit';
       $this->form_action = 'create';
    }

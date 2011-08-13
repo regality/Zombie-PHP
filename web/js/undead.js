@@ -1,9 +1,10 @@
 var undead = {};
 
 undead.debug = false;
-undead.short = false;
 undead.default_app = "welcome";
 undead.tokens = Array();
+undead.stackJSON = {};
+undead.stackId = 0;
 
 undead.error = function(mesg) {
    alert(mesg);
@@ -77,47 +78,77 @@ undead.requestToken = function() {
    });
 }
 
-undead.loadApp = function(app, cache, target, data) {
-   if (target == null || target.length == 0) {
-      target = "#content";
-   } else {
-      target = "#" + target;
+undead.focusApp = function(appStack) {
+   $(".app-stack:visible").hide().attr("active",null);
+   $("#" + appStack + "-stack").show().attr("active","true");
+   $("#" + appStack + "-stack").find(".app-content").hide();
+   $("#" + appStack + "-stack").find(".app-content").last().show();
+}
+
+undead.popActiveStack = function() {
+   activeStack = $(".app-stack[active=true]");
+   undead.popStack(activeStack);
+}
+
+undead.stackSize = function(appStack) {
+   return $("#" + appStack + "-stack").find(".app-content").length;
+}
+
+undead.popStack = function(appStack) {
+   $("#" + appStack + "-stack").find(".app-content").last().remove();
+   undead.focusApp(appStack);
+}
+
+undead.refreshStack = function(appStack) {
+   topFrame = $("#" + appStack + "-stack").find(".app-content").last();
+   data = undead.stackJSON[ topFrame.attr("sid") ];
+   $.ajax({"data":data,
+           "dataType":"html",
+           success:function(data) {
+               topFrame.html(data);
+               undead.focusApp(appStack);
+               undead.addMessage("App Refreshed", "The app <i>" + 
+                                 appStack + "." + topFrame.attr("action") + 
+                                 "</i> was successfully refreshed");
+           }
+   });
+}
+
+undead.emptyStack = function(appStack) {
+   $("#" + appStack + "-stack").find(".app-content").remove();
+}
+
+undead.pushStack = function(appStack, action, data) {
+   if (action == null) {
+      action = "index";
    }
    if (data == null || typeof data != "object") {
-      data = {"app":app};
+      data = {"app":appStack,
+              "action":action};
    } else {
-      data.app = app;
+      data.app = appStack;
+      data.action = action;
    }
-   app_div = $("#app-" + app);
-   if (app_div.length == 0 || cache == 0) {
-      if (cache == 0 && app_div.length == 1) {
-         app_div.remove();
-      }
-      $.ajax({"data":data,
-              "dataType":"html",
-              success:function(data) {
-                  while($("#app-" + app).length > 0) {
-                     $("#app-" + app).remove();
-                  }
-                  div = "<div id=\"app-" + app + "\">" + data + "</div>";
-                  $("#content").append(div);
-                  $("#app-" + app).addClass("app-content").hide();
-                  current = $(".app-content:visible");
-                  if (current.length == 0) {
-                     $("#app-" + app).show();
-                  } else {
-                     current.fadeOut("fast", function() {
-                        $("#app-" + app).fadeIn("fast");
-                     });
-                  }
-                  undead.addMessage("App Loaded", "The app <i>" + app + "</i> was successfully loaded");
-              }
-      });
-   } else {
-      $(".app-content:visible").fadeOut("fast", function() {
-         app_div.fadeIn("fast");
-      });
+   stackDiv = $("#" + appStack + "-stack");
+   if (stackDiv.length == 0) {
+      $("#content").append('<div class="app-stack" id="' + appStack + '-stack"></div>');
+      stackDiv = $("#" + appStack + "-stack");
    }
+   jsonStr = JSON.stringify(data).replace(/"/g, "\\\"");
+   sid = ++undead.stackId;
+   undead.stackJSON[sid] = data;
+   $.ajax({"data":data,
+           "dataType":"html",
+           success:function(data) {
+               div = '<div class="app-content" sid="' + sid + '" action="' + action + '">' + data + '</div>';
+               stackDiv.append(div);
+               stackDiv.show();
+               undead.focusApp(appStack);
+               undead.addMessage("App Loaded", "The app <i>" + 
+                                 appStack + "." + action + 
+                                 "</i> was successfully loaded");
+           }
+   });
 }
 
 undead.verify_form = function(form) {
@@ -201,8 +232,4 @@ undead.setupAjax = function() {
          undead.warn("ajax data:" + options.data);
       }
    });
-}
-
-if (undead.short == true) {
-   u = undead;
 }

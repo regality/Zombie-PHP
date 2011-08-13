@@ -3,7 +3,7 @@ $(document).ready(function() {
    undead.setupAjax();
    undead.resetMenu();
    if (typeof $(".active").attr("app") != "undefined") {
-      undead.loadApp($(".active").attr("app"), false);
+      undead.pushStack($(".active").attr("app"));
    }
 
    $("#console-clear").click(function() {
@@ -22,7 +22,11 @@ $(document).ready(function() {
          $(this).addClass("active");
          $(this).next().addClass("next");
          $(this).prev().addClass("prev");
-         undead.loadApp($(this).attr("app"), $(this).attr("cache"));
+         if (undead.stackSize($(this).attr("app")) == 0) {
+            undead.pushStack($(this).attr("app"));
+         } else {
+            undead.focusApp($(this).attr("app"));
+         }
       }
    });
 
@@ -41,7 +45,7 @@ $(document).ready(function() {
                       "password":hex_sha1($("#password").val())},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.loadApp(data.app, false);
+                     undead.pushStack(data.app);
                      $.ajax({"data":{"app":"menu"},
                              "dataType":"html",
                              "success":function(data) {

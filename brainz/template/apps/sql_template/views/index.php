@@ -20,15 +20,7 @@
 $(document).ready(function() {
    $(".<SLUG>-edit").click(function(e) {
       e.preventDefault();
-      $("#<SLUG>-modal").fadeIn();
-      $.ajax({"data":{"app":"<SLUG>",
-                      "action":"edit",
-                      "id":$(this).attr("<SLUG>_id")},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#<SLUG>-ajax").html(data);
-              }
-      });
+      undead.pushStack("<SLUG>", "edit", {"id":$(this).attr("<SLUG>_id")});
    });
 
    $(".<SLUG>-delete").click(function(e) {
@@ -45,15 +37,8 @@ $(document).ready(function() {
 
    $("#<SLUG>-new").click(function(e) {
       e.preventDefault();
-      $("#<SLUG>-modal").fadeIn();
-      $.ajax({"data":{"app":"<SLUG>",
-                      "action":"new"},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#<SLUG>-ajax").html(data);
-              }
-      });
-   });
+      undead.pushStack("<SLUG>","new");
+   G});
 
    $(".<SLUG>-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
@@ -66,8 +51,8 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS>
                       "action":"create"},
               "success":function(data) {
-                  $("#<SLUG>-modal").fadeOut();
-                  undead.loadApp("<SLUG>", 0);
+                  undead.popStack("<SLUG>");
+                  undead.refreshStack("<SLUG>");
               }
       });
    });
@@ -83,8 +68,8 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS_WID>
                       "action":"update"},
               "success":function(data) {
-                  $("#<SLUG>-modal").fadeOut();
-                  undead.loadApp("<SLUG>", 0);
+                  undead.popStack("<SLUG>");
+                  undead.refreshStack("<SLUG>");
               }
       });
    });

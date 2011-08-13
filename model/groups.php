@@ -7,7 +7,8 @@ class GroupsModel extends Model {
       $query = "SELECT groups.id
                      , groups.name
                 FROM groups
-                ORDER BY name";
+
+                ORDER BY groups.id";
       $result = $this->db->exec($query, array());
       return $result;
    }
@@ -16,9 +17,13 @@ class GroupsModel extends Model {
       $query = "SELECT groups.id
                      , groups.name
                 FROM groups
-                WHERE id = $1";
+
+                WHERE groups.id = $1";
       $params = array($id);
-      $result = $this->db->exec($query, $params)->fetch_one();
+      $result = $this->db->exec($query, $params);
+      if ($result) {
+         $result = $result->fetch_one();
+      }
       return $result;
    }
 

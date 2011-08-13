@@ -30,9 +30,11 @@
             <?php $menu->run("index", $request) ?>
          </div>
          <div id="content">
-            <div id="app-console" class="app-content" style="display:none;">
-               <h2>Console</h2><a href="javascript:void(0)" id="console-clear">Clear all</a>
-               <div id="console-messages">
+            <div class="app-stack" id="console-stack">
+               <div id="app-console" class="app-content" style="display:none;">
+                  <h2>Console</h2><a href="javascript:void(0)" id="console-clear">Clear all</a>
+                  <div id="console-messages">
+                  </div>
                </div>
             </div>
          </div>

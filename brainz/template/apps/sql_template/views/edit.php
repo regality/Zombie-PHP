@@ -1,4 +1,3 @@
-<div class="close-button" id="close-<SLUG>"></div>
 <div class="form">
 <table>
 <HTML_EDIT_FIELDS>

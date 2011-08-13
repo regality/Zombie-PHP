@@ -20,15 +20,7 @@
 $(document).ready(function() {
    $(".groups-edit").click(function(e) {
       e.preventDefault();
-      $("#groups-modal").fadeIn();
-      $.ajax({"data":{"app":"groups",
-                      "action":"edit",
-                      "id":$(this).attr("groups_id")},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#groups-ajax").html(data);
-              }
-      });
+      undead.pushStack("groups", "edit", {"id":$(this).attr("groups_id")});
    });
 
    $(".groups-delete").click(function(e) {
@@ -45,15 +37,8 @@ $(document).ready(function() {
 
    $("#groups-new").click(function(e) {
       e.preventDefault();
-      $("#groups-modal").fadeIn();
-      $.ajax({"data":{"app":"groups",
-                      "action":"new"},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#groups-ajax").html(data);
-              }
-      });
-   });
+      undead.pushStack("groups","new");
+   G});
 
    $(".groups-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
@@ -63,13 +48,11 @@ $(document).ready(function() {
       }
       $.ajax({"url":"app.php",
               "data":{"app":"groups",
-                      "id":$form.find("input[name=id]").val(),
                       "name":$form.find("input[name=name]").val(),
-
                       "action":"create"},
               "success":function(data) {
-                  $("#groups-modal").fadeOut();
-                  undead.loadApp("groups", 0);
+                  undead.popStack("groups");
+                  undead.refreshStack("groups");
               }
       });
    });
@@ -84,11 +67,10 @@ $(document).ready(function() {
               "data":{"app":"groups",
                       "id":$form.find("input[name=id]").val(),
                       "name":$form.find("input[name=name]").val(),
-
                       "action":"update"},
               "success":function(data) {
-                  $("#groups-modal").fadeOut();
-                  undead.loadApp("groups", 0);
+                  undead.popStack("groups");
+                  undead.refreshStack("groups");
               }
       });
    });

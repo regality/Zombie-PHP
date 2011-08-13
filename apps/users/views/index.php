@@ -27,15 +27,7 @@
 $(document).ready(function() {
    $(".users-edit").click(function(e) {
       e.preventDefault();
-      $("#users-modal").fadeIn();
-      $.ajax({"data":{"app":"users",
-                      "action":"edit",
-                      "id":$(this).attr("users_id")},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#users-ajax").html(data);
-              }
-      });
+      undead.pushStack("users", "edit", {"id":$(this).attr("users_id")});
    });
 
    $(".users-delete").click(function(e) {
@@ -52,14 +44,7 @@ $(document).ready(function() {
 
    $("#users-new").click(function(e) {
       e.preventDefault();
-      $("#users-modal").fadeIn();
-      $.ajax({"data":{"app":"users",
-                      "action":"new"},
-              "dataType":"html",
-              "success":function(data) {
-                  $("#users-ajax").html(data);
-              }
-      });
+      undead.pushStack("users","new");
    });
 
    $(".users-create").die('click').live('click', function() {
@@ -93,8 +78,8 @@ $(document).ready(function() {
                       "groups":groups,
                       "action":"create"},
               "success":function(data) {
-                  $("#users-modal").fadeOut();
-                  undead.loadApp("users", 0);
+                  undead.popStack("users");
+                  undead.refreshStack("users");
               }
       });
    });
@@ -123,16 +108,11 @@ $(document).ready(function() {
                       "action":"update"},
               "success":function(data) {
                   $("#users-modal").fadeOut();
-                  undead.loadApp("users", 0);
+                  undead.popStack("users");
+                  undead.refreshStack("users");
               }
       });
    });
 
-   $("#close-users").die('click').live('click', function() {
-      $("#users-modal").fadeOut();
-      $("#users-edit").fadeOut(function() {
-         $("#users-edit").remove();
-      });
-   });
 });
 </script>
