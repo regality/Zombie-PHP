@@ -1,18 +1,18 @@
 <?php
 
 $zombie_root = '/var/www/zombie';
-$app_root = '/var/www/zombie/apps';
+$app_root = $zombie_root . '/apps';
 $web_root = '';
 $domain = 'zombiephp.com';
 
-$db_class = 'PgSqlConnection';
-$db_file = 'sql/pgsql_connection.php';
+$db_class = 'MySqlConnection';
+$db_file = $zombie_root . '/brainz/sql/pgsql_connection.php';
 $db_host = 'localhost';
-$db_user = 'postgres';
-$db_pass = 'postgres';
+$db_user = 'mysql';
+$db_pass = 'password';
 $database = 'zombie';
 
-$sess_file = 'session/php_session.php';
+$sess_file = $zombie_root . '/brainz/session/php_session.php';
 $sess_class = 'PhpSession';
 
 ?>
