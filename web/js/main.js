@@ -22,11 +22,11 @@ $(document).ready(function() {
          $(this).addClass("active");
          $(this).next().addClass("next");
          $(this).prev().addClass("prev");
-         if (undead.stackSize($(this).attr("app")) == 0) {
-            undead.pushStack($(this).attr("app"));
-         } else {
-            undead.focusApp($(this).attr("app"));
-         }
+      }
+      if (undead.stackSize($(this).attr("app")) == 0) {
+         undead.pushStack($(this).attr("app"));
+      } else {
+         undead.focusApp($(this).attr("app"));
       }
    });
 

@@ -16,7 +16,7 @@ class SqlSession extends Session {
 
    public function __construct() {
       require(dirname(__FILE__) . "/../config.php");
-      require_once(dirname(__FILE__) . "/../" . $db_file);
+      require_once($db_file);
       $this->sql = new $db_class($db_host, $db_user, $db_pass, $database);
       $this->clear_old();
       $this->session = false;

@@ -1,5 +1,32 @@
-404 if function and view not found
+ZOMBIE PHP
+==========
 
-deal with latency
+ - 404 if function and view not found
 
-make SEO friendly (rewrite)
+ - add session hijacking protection
+
+ - make SEO friendly (mod_rewrite)
+
+ - add class autoloading for apps/models
+
+UNDEAD JS
+=========
+
+ - deal with latency
+
+ - Default app based on hash-tag
+
+ - Pack a wysiwyg with the framework
+
+ - integrate with window.history
+
+TEMPLATING SYSTEM
+=================
+
+ - allow for overwriteing app/model
+
+GENERAL
+=======
+
+ - Somebody please make a new logo
+
