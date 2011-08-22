@@ -3,24 +3,22 @@ require_once(__DIR__ . "/../../brainz/app/app.php");
 
 class Menu extends App {
    public function index_run($request) {
-      $active = (isset($request['action']) ? $request['action'] : "welcome");
       if ($this->session->is_set('username')) {
          $this->title = "Welcome, " . $this->session->get('username');
       } else {
          $this->title = "Menu";
       }
 
-      $this->apps['welcome'] = array("name" => "Home", "cache" => false);
+      $this->apps['welcome'] = array("name" => "Home");
       if (!$this->session->is_set('username')) {
-         $this->apps['login'] = array("name" => "Login", "cache" => false);
+         $this->apps['login'] = array("name" => "Login");
       }
       if ($this->in_group('admin')) {
-         $this->apps['users'] = array("name" => "Users", "cache" => false);
-         $this->apps['groups'] = array("name" => "Groups", "cache" => false);
-         $this->apps['console'] = array("name" => "Console", "cache" => true);
+         $this->apps['users'] = array("name" => "Users");
+         $this->apps['groups'] = array("name" => "Groups");
+         $this->apps['console'] = array("name" => "Console");
       }
-
-      $this->apps[$active]['active'] = true;
+      $this->preload = (isset($request['action']) ? $request['action'] : "welcome");
    }
 }
 

@@ -14,15 +14,14 @@ $(document).ready(function() {
       $(this).parent().remove();
    });
 
-   $(".app").live('click', function() {
+   $(".item").live('click', function() {
       if (!$(this).hasClass("active")) {
          $(".item").removeClass("active");
-         $(".item").removeClass("prev");
-         $(".item").removeClass("next");
          $(this).addClass("active");
-         $(this).next().addClass("next");
-         $(this).prev().addClass("prev");
       }
+   });
+
+   $(".app").live('click', function() {
       if (undead.stackSize($(this).attr("app")) == 0) {
          undead.pushStack($(this).attr("app"));
       } else {

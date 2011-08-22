@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
+require_once(__DIR__ . "/../util/autoload.php");
 
 abstract class App {
    protected $session;
@@ -100,8 +101,13 @@ abstract class App {
       $this->save_safe($this->action, $this->request);
       if (method_exists($this, $run_func)) {
          $this->$run_func($this->request);
+         $this->render();
+      } else if (method_exists($this, 'default_run')) {
+         $this->default_run($this->request);
+         $this->render();
+      } else {
+         include($this->app_root . '/home/views/404.php');
       }
-      $this->render();
    }
 
    public function save_safe($action, $request) {

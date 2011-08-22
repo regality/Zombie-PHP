@@ -1,24 +1,24 @@
 ZOMBIE PHP
 ==========
 
- - 404 if function and view not found
-
  - add session hijacking protection
 
  - make SEO friendly (mod_rewrite)
 
- - add class autoloading for apps/models
+ - add detection and stylesheet for mobile browsers
 
 UNDEAD JS
 =========
 
- - deal with latency
-
  - Default app based on hash-tag
 
- - Pack a wysiwyg with the framework
-
  - integrate with window.history
+
+ - change menu to <a> tags
+
+ - deal with latency
+
+ - Pack a wysiwyg with the framework
 
 TEMPLATING SYSTEM
 =================
@@ -30,3 +30,7 @@ GENERAL
 
  - Somebody please make a new logo
 
+FUTURE FEATURES
+===============
+
+ - Testing platform

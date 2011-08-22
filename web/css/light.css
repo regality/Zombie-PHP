@@ -1,8 +1,8 @@
 @font-face {
-  font-family: 'Slackey';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Slackey'), url('/css/Slackey.ttf') format('woff');
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
 }
 
 * {
@@ -10,10 +10,21 @@ padding: 0px;
 margin: 0px;
 }
 
+html {
+height: 100%;
+}
+
 body {
 font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
+background: white;
+color: black;
+height: 100%;
 }
+
+
+
+
 
 table {
 border-collapse: collapse;
@@ -31,9 +42,9 @@ table tr td {
 border-bottom: 1px solid white;
 padding: 4px 10px;
 background-color: #e8edff;
+color: black;
 }
 
-/* jqueyr ui stuff */
 .demoHeaders { margin-top: 2em; }
 #dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 #dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
@@ -42,97 +53,80 @@ ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; f
 ul#icons span.ui-icon {float: left; margin: 0 4px;}
 
 #header {
-width: 800px;
-text-align: center;
+position: absolute;
+top: 0px;
+left: 300px;
+width: 550px;
 margin: 0px auto;
 height: 90px;
-padding: 5px;
+padding: 15px;
 padding-bottom: 0px;
 }
 
 #header h1 {
-font-family: 'Slackey', 'Arial';
+font-family: 'Orbitron', 'Arial';
 font-size: 58px;
+display: inline-block;
+padding-top: 20px;
+color: #f60;
 position: relative;
 top: -20px;
-display: inline-block;
 }
 
 #header img {
-   height: 90px;
-}
-
-#wrapper {
-width: 800px;
-margin: 0px auto;
-height: 601px;
-border-top: 1px solid #2955a6;
-border-left: 1px solid #2955a6;
+height: 90px;
+display: inline-block;
 }
 
 #main {
+width: 1000px;
 position: absolute;
+height: 100%;
 }
 
 #sidenav {
 width: 200px;
-height: 600px;
-border-bottom: 1px solid #2955a6;
-border-right: 1px solid #2955a6;
+min-height: 100%;
+padding-left: 100px;
+padding-top: 100px;
 background: #b9d1ff;
 }
 
-.item {
+a.item {
+text-decoration: none;
+display: block;
 width: 170px;
-height: 20px;
+height: 15px;
 margin: 0px 10px;
-padding: 15px 5px;
-border-bottom: 1px solid #9fc1ff;
-border-top: 1px solid #ddf;
-text-align: center;
+padding: 10px 5px;
+color: black;
+font-family: 'Orbitron';
 }
 
-.app {
-color: #000;
+.menu-title {
+margin-left: 10px;
+height: 50px;
+font-family: 'Orbitron';
+color: #f60;
 }
 
-.item.prev, .item.last {
-border-bottom: none;
+a.item:hover {
+color: white;
 }
 
-.item.next {
-border-top: none;
-}
-
-.app:hover {
-color: #000;
-}
-
-.app.active {
-position: relative;
-left: -20px;
-width: 200px;
-height: 22px;
-border: 1px solid #2955a6;
-border-right: none;
+a.item.active {
+text-align: right;
 background: white;
-border-bottom-left-radius: 5px;
-border-top-left-radius: 5px;
--moz-border-radius-bottomleft: 5px;
--moz-border-radius-topleft: 5px;
-padding-top: 16px;
-padding-bottom: 14px;
-padding-left: 9px;
-padding-right: 1px;
+color: #f60;
+font-weight: bold;
 }
 
 #content {
 position: absolute;
-top: 20px;
-left: 200px;
-width: 600px;
-text-align: center;
-padding: 5px 20px;
+top: 100px;
+left: 300px;
+width: 550px;
+padding: 15px 20px;
 }
 
 #login {
@@ -245,7 +239,6 @@ border-top-width: 0px;
 background-color: #eee;
 width: 80%;
 text-align: left;
-margin: 0px auto;
 padding: 2px;
 }
 
@@ -267,4 +260,14 @@ font-family: "Courier";
 
 .console-mesg-close:hover {
 color: #aaa;
+}
+
+h2 {
+display: block;
+color: #dd7500;
+}
+
+h3 {
+color: black;
+text-transform: uppercase;
 }

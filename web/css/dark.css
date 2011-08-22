@@ -1,0 +1,273 @@
+@font-face {
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
+}
+
+* {
+padding: 0px;
+margin: 0px;
+}
+
+html {
+height: 100%;
+}
+
+body {
+font: 80.5% "Trebuchet MS", sans-serif;
+cursor:default;
+background: #333;
+color: white;
+height: 100%;
+}
+
+a         { color: #f60; }
+a:visited { color: #a50; }
+a:hover   { color: #fa0; }
+
+table {
+border-collapse: collapse;
+}
+
+table tr th {
+padding: 1px 10px;
+border-bottom: 1px solid #333;
+background: #111;
+color: #f60;
+font-weight:normal;
+}
+
+table tr td {
+border-bottom: 1px solid #333;
+padding: 4px 10px;
+background-color: #444;
+color: #fff;
+}
+
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+
+#header {
+position: absolute;
+top: 0px;
+left: 300px;
+width: 550px;
+margin: 0px auto;
+height: 90px;
+padding: 15px;
+padding-bottom: 0px;
+}
+
+#header h1 {
+font-family: 'Orbitron', 'Arial';
+font-size: 58px;
+display: inline-block;
+padding-top: 20px;
+color: #f60;
+position: relative;
+top: -20px;
+}
+
+#header img {
+height: 90px;
+display: inline-block;
+}
+
+#main {
+width: 1000px;
+position: absolute;
+height: 100%;
+}
+
+#sidenav {
+width: 200px;
+min-height: 100%;
+padding-left: 100px;
+padding-top: 100px;
+background: #111;
+}
+
+a.item {
+text-decoration: none;
+display: block;
+width: 170px;
+height: 15px;
+margin: 0px 10px;
+padding: 10px 5px;
+color: #666;
+font-family: 'Orbitron';
+}
+
+.menu-title {
+margin-left: 10px;
+height: 50px;
+font-family: 'Orbitron';
+color: #f60;
+}
+
+a.item:hover {
+color: white;
+}
+
+a.item.active {
+text-align: right;
+background: #333;
+color: #f60;
+font-weight: bold;
+}
+
+#content {
+position: absolute;
+top: 100px;
+left: 300px;
+width: 550px;
+padding: 15px 20px;
+}
+
+#login {
+position: relative;
+top: 15%;
+margin: 0px auto;
+width: 370px;
+height: 300px;
+text-align: center;
+}
+
+#login-title {
+width: 300px;
+margin: 10px auto 0px auto;
+padding: 10px;
+text-align: left;
+}
+
+#login-title span {
+font-size: 2em;
+}
+
+#login-error {
+color: red;
+font-size: small;
+float: right;
+}
+
+#login input {
+border: 1px solid #999;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+height: 30px;
+}
+
+#login input[type="text"],
+#login input[type="password"] {
+width: 300px;
+}
+
+#login-btn {
+width: 300px;
+text-align: center;
+margin: 20px auto;
+}
+
+#login-btn input {
+width: 100px;
+}
+
+#login input[type="button"] {
+width: 100px;
+}
+
+#login label {
+margin: 10px auto;
+width: 300px;
+display: block;
+text-align: left;
+font-size: 1.2em;
+}
+
+.modal {
+background-color: rgba(0, 0, 0, 0.5);
+width: 100%;
+height: 100%;
+z-index: 100;
+position: absolute;
+top: 0px;
+left: 0px;
+display: none;
+}
+
+.content-modal {
+top: -20px;
+width: 599px;
+height: 600px;
+border-bottom: 1px solid #2955a6;
+border-right: 1px solid #2955a6;
+}
+
+.awesome {
+border: 3px solid #2955a6;
+background: white;
+}
+
+.close-button {
+height: 30px;
+width: 30px;
+background-image: url('/images/close-button.png');
+float: right;
+position: relative;
+top: -20px;
+left: 20px;
+}
+
+.basic-ajax {
+position: absolute;
+top: 100px;
+left: 150px;
+width: 300px;
+min-height: 150px;
+padding: 5px;
+}
+
+.console-mesg {
+border: 1px solid #111;
+border-top-width: 0px;
+background-color: #444;
+width: 80%;
+text-align: left;
+padding: 2px;
+}
+
+.console-error {
+font-weight: bold;
+color: red;
+}
+
+.console-title {
+font-weight: bold;
+color: #f60;
+}
+
+.console-mesg-close {
+float: right;
+font-weight: bold;
+font-family: "Courier";
+}
+
+.console-mesg-close:hover {
+color: #aaa;
+}
+
+h2 {
+display: block;
+color: #dd7500;
+}
+
+h3 {
+color: black;
+text-transform: uppercase;
+}

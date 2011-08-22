@@ -3,7 +3,7 @@
 <head>
    <title>Zombie PHP</title>
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-   <link rel="stylesheet" href="<?= $web_root ?>/css/main.css" type="text/css" />
+   <link rel="stylesheet" href="<?= $web_root ?>/css/light.css" type="text/css" />
    <script type="text/javascript" src="<?= $web_root ?>/js/jquery.min.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/sha1.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
@@ -18,20 +18,19 @@
    </script>
 </head>
 <body>
-   <div id="header">
-      <h1>Zombie PHP</h1>
-      <img src="<?= $web_root ?>/images/zombie.jpg" />
-   </div>
-   <div id="wrapper">
-      <div id="main">
-         <div id="sidenav">
-            <?php $menu->run("index", $request) ?>
-         </div>
-         <div id="content">
-            <div class="app-stack" id="console-stack">
-               <div id="app-console" class="app-content" style="display:none;">
-                  <h2>Console</h2><a href="javascript:void(0)" id="console-clear">Clear all</a>
-                  <div id="console-messages">
-                  </div>
+   <div id="main">
+      <div id="header">
+         <img src="<?= $web_root ?>/images/zombie-glasses.png" />
+         <h1>Zombie PHP</h1>
+      </div>
+      <div id="sidenav">
+         <?php $menu->run("index", $request) ?>
+      </div>
+      <div id="content">
+         <div class="app-stack" id="console-stack">
+            <div id="app-console" class="app-content" style="display:none;">
+               <h2>Console</h2><a href="javascript:void(0)" id="console-clear">Clear all</a>
+               <div id="console-messages">
                </div>
             </div>
+         </div>
