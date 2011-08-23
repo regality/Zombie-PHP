@@ -18,7 +18,8 @@ class Menu extends App {
          $this->apps['groups'] = array("name" => "Groups");
          $this->apps['console'] = array("name" => "Console");
       }
-      $this->preload = (isset($request['action']) ? $request['action'] : "welcome");
+      $this->preload = (isset($request['default_app']) ? $request['default_app'] : "welcome");
+      $this->preload_action = (isset($request['default_action']) ? $request['default_action'] : "index");
    }
 }
 

@@ -1,7 +1,7 @@
 <div class="modal content-modal" id="groups-modal">
    <div id="groups-ajax" class="awesome basic-ajax"></div>
 </div>
-<a href="#" id="groups-new">New +</a>
+<a href="#/groups/new" id="groups-new">New +</a>
 <table>
    <tr>
       <th>Name</th>
@@ -33,11 +33,6 @@ $(document).ready(function() {
                   $row.remove();
               }
       });
-   });
-
-   $("#groups-new").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("groups","new");
    });
 
    $(".groups-create").die('click').live('click', function() {
@@ -72,13 +67,6 @@ $(document).ready(function() {
                   undead.popStack("groups");
                   undead.refreshStack("groups");
               }
-      });
-   });
-
-   $("#close-groups").die('click').live('click', function() {
-      $("#groups-modal").fadeOut();
-      $("#groups-edit").fadeOut(function() {
-         $("#groups-edit").remove();
       });
    });
 });

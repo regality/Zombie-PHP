@@ -1,8 +1,11 @@
 var undead = {};
 
 undead.debug = false;
-undead.default_app = "welcome";
+undead.defaultApp = "welcome";
+undead.defaultAction = "index";
 undead.token = "";
+undead.firstState = true;
+undead.ignoreHash = false;
 
 undead.error = function(mesg) {
    alert(mesg);
@@ -44,13 +47,6 @@ undead.consoleAdd = function(html) {
    $(".console-mesg:first").css({"padding":"0px 2px"});
 }
 
-undead.resetMenu = function() {
-   $(".item").removeClass("last next prev");
-   $(".item").last().addClass("last");
-   $(".active").next().addClass("next");
-   $(".active").prev().addClass("prev");
-}
-
 undead.setToken = function(token) {
    undead.token = token;
 }
@@ -71,31 +67,83 @@ undead.requestToken = function() {
    });
 }
 
+undead.loadDefaultApp = function() {
+   var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?/);
+   if (re != null) {
+      if (re[1] != null) {
+         undead.defaultApp = re[1];
+      }
+      if (re[2] != null) {
+         undead.defaultAtion = re[2];
+      }
+   }
+   undead.pushStack(undead.defaultApp, undead.defaultAction);
+}
+
 undead.focusApp = function(appStack) {
    $(".app-stack:visible").hide().attr("active",null);
    $("#" + appStack + "-stack").show().attr("active","true");
    $("#" + appStack + "-stack").find(".app-content").hide();
    $("#" + appStack + "-stack").find(".app-content").last().show();
+   $(".item").removeClass("active");
+   $(".item[href^='#/" + appStack + "']").addClass("active");
+   newHash = "/" + appStack + "/" + undead.topAction(appStack);
+   if (newHash != window.location.hash) {
+      window.location.hash = newHash;
+   }
+}
+
+undead.activeStackName = function() {
+   return $(".app-stack[active=true]").attr("app");
 }
 
 undead.popActiveStack = function() {
-   activeStack = $(".app-stack[active=true]").attr("app");
-   undead.popStack(activeStack);
+   undead.popStack(undead.activeStackName());
 }
 
 $(".pop-active").live('click', function(e) {
-   e.preventDefault();
    undead.popActiveStack();
 });
-
-undead.stackSize = function(appStack) {
-   return $("#" + appStack + "-stack").find(".app-content").length;
-}
 
 undead.popStack = function(appStack) {
    $("#" + appStack + "-stack").find(".app-content").last().remove();
    undead.focusApp(appStack);
 }
+
+undead.stackSize = function(appStack) {
+   return $("#" + appStack + "-stack").find(".app-content").length;
+}
+
+undead.topAction = function(appStack) {
+   return $("#" + appStack + "-stack").find(".app-content").last().attr("action");
+}
+
+undead.handleHashChange = function(hash) {
+   if (undead.ignoreHash == false) {
+      var re = hash.match(/([a-z_]+)\/([a-z_]+)/);
+      if (re != null) {
+         app = re[1];
+         action = re[2];
+         if (undead.stackSize(app) > 1 && undead.topAction(app) != action) {
+            undead.popStack(app);
+         } else if (undead.stackSize(app) > 0) {
+            undead.focusApp(app);
+         }
+      } else {
+         if (undead.activeStackName() != undead.defaultApp) {
+            undead.focusApp(undead.defaultApp);
+         } else if (undead.stackSize(undead.defaultApp) > 1) {
+            undead.popStack(undead.defaultApp);
+         }
+      }
+   } else {
+      undead.ignoreHash = false;
+   }
+}
+
+$(window).bind('hashchange', function() {
+   undead.handleHashChange(window.location.hash);
+});
 
 undead.refreshStack = function(appStack) {
    topFrame = $("#" + appStack + "-stack").find(".app-content").last();
@@ -136,6 +184,8 @@ undead.pushStack = function(appStack, action, data) {
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
+               undead.ignoreHash = true;
+               window.location.hash = "/" + appStack + "/" + action;
                div = '<div class="app-content" json="' + jsonStr + '" action="' + action + '">' + data + '</div>';
                stackDiv.append(div);
                stackDiv.show();

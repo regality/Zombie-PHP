@@ -1,10 +1,7 @@
 $(document).ready(function() {
    setAjaxUrl();
    undead.setupAjax();
-   undead.resetMenu();
-   if (typeof $(".active").attr("app") != "undefined") {
-      undead.pushStack($(".active").attr("app"));
-   }
+   undead.loadDefaultApp();
 
    $("#console-clear").click(function() {
       $("#console-messages").html("");
@@ -21,11 +18,22 @@ $(document).ready(function() {
       }
    });
 
-   $(".app").live('click', function() {
-      if (undead.stackSize($(this).attr("app")) == 0) {
-         undead.pushStack($(this).attr("app"));
-      } else {
-         undead.focusApp($(this).attr("app"));
+   $("a").live('click', function(e) {
+      var href = $(this).attr("href");
+      var re = href.match(/^\/?#\/([a-z_]+)\/?([a-z_]+)?$/);
+      if (re != null) {
+         e.preventDefault();
+         var app = re[1];
+         if (re[2] == null) {
+            if (undead.stackSize(app) == 0) {
+               undead.pushStack(app);
+            } else {
+               undead.focusApp(app);
+            }
+         } else {
+            var action = re[2];
+            undead.pushStack(app, action);
+         }
       }
    });
 
