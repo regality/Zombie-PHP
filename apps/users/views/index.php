@@ -1,7 +1,7 @@
 <div class="modal content-modal" id="users-modal">
    <div id="users-ajax" class="awesome basic-ajax"></div>
 </div>
-<a href="#" id="users-new">New +</a>
+<a href="/users/new" id="users-new">New +</a>
 <table>
    <tr>
       <th>Username</th>
@@ -40,11 +40,6 @@ $(document).ready(function() {
                   $row.remove();
               }
       });
-   });
-
-   $("#users-new").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("users","new");
    });
 
    $(".users-create").die('click').live('click', function() {

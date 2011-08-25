@@ -1,4 +1,4 @@
-<a href="#" id="<SLUG>-new">New +</a>
+<a href="/<SLUG>/new" id="<SLUG>-new">New +</a>
 <table>
    <tr>
 <HTML_FIELDS_TH>
@@ -30,11 +30,6 @@ $(document).ready(function() {
                   $row.remove();
               }
       });
-   });
-
-   $("#<SLUG>-new").click(function(e) {
-      e.preventDefault();
-      undead.pushStack("<SLUG>","new");
    });
 
    $(".<SLUG>-create").die('click').live('click', function() {

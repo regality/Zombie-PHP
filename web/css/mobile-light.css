@@ -53,7 +53,7 @@ padding-bottom: 0px;
 
 #header h1 {
 font-family: 'Orbitron', 'Arial';
-font-size: 58px;
+font-size: 48px;
 display: inline-block;
 padding-top: 20px;
 color: #f60;
@@ -131,6 +131,7 @@ width: 300px;
 
 #login-btn {
 width: 300px;
+height: 30px;
 text-align: center;
 }
 
@@ -141,16 +142,6 @@ width: 100px;
 #login label {
 display: block;
 font-size: 1.2em;
-}
-
-.close-button {
-height: 30px;
-width: 30px;
-background-image: url('/images/close-button.png');
-float: right;
-position: relative;
-top: -20px;
-left: 20px;
 }
 
 .console-mesg {

@@ -20,7 +20,7 @@ $(document).ready(function() {
 
    $("a").live('click', function(e) {
       var href = $(this).attr("href");
-      var re = href.match(/^\/?#\/([a-z_]+)\/?([a-z_]+)?$/);
+      var re = href.match(/^\/([a-z_]+)\/?([a-z_]+)?$/);
       if (re != null) {
          e.preventDefault();
          var app = re[1];

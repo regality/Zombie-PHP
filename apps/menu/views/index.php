@@ -4,7 +4,7 @@
 
 <?php foreach ($apps as $app => $settings): ?>
    <?php $active = ($preload == $app ? 'active' : '') ?>
-   <a href="#/<?= $app ?>" class="item <?= $active ?>"><?= $settings['name'] ?></a>
+   <a href="/<?= $app ?>" class="item <?= $active ?>"><?= $settings['name'] ?></a>
 <?php endforeach ?>
 
 <?php if ($session->is_set("username")): ?>

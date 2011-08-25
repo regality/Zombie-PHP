@@ -13,6 +13,9 @@ ZOMBIE PHP
    - Check based on user-agent header?
    - Could also check based on ip, but could cause problems.
 
+ - Move mobile detection to cookie/session
+   - allow for client to override mobile
+
 UNDEAD JS
 =========
 
@@ -23,6 +26,8 @@ UNDEAD JS
  - Pack a wysiwyg with the framework
    - Maybe tinyMCE?
 
+ - create error/messages div on page, no more alerts
+
 FRONTEND
 ========
 
@@ -30,6 +35,10 @@ FRONTEND
    - dark template looks ugly in android
    - wrong scale in mobile firefox
    - needs testing in iphone, windows, etc
+
+ - add a footer
+   - copyright or something
+   - switch to full version if looking at mobile
 
 TEMPLATING SYSTEM
 =================

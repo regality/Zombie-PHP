@@ -33,7 +33,7 @@ undead.addError = function(level, mesg) {
                  2048:"PHP Strict"};
    title = levels[level];
    html = "<div class=\"console-error\">" + title + "</div>" + mesg;
-   $("a[href^='#/console']").css({"color":"red","font-weight":"bold"}).click(function() {
+   $("a[href^='/console']").css({"color":"red","font-weight":"bold"}).click(function() {
       $(this).css({"color":"black","font-weight":"normal"});
    });
    undead.consoleAdd(html);
@@ -69,6 +69,12 @@ undead.requestToken = function() {
 
 undead.loadDefaultApp = function() {
    var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?/);
+   if (re == null) {
+      re = window.location.pathname.match(/([a-z_]+)\/?([a-z_]+)?/);
+      if (typeof window.history.replaceState == "function") {
+         window.history.replaceState({}, "", "/");
+      }
+   }
    if (re != null) {
       if (re[1] != null) {
          undead.defaultApp = re[1];
@@ -80,7 +86,9 @@ undead.loadDefaultApp = function() {
    if (undead.stackSize(undead.defaultApp) > 0 && 
        undead.topAction(undead.defaultApp) != undead.defaultAction) {
       undead.pushStack(undead.defaultApp, undead.defaultAction);
-   } // otherwise it's already loaded
+   } else {
+      undead.focusApp(undead.defaultApp);
+   }
 }
 
 undead.focusApp = function(appStack) {
@@ -89,7 +97,7 @@ undead.focusApp = function(appStack) {
    $("#" + appStack + "-stack").find(".app-content").hide();
    $("#" + appStack + "-stack").find(".app-content").last().show();
    $(".item").removeClass("active");
-   $(".item[href^='#/" + appStack + "']").addClass("active");
+   $(".item[href^='/" + appStack + "']").addClass("active");
    newHash = "/" + appStack + "/" + undead.topAction(appStack);
    if (newHash != window.location.hash) {
       window.location.hash = newHash;
