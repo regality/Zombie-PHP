@@ -8,7 +8,5 @@
 <?php endforeach ?>
 
 <?php if ($session->is_set("username")): ?>
-   <a class="item" id="logout">
-      Logout
-   </a>
+   <a href="javascript:void(0)" class="item" id="logout">Logout</a>
 <?php endif ?>

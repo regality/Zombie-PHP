@@ -37,10 +37,12 @@ $(document).ready(function() {
       }
    });
 
-   $("#logout").unbind('click').live('click',function() {
+   $("#logout").unbind('click').live('click',function(e) {
+      e.preventDefault();
       $.ajax({"data":{"app":"auth",
                       "logout":""},
               "success":function(data) {
+                  window.location.hash = '';
                   window.location.reload();
               }
       });

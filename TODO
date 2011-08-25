@@ -2,35 +2,51 @@ ZOMBIE PHP
 ==========
 
  - add session hijacking protection
-
- - make SEO friendly (mod_rewrite)
+   - Check based on user-agent header?
+   - Could also check based on ip, but could cause problems.
 
  - add detection and stylesheet for mobile browsers
 
 UNDEAD JS
 =========
 
- - Default app based on hash-tag
-
- - integrate with window.history
-
- - change menu to <a> tags
-
- - deal with latency
+ - deal with latency (loading screen)
 
  - Pack a wysiwyg with the framework
+   - Maybe tinyMCE?
 
 TEMPLATING SYSTEM
 =================
 
  - allow for overwriteing app/model
 
+ - needs additional error checking
+
+ - add more templates
+   - search engine template
+   - add postgres support
+
+DATABASE
+========
+
+ - Create more DB classes
+   - Oracle would be nice
+   - Maybe some nosql: couch, mongo, hadoop?
+
+ - Update sql install files
+
 GENERAL
 =======
 
  - Somebody please make a new logo
 
+ - organize brainz folder to upgradable and not upgradable
+
+ - move config to top level for easier novice access?
+
 FUTURE FEATURES
 ===============
 
  - Testing platform
+
+ - Include ORM? I don't like them, but some people do.

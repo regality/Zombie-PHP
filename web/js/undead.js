@@ -33,7 +33,7 @@ undead.addError = function(level, mesg) {
                  2048:"PHP Strict"};
    title = levels[level];
    html = "<div class=\"console-error\">" + title + "</div>" + mesg;
-   $("div[app=console]").css({"color":"red","font-weight":"bold"}).click(function() {
+   $("a[href^='#/console']").css({"color":"red","font-weight":"bold"}).click(function() {
       $(this).css({"color":"black","font-weight":"normal"});
    });
    undead.consoleAdd(html);
@@ -77,7 +77,10 @@ undead.loadDefaultApp = function() {
          undead.defaultAtion = re[2];
       }
    }
-   undead.pushStack(undead.defaultApp, undead.defaultAction);
+   if (undead.stackSize(undead.defaultApp) > 0 && 
+       undead.topAction(undead.defaultApp) != undead.defaultAction) {
+      undead.pushStack(undead.defaultApp, undead.defaultAction);
+   } // otherwise it's already loaded
 }
 
 undead.focusApp = function(appStack) {
@@ -225,7 +228,7 @@ undead.setupAjax = function() {
             try {
                data = $.parseJSON(rawData);
                if (data.status == "logged out") {
-                  window.location.reload();
+                  undead.pushStack("login");
                }
                if (data.query != null) {
                   undead.warn(data.query);
@@ -250,7 +253,7 @@ undead.setupAjax = function() {
             }
          } else {
             if (rawData == "logged out") {
-               window.location.reload();
+               undead.pushStack("login");
             }
          }
          return rawData;
