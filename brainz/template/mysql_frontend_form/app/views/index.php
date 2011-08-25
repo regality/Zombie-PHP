@@ -12,7 +12,7 @@
 $(document).ready(function() {
    $(".<SLUG>-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -21,8 +21,8 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS>
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("<SLUG>");
-                  undead.pushStack("<SLUG>", "success");
+                  undead.stack.pop("<SLUG>");
+                  undead.stack.push("<SLUG>", "success");
               }
       });
    });

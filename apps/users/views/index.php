@@ -27,7 +27,7 @@
 $(document).ready(function() {
    $(".users-edit").click(function(e) {
       e.preventDefault();
-      undead.pushStack("users", "edit", {"id":$(this).attr("users_id")});
+      undead.stack.push("users", "edit", {"id":$(this).attr("users_id")});
    });
 
    $(".users-delete").click(function(e) {
@@ -44,7 +44,7 @@ $(document).ready(function() {
 
    $(".users-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -73,15 +73,15 @@ $(document).ready(function() {
                       "groups":groups,
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("users");
-                  undead.refreshStack("users");
+                  undead.stack.pop("users");
+                  undead.stack.refresh("users");
               }
       });
    });
 
    $(".users-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -103,8 +103,8 @@ $(document).ready(function() {
                       "action":"update"},
               "success":function(data) {
                   $("#users-modal").fadeOut();
-                  undead.popStack("users");
-                  undead.refreshStack("users");
+                  undead.stack.pop("users");
+                  undead.stack.refresh("users");
               }
       });
    });

@@ -1,7 +1,7 @@
 $(document).ready(function() {
    setAjaxUrl();
-   undead.setupAjax();
-   undead.loadDefaultApp();
+   undead.init.setupAjax();
+   undead.stack.loadDefault();
 
    $("#console-clear").click(function() {
       $("#console-messages").html("");
@@ -25,14 +25,14 @@ $(document).ready(function() {
          e.preventDefault();
          var app = re[1];
          if (re[2] == null) {
-            if (undead.stackSize(app) == 0) {
-               undead.pushStack(app);
+            if (undead.stack.size(app) == 0) {
+               undead.stack.push(app);
             } else {
-               undead.focusApp(app);
+               undead.stack.focus(app);
             }
          } else {
             var action = re[2];
-            undead.pushStack(app, action);
+            undead.stack.push(app, action);
          }
       }
    });
@@ -54,12 +54,11 @@ $(document).ready(function() {
                       "password":hex_sha1($("#password").val())},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.pushStack(data.app);
+                     undead.stack.push(data.app);
                      $.ajax({"data":{"app":"menu"},
                              "dataType":"html",
                              "success":function(data) {
                                  $("#sidenav").html(data);
-                                 undead.resetMenu();
                              }
                      });
                   } else {

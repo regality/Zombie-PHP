@@ -17,7 +17,7 @@
 $(document).ready(function() {
    $(".<SLUG>-edit").click(function(e) {
       e.preventDefault();
-      undead.pushStack("<SLUG>", "edit", {"id":$(this).attr("<SLUG>_id")});
+      undead.stack.push("<SLUG>", "edit", {"id":$(this).attr("<SLUG>_id")});
    });
 
    $(".<SLUG>-delete").click(function(e) {
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
    $(".<SLUG>-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -43,15 +43,15 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS>
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("<SLUG>");
-                  undead.refreshStack("<SLUG>");
+                  undead.stack.push("<SLUG>");
+                  undead.stack.refresh("<SLUG>");
               }
       });
    });
 
    $(".<SLUG>-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -60,8 +60,8 @@ $(document).ready(function() {
 <AJAX_COMMA_SEP_FIELDS_WID>
                       "action":"update"},
               "success":function(data) {
-                  undead.popStack("<SLUG>");
-                  undead.refreshStack("<SLUG>");
+                  undead.stack.pop("<SLUG>");
+                  undead.stack.refresh("<SLUG>");
               }
       });
    });

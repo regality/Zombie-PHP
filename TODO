@@ -28,6 +28,9 @@ UNDEAD JS
 
  - create error/messages div on page, no more alerts
 
+ - finalize api function names, they are all over the place
+   - possibly have objects for each section of api, i.e. undead.stack.whatever()
+
 FRONTEND
 ========
 
@@ -39,6 +42,8 @@ FRONTEND
  - add a footer
    - copyright or something
    - switch to full version if looking at mobile
+
+ - welcome page should be quick start instructions
 
 TEMPLATING SYSTEM
 =================

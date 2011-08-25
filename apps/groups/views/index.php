@@ -20,7 +20,7 @@
 $(document).ready(function() {
    $(".groups-edit").click(function(e) {
       e.preventDefault();
-      undead.pushStack("groups", "edit", {"id":$(this).attr("groups_id")});
+      undead.stack.push("groups", "edit", {"id":$(this).attr("groups_id")});
    });
 
    $(".groups-delete").click(function(e) {
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
    $(".groups-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -46,15 +46,15 @@ $(document).ready(function() {
                       "name":$form.find("input[name=name]").val(),
                       "action":"create"},
               "success":function(data) {
-                  undead.popStack("groups");
-                  undead.refreshStack("groups");
+                  undead.stack.pop("groups");
+                  undead.stack.refresh("groups");
               }
       });
    });
 
    $(".groups-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
-      if (!undead.verify_form($form)) {
+      if (!undead.ui.verifyForm($form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -64,8 +64,8 @@ $(document).ready(function() {
                       "name":$form.find("input[name=name]").val(),
                       "action":"update"},
               "success":function(data) {
-                  undead.popStack("groups");
-                  undead.refreshStack("groups");
+                  undead.stack.pop("groups");
+                  undead.stack.refresh("groups");
               }
       });
    });

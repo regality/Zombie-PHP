@@ -32,7 +32,7 @@ function render_errors_js() {
 
          mesg = "<i><?= $error['errstr'] ?></i> in <?= $error['errfile'] ?>" +
                 " on line <?= $error['errline'] ?>.";
-         undead.addError(<?= $error['errno'] ?>, mesg);
+         undead.ui.addError(<?= $error['errno'] ?>, mesg);
       <?php endforeach ?>
       });
       </script>

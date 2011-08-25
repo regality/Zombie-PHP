@@ -15,7 +15,7 @@
          "url":"<?= $web_root ?>/app.php",
       });
    }
-   undead.setToken("<?= $token ?>");
+   undead.token.set("<?= $token ?>");
    </script>
 </head>
 <body>

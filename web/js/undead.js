@@ -1,30 +1,36 @@
 var undead = {};
 
 undead.debug = false;
-undead.defaultApp = "welcome";
-undead.defaultAction = "index";
-undead.token = "";
-undead.firstState = true;
-undead.ignoreHash = false;
 
-undead.error = function(mesg) {
+/**************************************************
+ * UI functions                                   *
+ **************************************************/
+
+undead.ui = {};
+
+// reports an error 
+undead.ui.error = function(mesg) {
    alert(mesg);
 }
 
-undead.warn = function(mesg) {
+// warning message
+undead.ui.warn = function(mesg) {
    alert(mesg);
 }
 
-undead.message = function(mesg) {
+// you just wanted to say hi
+undead.ui.message = function(mesg) {
    alert(mesg);
 }
 
-undead.addMessage = function(title, mesg) {
+// add a message to the console
+undead.ui.addMessage = function(title, mesg) {
    html = "<div class=\"console-title\">" + title + "</div>" + mesg;
-   undead.consoleAdd(html);
+   undead.ui.consoleAdd(html);
 }
 
-undead.addError = function(level, mesg) {
+// add an error to the console
+undead.ui.addError = function(level, mesg) {
    var levels = {0:"Javascript Error",
                  2:"PHP Warning",
                  8:"PHP Notice",
@@ -36,10 +42,11 @@ undead.addError = function(level, mesg) {
    $("a[href^='/console']").css({"color":"red","font-weight":"bold"}).click(function() {
       $(this).css({"color":"black","font-weight":"normal"});
    });
-   undead.consoleAdd(html);
+   undead.ui.consoleAdd(html);
 }
 
-undead.consoleAdd = function(html) {
+// add html to the console
+undead.ui.consoleAdd = function(html) {
    html = "<div class=\"console-mesg\">" +
           "<div class=\"console-mesg-close\">X</div>" + html + "</div>";
    $("#console-messages").append(html);
@@ -47,27 +54,64 @@ undead.consoleAdd = function(html) {
    $(".console-mesg:first").css({"padding":"0px 2px"});
 }
 
-undead.setToken = function(token) {
-   undead.token = token;
+// check for incomplete required fields
+undead.ui.verifyForm = function(form) {
+   form_done = true;
+   form.find("input.required, textarea.required, select.required").each(function() {
+      if ($(this).val() == "") {
+         form_done = false;
+         $(this).css({"background":"#fdd"});
+      } else {
+         $(this).css({"background":"#fff"});
+      }
+   });
+   return form_done;
 }
 
-undead.getToken = function() {
-   if (undead.token == "") {
-      undead.requestToken();
+/**************************************************
+ * Token functions                                *
+ **************************************************/
+
+undead.token = {};
+
+// the golden egg (aka the token)
+undead.token.token = "";
+
+// set the token
+undead.token.set = function(token) {
+   undead.token.token = token;
+}
+
+// get the token
+undead.token.get = function() {
+   if (undead.token.token == "") {
+      undead.token.request();
    }
-   return undead.token;
+   return undead.token.token;
 }
 
-undead.requestToken = function() {
+// request a new token from the server
+undead.token.request = function() {
    $.ajax({"data":{"app":"csrf"},
            "async":false,
            "success":function(data) {
-               undead.setToken(data.token);
+               undead.token.set(data.token);
            }
    });
 }
 
-undead.loadDefaultApp = function() {
+/**************************************************
+ * Stack functions                                *
+ **************************************************/
+
+undead.stack = {};
+
+undead.stack.defaultApp = "welcome";
+undead.stack.defaultAction = "index";
+undead.stack.ignoreHash = false;
+
+// load the default application
+undead.stack.loadDefault = function() {
    var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?/);
    if (re == null) {
       re = window.location.pathname.match(/([a-z_]+)\/?([a-z_]+)?/);
@@ -77,105 +121,116 @@ undead.loadDefaultApp = function() {
    }
    if (re != null) {
       if (re[1] != null) {
-         undead.defaultApp = re[1];
+         undead.stack.defaultApp = re[1];
       }
       if (re[2] != null) {
-         undead.defaultAtion = re[2];
+         undead.stack.defaultAction = re[2];
       }
    }
-   if (undead.stackSize(undead.defaultApp) > 0 && 
-       undead.topAction(undead.defaultApp) != undead.defaultAction) {
-      undead.pushStack(undead.defaultApp, undead.defaultAction);
+   if (undead.stack.size(undead.stack.defaultApp) > 0 && 
+       undead.stack.topAction(undead.stack.defaultApp) != undead.stack.defaultAction) {
+      undead.stack.push(undead.stack.defaultApp, undead.stack.defaultAction);
    } else {
-      undead.focusApp(undead.defaultApp);
+      undead.stack.focus(undead.stack.defaultApp);
    }
 }
 
-undead.focusApp = function(appStack) {
+// focus on a stack
+undead.stack.focus = function(appStack) {
    $(".app-stack:visible").hide().attr("active",null);
    $("#" + appStack + "-stack").show().attr("active","true");
    $("#" + appStack + "-stack").find(".app-content").hide();
    $("#" + appStack + "-stack").find(".app-content").last().show();
    $(".item").removeClass("active");
    $(".item[href^='/" + appStack + "']").addClass("active");
-   newHash = "/" + appStack + "/" + undead.topAction(appStack);
+   newHash = "/" + appStack + "/" + undead.stack.topAction(appStack);
    if (newHash != window.location.hash) {
       window.location.hash = newHash;
    }
 }
 
-undead.activeStackName = function() {
+// get the name of the active stack
+undead.stack.activeName = function() {
    return $(".app-stack[active=true]").attr("app");
 }
 
-undead.popActiveStack = function() {
-   undead.popStack(undead.activeStackName());
+// pop the active stack
+undead.stack.popActive = function() {
+   undead.stack.pop(undead.stack.activeName());
 }
 
+// generic pop event
 $(".pop-active").live('click', function(e) {
-   undead.popActiveStack();
+   undead.stack.popActive();
 });
 
-undead.popStack = function(appStack) {
-   $("#" + appStack + "-stack").find(".app-content").last().remove();
-   undead.focusApp(appStack);
-}
-
-undead.stackSize = function(appStack) {
+// get the size of a stack
+undead.stack.size = function(appStack) {
    return $("#" + appStack + "-stack").find(".app-content").length;
 }
 
-undead.topAction = function(appStack) {
+// get the top (most recent) action of a stack
+undead.stack.topAction = function(appStack) {
    return $("#" + appStack + "-stack").find(".app-content").last().attr("action");
 }
 
-undead.handleHashChange = function(hash) {
-   if (undead.ignoreHash == false) {
+// handle the changing of the hash
+undead.stack.handleHashChange = function(hash) {
+   if (undead.stack.ignoreHash == false) {
       var re = hash.match(/([a-z_]+)\/([a-z_]+)/);
       if (re != null) {
          app = re[1];
          action = re[2];
-         if (undead.stackSize(app) > 1 && undead.topAction(app) != action) {
-            undead.popStack(app);
-         } else if (undead.stackSize(app) > 0) {
-            undead.focusApp(app);
+         if (undead.stack.size(app) > 1 && undead.stack.topAction(app) != action) {
+            undead.stack.pop(app);
+         } else if (undead.stack.size(app) > 0) {
+            undead.stack.focus(app);
          }
       } else {
-         if (undead.activeStackName() != undead.defaultApp) {
-            undead.focusApp(undead.defaultApp);
-         } else if (undead.stackSize(undead.defaultApp) > 1) {
-            undead.popStack(undead.defaultApp);
+         if (undead.stack.activeName() != undead.stack.defaultApp) {
+            undead.stack.focus(undead.stack.defaultApp);
+         } else if (undead.stack.size(undead.stack.defaultApp) > 1) {
+            undead.stack.pop(undead.stack.defaultApp);
          }
       }
    } else {
-      undead.ignoreHash = false;
+      undead.stack.ignoreHash = false;
    }
 }
 
 $(window).bind('hashchange', function() {
-   undead.handleHashChange(window.location.hash);
+   undead.stack.handleHashChange(window.location.hash);
 });
 
-undead.refreshStack = function(appStack) {
+// refresh the top of a stack
+undead.stack.refresh = function(appStack) {
    topFrame = $("#" + appStack + "-stack").find(".app-content").last();
    data = JSON.parse(unescape(topFrame.attr("json")));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
                topFrame.html(data);
-               undead.focusApp(appStack);
-               undead.addMessage("App Refreshed", "The app <i>" + 
+               undead.stack.focus(appStack);
+               undead.ui.addMessage("App Refreshed", "The app <i>" + 
                                  appStack + "." + topFrame.attr("action") + 
                                  "</i> was successfully refreshed");
            }
    });
 }
 
-undead.emptyStack = function(appStack) {
+// delete everything from a stack
+undead.stack.empty = function(appStack) {
    $("#" + appStack + "-stack").find(".app-content").remove();
 }
 
-undead.pushStack = function(appStack, action, data) {
+// pop a stack
+undead.stack.pop = function(appStack) {
+   $("#" + appStack + "-stack").find(".app-content").last().remove();
+   undead.stack.focus(appStack);
+}
+
+// push onto a stack
+undead.stack.push = function(appStack, action, data) {
    if (action == null) {
       action = "index";
    }
@@ -195,73 +250,67 @@ undead.pushStack = function(appStack, action, data) {
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
-               undead.ignoreHash = true;
+               undead.stack.ignoreHash = true;
                window.location.hash = "/" + appStack + "/" + action;
                div = '<div class="app-content" json="' + jsonStr + '" action="' + action + '">' + data + '</div>';
                stackDiv.append(div);
                stackDiv.show();
-               undead.focusApp(appStack);
-               undead.addMessage("App Loaded", "The app <i>" + 
+               undead.stack.focus(appStack);
+               undead.ui.addMessage("App Loaded", "The app <i>" + 
                                  appStack + "." + action + 
                                  "</i> was successfully loaded");
            }
    });
 }
 
-undead.verify_form = function(form) {
-   form_done = true;
-   form.find("input.required, textarea.required, select.required").each(function() {
-      if ($(this).val() == "") {
-         form_done = false;
-         $(this).css({"background":"#fdd"});
-      } else {
-         $(this).css({"background":"#fff"});
-      }
-   });
-   return form_done;
-}
+/**************************************************
+ * Init functions                                 *
+ **************************************************/
 
-undead.setupAjax = function() {
+undead.init = {};
+
+// setup ajax for the undead
+undead.init.setupAjax = function() {
    $.ajaxSetup({
       "dataType":"json",
       "cache":"false",
       "error":function(xhr, status, error) {
-         undead.warn('An error occured:' + error + status);
+         undead.ui.warn('An error occured:' + error + status);
       },
       "dataFilter":function(rawData, type) {
          if (undead.debug) {
-            undead.warn('raw data:' + rawData);
+            undead.ui.warn('raw data:' + rawData);
          }
          if (type == "json") {
             try {
                data = $.parseJSON(rawData);
                if (data.status == "logged out") {
-                  undead.pushStack("login");
+                  undead.stack.push("login");
                }
                if (data.query != null) {
-                  undead.warn(data.query);
+                  undead.ui.warn(data.query);
                }
                if (typeof data.errors == "object") {
                   for (i = 0; i < data.errors.length; ++i) {
                      mesg = "<i>" + data.errors[i].errstr + "</i> in " +
                             data.errors[i].errfile + " on line " +
                             data.errors[i].errline + ".";
-                     undead.addError(data.errors[i].errno, mesg);
+                     undead.ui.addError(data.errors[i].errno, mesg);
                   }
                }
                if (typeof data.alert == "object") {
                   for (i = 0; i < data.alert.length; ++i) {
-                     undead.warn(data.alert[i]);
+                     undead.ui.warn(data.alert[i]);
                   }
                } else if (data.alert != null) {
-                  undead.warn(data.alert);
+                  undead.ui.warn(data.alert);
                }
             } catch (e) {
-               undead.warn('error parsing json:' + rawData);
+               undead.ui.warn('error parsing json:' + rawData);
             }
          } else {
             if (rawData == "logged out") {
-               undead.pushStack("login");
+               undead.stack.push("login");
             }
          }
          return rawData;
@@ -274,7 +323,7 @@ undead.setupAjax = function() {
       if (options.data != null &&
           options.data.search("app=csrf") == -1 &&
           options.data.search("csrf=") == -1) {
-         csrf = "csrf=" + undead.getToken();
+         csrf = "csrf=" + undead.token.get();
          if (options.data.length > 0) {
             csrf = "&" + csrf;
          }
@@ -286,7 +335,7 @@ undead.setupAjax = function() {
          options.data = "format=" + options.dataType;
       }
       if (undead.debug) {
-         undead.warn("ajax data:" + options.data);
+         undead.ui.warn("ajax data:" + options.data);
       }
    });
 }
