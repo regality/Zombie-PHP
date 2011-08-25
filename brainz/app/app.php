@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/autoload.php");
+require_once(__DIR__ . "/../util/mobile.php");
 
 abstract class App {
    protected $session;
@@ -18,6 +19,7 @@ abstract class App {
       $this->domain = $domain;
       $this->json = array();
       $this->is_page = false;
+      $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
       if ($sess == null) {
          require_once($sess_file);
          $this->session = $sess_class::get_session();

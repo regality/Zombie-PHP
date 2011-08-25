@@ -1,0 +1,196 @@
+@font-face {
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
+}
+
+* {
+padding: 0px;
+margin: 0px;
+}
+
+html {
+}
+
+body {
+font: 150% "Trebuchet MS", sans-serif;
+cursor:default;
+background: #333;
+color: white;
+}
+
+a         { color: #f60; }
+a:visited { color: #a50; }
+a:hover   { color: #fa0; }
+
+table {
+border-collapse: collapse;
+}
+
+table tr th {
+padding: 1px 10px;
+border-bottom: 1px solid #333;
+background: #111;
+color: #f60;
+font-weight:normal;
+}
+
+table tr td {
+border-bottom: 1px solid #333;
+padding: 4px 10px;
+background-color: #444;
+color: #fff;
+}
+
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+
+#header {
+padding: 15px;
+padding-bottom: 0px;
+}
+
+#header h1 {
+font-family: 'Orbitron', 'Arial';
+font-size: 58px;
+display: inline-block;
+padding-top: 20px;
+color: #f60;
+position: relative;
+top: -20px;
+}
+
+#header img {
+display: none;
+}
+
+#main {
+}
+
+#sidenav {
+border: 3px solid #777;
+border-width: 3px 0px;
+padding: 0px 10px;
+margin: 0px;
+background: #111;
+}
+
+a.item {
+text-decoration: none;
+display: inline-block;
+width: 120px;
+height: 25px;
+padding: 20px 5px;
+margin: 2px;
+color: white;
+font-family: 'Orbitron';
+text-align: center;
+border: 1px solid #f60;
+background: #333;
+}
+
+.menu-title {
+height: 10px;
+padding: 10px 5px;
+margin: 0px;
+font-family: 'Orbitron';
+color: #f60;
+display: inline-block;
+display: none; /* maybe? */
+}
+
+a.item:hover {
+color: white;
+}
+
+a.item.active {
+background: #333;
+color: #f60;
+font-weight: bold;
+}
+
+#content {
+padding: 15px 20px;
+}
+
+#login-error {
+color: red;
+font-size: small;
+float: right;
+}
+
+#login input {
+border: 1px solid #999;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+height: 30px;
+width: 300px;
+}
+
+#login-btn {
+width: 300px;
+text-align: center;
+}
+
+#login-btn input {
+width: 100px;
+}
+
+#login label {
+display: block;
+font-size: 1.2em;
+}
+
+.close-button {
+height: 30px;
+width: 30px;
+background-image: url('/images/close-button.png');
+float: right;
+position: relative;
+top: -20px;
+left: 20px;
+}
+
+.console-mesg {
+border: 1px solid #111;
+border-top-width: 0px;
+background-color: #444;
+text-align: left;
+padding: 2px;
+}
+
+.console-error {
+font-weight: bold;
+color: red;
+}
+
+.console-title {
+font-weight: bold;
+color: #f60;
+}
+
+.console-mesg-close {
+float: right;
+font-weight: bold;
+font-family: "Courier";
+}
+
+.console-mesg-close:hover {
+color: #aaa;
+}
+
+h2 {
+display: block;
+color: #dd7500;
+}
+
+h3 {
+color: black;
+text-transform: uppercase;
+}

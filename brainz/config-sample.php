@@ -6,7 +6,7 @@ $web_root = '';
 $domain = 'zombiephp.com';
 
 $db_class = 'MySqlConnection';
-$db_file = $zombie_root . '/brainz/sql/pgsql_connection.php';
+$db_file = $zombie_root . '/brainz/sql/mysql_connection.php';
 $db_host = 'localhost';
 $db_user = 'mysql';
 $db_pass = 'password';
