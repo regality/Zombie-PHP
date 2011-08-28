@@ -1,8 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../brainz/model/model.php");
+require_once(dirname(__FILE__) . "/../brainz/model/sql_model.php");
 
-class <MODEL_CLASS_NAME> extends Model {
+class <MODEL_CLASS_NAME> extends SqlModel {
    public function get_all() {
       $query = "SELECT<SQL_FIELDS_COMMA_SEP>
                 FROM <TABLE_NAME>

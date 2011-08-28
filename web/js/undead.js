@@ -68,6 +68,10 @@ undead.ui.verifyForm = function(form) {
    return form_done;
 }
 
+undead.ui.wysiwyg = function(textarea) {
+   // implemented in main.js
+}
+
 /**************************************************
  * Token functions                                *
  **************************************************/

@@ -1,8 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../brainz/model/model.php");
+require_once(dirname(__FILE__) . "/../brainz/model/sql_model.php");
 
-class UsersModel extends Model {
+class UsersModel extends SqlModel {
    public function get_all() {
       $query = 'SELECT users.id
                      , users.username

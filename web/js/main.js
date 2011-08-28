@@ -70,3 +70,19 @@ $(document).ready(function() {
    });
 
 });
+
+undead.ui.wysiwygJsLoaded = false;
+
+undead.ui.wysiwyg = function(textarea) {
+   if (undead.ui.wysiwygJsLoaded == false) {
+      $("head").append("<link>");
+      $("head").children(":last").attr({
+         rel:  "stylesheet",
+         type: "text/css",
+         href: "/js/jwysiwyg/jquery.wysiwyg.css"
+      });
+      $.ajax({"url":"/js/jwysiwyg/jquery.wysiwyg.js", "async":false, "dataType":"script"});
+      undead.ui.wysiwygJsLoaded = true;
+   }
+   $(textarea).wysiwyg();
+}
