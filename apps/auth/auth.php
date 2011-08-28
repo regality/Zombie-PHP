@@ -3,11 +3,8 @@ require_once(__DIR__ . "/../../brainz/app/app.php");
 
 class Auth extends App {
    public function index_run($request) {
-      if (isset($request['logout'])) {
-         $this->json['status'] = "logged out";
-         $this->session->clear();
-      } else if (!isset($request['username']) ||
-                 !isset($request['password'])) {
+      if (!isset($request['username']) ||
+          !isset($request['password'])) {
          $this->json['status'] = "failed";
       } else {
          $users_model = $this->get_model("users");
@@ -26,6 +23,11 @@ class Auth extends App {
             $this->json['status'] = "failed";
          }
       }
+   }
+
+   public function logout_run($request) {
+      $this->json['status'] = "success";
+      $this->session->clear();
    }
 }
 

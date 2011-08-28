@@ -40,10 +40,9 @@ $(document).ready(function() {
    $("#logout").unbind('click').live('click',function(e) {
       e.preventDefault();
       $.ajax({"data":{"app":"auth",
-                      "logout":""},
+                      "action":"logout"},
               "success":function(data) {
-                  window.location.hash = '';
-                  window.location.reload();
+                  window.location = '/';
               }
       });
    });

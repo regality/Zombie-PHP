@@ -127,7 +127,7 @@ undead.stack.loadDefault = function() {
          undead.stack.defaultAction = re[2];
       }
    }
-   if (undead.stack.size(undead.stack.defaultApp) > 0 && 
+   if (undead.stack.size(undead.stack.defaultApp) == 0 || 
        undead.stack.topAction(undead.stack.defaultApp) != undead.stack.defaultAction) {
       undead.stack.push(undead.stack.defaultApp, undead.stack.defaultAction);
    } else {
@@ -205,7 +205,7 @@ $(window).bind('hashchange', function() {
 // refresh the top of a stack
 undead.stack.refresh = function(appStack) {
    topFrame = $("#" + appStack + "-stack").find(".app-content").last();
-   data = JSON.parse(unescape(topFrame.attr("json")));
+   data = $.parseJSON(unescape(topFrame.attr("json")));
    $.ajax({"data":data,
            "dataType":"html",
            success:function(data) {
@@ -276,6 +276,7 @@ undead.init.setupAjax = function() {
       "cache":"false",
       "error":function(xhr, status, error) {
          undead.ui.warn('An error occured:' + error + status);
+         undead.ui.warn(xhr.getAllResponseHeaders());
       },
       "dataFilter":function(rawData, type) {
          if (undead.debug) {
@@ -286,6 +287,8 @@ undead.init.setupAjax = function() {
                data = $.parseJSON(rawData);
                if (data.status == "logged out") {
                   undead.stack.push("login");
+               } else if (data.status == "reload") {
+                  window.location.reload();
                }
                if (data.query != null) {
                   undead.ui.warn(data.query);

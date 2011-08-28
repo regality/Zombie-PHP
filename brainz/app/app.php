@@ -81,7 +81,7 @@ abstract class App {
    }
 
    public function prepare($action, $request) {
-      if (is_null($action) && isset($_REQUEST['action'])) {
+      if (is_null($action) && !empty($_REQUEST['action'])) {
          $this->action = $_REQUEST['action'];
       } else if (is_null($action)) {
          $this->action = 'index';
@@ -105,6 +105,7 @@ abstract class App {
          $this->$run_func($this->request);
          $this->render();
       } else if (method_exists($this, 'default_run')) {
+         $this->view = 'default';
          $this->default_run($this->request);
          $this->render();
       } else {

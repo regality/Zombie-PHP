@@ -16,6 +16,8 @@ ZOMBIE PHP
  - Move mobile detection to cookie/session
    - allow for client to override mobile
 
+ - Need app for changing password
+
 UNDEAD JS
 =========
 
@@ -28,8 +30,7 @@ UNDEAD JS
 
  - create error/messages div on page, no more alerts
 
- - finalize api function names, they are all over the place
-   - possibly have objects for each section of api, i.e. undead.stack.whatever()
+ - Check verifyForm() for bugs
 
 FRONTEND
 ========
@@ -43,7 +44,7 @@ FRONTEND
    - copyright or something
    - switch to full version if looking at mobile
 
- - welcome page should be quick start instructions
+ - welcome page should be quick-start instructions
 
 TEMPLATING SYSTEM
 =================
@@ -73,7 +74,7 @@ GENERAL
 
  - Somebody please make a new logo
 
- - organize brainz folder to upgradable and not upgradable
+ - organize everything to upgradable and not upgradable
 
  - move config to top level for easier novice access?
 
@@ -85,3 +86,5 @@ FUTURE FEATURES
  - Include ORM? I don't like them, but some people do.
 
  - automagic upgrade zombie
+
+ - put a stack within a stack

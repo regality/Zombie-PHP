@@ -72,14 +72,13 @@ padding-bottom: 0px;
 #header h1 {
 font-family: 'Orbitron', 'Arial';
 font-size: 58px;
-display: inline-block;
 padding-top: 20px;
 color: #f60;
-position: relative;
-top: -20px;
+float: left;
 }
 
 #header img {
+float: left;
 height: 90px;
 display: inline-block;
 }
