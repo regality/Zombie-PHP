@@ -27,9 +27,6 @@ UNDEAD JS
 
  - deal with latency (loading screen)
 
- - Pack a wysiwyg with the framework
-   - Maybe tinyMCE?
-
  - create error/messages div on page, no more alerts
 
  - Check verifyForm() for bugs
