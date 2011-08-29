@@ -11,7 +11,12 @@ ZOMBIE PHP
 
  - add session hijacking protection
    - Check based on user-agent header?
-   - Could also check based on ip, but could cause problems.
+   - Add option to check based on IP
+   - Add option to check based on client public key
+   - Add session regenerate id
+   - Destroy cookie on logout
+
+ - Make sure session times out properly
 
  - Move mobile detection to cookie/session
    - allow for client to override mobile
@@ -67,6 +72,8 @@ DATABASE
    - Maybe some nosql: couch, mongo, hadoop?
 
  - Update sql install files
+
+ - Add functions to encrypt/decrypt data for storage
 
 GENERAL
 =======
