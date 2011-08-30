@@ -6,13 +6,15 @@ include('model/users.php');
 
 $groups_model = new GroupsModel();
 $users_model = new UsersModel();
-$db = new MysqlConnection();
+$db = new MysqlConnection("","","","");
 
 $install_sql = file_get_contents("brainz/install.mysql");
 $sql_commands = explode(";", $install_sql);
 
-foreach ($sql_commands, as $sql) {
-   $db->exec($sql);
+foreach ($sql_commands as $sql) {
+   if (strlen(trim($sql))) {
+      $db->exec($sql);
+   }
 }
 
 $groups_model->insert(array("name" => "admin"));
