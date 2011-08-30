@@ -8,18 +8,13 @@
    <?php foreach ($<SLUG> as $row): ?>
    <tr>
 <HTML_FIELDS_TD>
-      <td><a class="<SLUG>-edit" href="#" <SLUG>_id="<?= $row['id'] ?>">edit</a></td>
+      <td><a href="/<SLUG>/edit?id=<?= $row['id'] ?>">edit</a></td>
       <td><a class="<SLUG>-delete" href="#" <SLUG>_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
    <?php endforeach ?>
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
-   $(".<SLUG>-edit").click(function(e) {
-      e.preventDefault();
-      undead.stack.push("<SLUG>", "edit", {"id":$(this).attr("<SLUG>_id")});
-   });
-
    $(".<SLUG>-delete").click(function(e) {
       e.preventDefault();
       $row = $(this).parents("tr");

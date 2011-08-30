@@ -21,6 +21,7 @@ $(document).ready(function() {
    $("a").live('click', function(e) {
       var href = $(this).attr("href");
       var re = href.match(/^\/([a-z_]+)\/?([a-z_]+)?$/);
+      var re = href.match(/^\/([a-z_]+)\/?([a-z_]+)?\??(.*)$/);
       if (re != null) {
          e.preventDefault();
          var app = re[1];
@@ -32,7 +33,19 @@ $(document).ready(function() {
             }
          } else {
             var action = re[2];
-            undead.stack.push(app, action);
+            var data = {};
+            if (re[3] != null) {
+               var pairs = re[3].split('&');
+               for (var i = 0; i < pairs.length; ++i) {
+                  var pair = pairs[i].split('=');
+                  if (pair[1] == null) {
+                     data[pair[0]] = '';
+                  } else {
+                     data[pair[0]] = pair[1];
+                  }
+               }
+            }
+            undead.stack.push(app, action, data);
          }
       }
    });

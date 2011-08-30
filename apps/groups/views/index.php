@@ -11,18 +11,13 @@
    <?php foreach ($groups as $row): ?>
    <tr>
       <td><?= $row['name'] ?></td>
-      <td><a class="groups-edit" href="#" groups_id="<?= $row['id'] ?>">edit</a></td>
+      <td><a href="/groups/edit?id=<?=$row['id']?>">edit</a></td>
       <td><a class="groups-delete" href="#" groups_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
    <?php endforeach ?>
 </table>
 <script type="text/javascript">
 $(document).ready(function() {
-   $(".groups-edit").click(function(e) {
-      e.preventDefault();
-      undead.stack.push("groups", "edit", {"id":$(this).attr("groups_id")});
-   });
-
    $(".groups-delete").click(function(e) {
       e.preventDefault();
       $row = $(this).parents("tr");
