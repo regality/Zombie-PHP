@@ -46,14 +46,14 @@ FRONTEND
 
  - add a footer
    - copyright or something
-   - switch to full version if looking at mobile
+   - option to switch to full version if looking at mobile
 
  - welcome page should be quick-start instructions
 
 TEMPLATING SYSTEM
 =================
 
- - allow for overwriteing app/model
+ - allow for overwriteing app/model (include auto backup?)
 
  - needs additional error checking
 
@@ -94,3 +94,5 @@ FUTURE FEATURES
  - automagic upgrade zombie
 
  - put a stack within a stack
+
+ - db migration

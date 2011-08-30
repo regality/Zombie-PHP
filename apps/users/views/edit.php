@@ -8,7 +8,7 @@
          <label>Username</label>
       </td>
       <td>
-         <input class="required" type="text" name="username" value="<?= (isset($users['username']) ? htmlentities($users['username']) : '') ?>" />
+         <input class="required" type="text" name="username" value="<?= (isset($users['username']) ? $users['username'] : '') ?>" />
       </td>
    </tr>
    <tr>
@@ -16,7 +16,7 @@
          <label>Firstname</label>
       </td>
       <td>
-         <input  type="text" name="firstname" value="<?= (isset($users['firstname']) ? htmlentities($users['firstname']) : '') ?>" />
+         <input  type="text" name="firstname" value="<?= (isset($users['firstname']) ? $users['firstname'] : '') ?>" />
       </td>
    </tr>
    <tr>
@@ -24,7 +24,7 @@
          <label>Lastname</label>
       </td>
       <td>
-         <input class="required" type="text" name="lastname" value="<?= (isset($users['lastname']) ? htmlentities($users['lastname']) : '') ?>" />
+         <input class="required" type="text" name="lastname" value="<?= (isset($users['lastname']) ? $users['lastname'] : '') ?>" />
       </td>
    </tr>
    <?php if ($form_action == 'create'): ?>
@@ -51,7 +51,7 @@
       </td>
       <td>
          <?php foreach ($groups as $group): ?>
-            <input  type="checkbox" name="groups[]" value="<?= $group['name'] ?>" <?= (isset($users['groups']) && in_array($group['name'], $users['groups']) ? 'checked' : '') ?> />
+            <input  type="checkbox" name="groups[]" value="<?= $group['id'] ?>" <?= (isset($users['groups']) && in_array($group['name'], $users['groups']) ? 'checked' : '') ?> />
             <?= $group['name'] ?><br />
          <?php endforeach ?>
       </td>

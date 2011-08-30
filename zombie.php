@@ -9,15 +9,14 @@ require("brainz/util/util.php");
 
 function cli_main($argv) {
    $argc = count($argv);
-   if ($argc < 3) {
-      die ("Usage: zombie.php <template name> <app name> <option=value> ...\n");
+   if ($argc < 2) {
+      die ("Usage: zombie.php <app name> <template=template_name> <option=value> ...\n");
    }
 
-   $template = $argv[1];
-   $app = $argv[2];
+   $app = $argv[1];
 
    $options = array();
-   for ($i = 3; $i < $argc; ++$i) {
+   for ($i = 2; $i < $argc; ++$i) {
       $opt = explode("=", $argv[$i], 2);
       if (count($opt) == 2) {
          $options[$opt[0]] = $opt[1];
@@ -25,6 +24,8 @@ function cli_main($argv) {
          $options[$opt[0]] = true;
       }
    }
+
+   $template = (isset($options['template']) ? $options['template'] : 'basic');
 
    if (!file_exists("brainz/template/" . $template . "/template.php")) {
       die("unknown template: " . $template . "\n");

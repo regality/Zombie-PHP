@@ -7,7 +7,6 @@
       <th>Username</th>
       <th>Firstname</th>
       <th>Lastname</th>
-      <th>Groups</th>
       <th></th>
       <th></th>
    </tr>
@@ -16,7 +15,6 @@
       <td><?= $row['username'] ?></td>
       <td><?= $row['firstname'] ?></td>
       <td><?= $row['lastname'] ?></td>
-      <td><?= implode(',', unserialize($row['groups'])); ?></td>
       <td><a class="users-edit" href="#" users_id="<?= $row['id'] ?>">edit</a></td>
       <td><a class="users-delete" href="#" users_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
@@ -62,7 +60,7 @@ $(document).ready(function() {
          alert('Passwords do not match');
          retun;
       }
-      hex_pass = hex_sha1(pw1);
+      hex_pass = undead.crypt.hash(pw1);
       $.ajax({"url":"app.php",
               "data":{"app":"users",
                       "id":$form.find("input[name=id]").val(),

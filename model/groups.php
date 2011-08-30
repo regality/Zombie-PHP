@@ -28,10 +28,13 @@ class GroupsModel extends SqlModel {
    }
 
    public function delete($id) {
-      $query = "DELETE FROM groups
-                WHERE id = $1";
+      $g_query = "DELETE FROM groups
+                  WHERE id = $1";
+      $u_query = "DELETE FROM users_groups
+                  WHERE groups_id = $1";
       $params = array($id);
-      return (boolean)$this->db->exec($query, $params);
+      return (boolean)$this->db->exec($g_query, $params) &&
+             (boolean)$this->db->exec($u_query, $params);
    }
 
    public function insert($request) {

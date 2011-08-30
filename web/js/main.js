@@ -50,7 +50,7 @@ $(document).ready(function() {
    $("#login-form").live('submit', function(e) {
       $.ajax({"data":{"app":"auth",
                       "username":$("#username").val(),
-                      "password":hex_sha1($("#password").val())},
+                      "password":undead.crypt.hash($("#password").val())},
               "success":function(data) {
                   if (data.status == "success") {
                      undead.stack.push(data.app);
@@ -70,19 +70,3 @@ $(document).ready(function() {
    });
 
 });
-
-undead.ui.wysiwygJsLoaded = false;
-
-undead.ui.wysiwyg = function(textarea) {
-   if (undead.ui.wysiwygJsLoaded == false) {
-      $("head").append("<link>");
-      $("head").children(":last").attr({
-         rel:  "stylesheet",
-         type: "text/css",
-         href: "/js/jwysiwyg/jquery.wysiwyg.css"
-      });
-      $.ajax({"url":"/js/jwysiwyg/jquery.wysiwyg.js", "async":false, "dataType":"script"});
-      undead.ui.wysiwygJsLoaded = true;
-   }
-   $(textarea).wysiwyg();
-}

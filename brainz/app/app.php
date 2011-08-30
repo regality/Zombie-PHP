@@ -32,8 +32,12 @@ abstract class App {
    public function render() {
       if ($this->format == 'json') {
          $errors = get_error_array();
-         if (is_array($errors) && isset($this->json['errors'])) {
-            $this->json['errors'] = array_merge($this->json['errors'], $errors);
+         if (is_array($errors)) {
+            if (isset($this->json['errors'])) {
+               $this->json['errors'] = array_merge($this->json['errors'], $errors);
+            } else {
+               $this->json['errors'] = $errors;
+            }
          }
          $this->render_json();
       } else {

@@ -39,8 +39,10 @@ undead.ui.addError = function(level, mesg) {
                  2048:"PHP Strict"};
    title = levels[level];
    html = "<div class=\"console-error\">" + title + "</div>" + mesg;
+   // fix this ugly hack that doesn't work properly
+   undead.oldConsoleColor = $("a[href^='/console']").css("color");
    $("a[href^='/console']").css({"color":"red","font-weight":"bold"}).click(function() {
-      $(this).css({"color":"black","font-weight":"normal"});
+      $(this).css({"color":undead.oldConsoleColor, "font-weight":"normal"});
    });
    undead.ui.consoleAdd(html);
 }
@@ -69,7 +71,9 @@ undead.ui.verifyForm = function(form) {
 }
 
 undead.ui.wysiwyg = function(textarea) {
-   // implemented in main.js
+   undead.util.loadCSS("/js/jwysiwyg/jquery.wysiwyg.css");
+   undead.util.loadScript("/js/jwysiwyg/jquery.wysiwyg.js");
+   $(textarea).wysiwyg();
 }
 
 /**************************************************
@@ -102,6 +106,47 @@ undead.token.request = function() {
                undead.token.set(data.token);
            }
    });
+}
+
+/**************************************************
+ * Util functions                                *
+ **************************************************/
+
+undead.util = {};
+
+undead.util.scripts = [];
+undead.util.stylesheets = [];
+
+undead.util.loadScript = function(url) {
+   if (typeof undead.util.scripts[url] == "undefined") {
+      $.ajax({"url":url,
+              "dataType":"script",
+              "async":false});
+      undead.util.scripts[url] = "loaded";
+   }
+}
+
+undead.util.loadCSS = function(url) {
+   if (typeof undead.util.stylesheets[url] == "undefined") {
+      $("head").append("<link>");
+      $("head").children(":last").attr({
+         rel:  "stylesheet",
+         type: "text/css",
+         href: url
+      });
+      undead.util.stylesheets[url] = "loaded";
+   }
+}
+
+/**************************************************
+ * Crypt functions                                *
+ **************************************************/
+
+undead.crypt = {};
+
+undead.crypt.hash = function(m) {
+   undead.util.loadScript("/js/sha256.min.js");
+   return Sha256.hash(m);
 }
 
 /**************************************************

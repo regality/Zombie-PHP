@@ -75,6 +75,11 @@ class MySqlConnection extends SqlConnection {
      return $this->errors;
    }
 
+   public function last_insert_id($table = null) {
+      // $table only their for postgres compatability
+      return mysql_insert_id();
+   }
+
    public function begin() {
    }
 

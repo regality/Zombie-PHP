@@ -7,6 +7,7 @@
    <link rel="stylesheet" href="<?= $web_root ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>dark.css" type="text/css" />
    <script type="text/javascript" src="<?= $web_root ?>/js/jquery.min.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/sha1.js"></script>
+   <script type="text/javascript" src="<?= $web_root ?>/js/sha256.min.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/main.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/json2.js"></script>
