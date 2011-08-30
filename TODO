@@ -42,7 +42,7 @@ FRONTEND
  - beautify mobile version
    - dark template looks ugly in android
    - wrong scale in mobile firefox
-   - needs testing in iphone, windows, etc
+   - needs testing in iphone, windows ce, etc
 
  - add a footer
    - copyright or something

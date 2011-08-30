@@ -23,7 +23,7 @@
 <body>
    <div id="main">
       <div id="header">
-         <img src="<?= $web_root ?>/images/zombie-glasses.png" />
+         <img src="<?= $web_root ?>/images/zombie-glasses.png" alt="logo" />
          <h1>Zombie PHP</h1>
       </div>
       <div id="sidenav">

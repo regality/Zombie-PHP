@@ -88,11 +88,27 @@ class UsersModel extends SqlModel {
       }
    }
 
+   public function gen_rsa_keys($passphrase) {
+      // generate a 1024 bit rsa private key, returns a php resource, save to file
+      $privateKey = openssl_pkey_new(array(
+         'private_key_bits' => 512,
+         'private_key_type' => OPENSSL_KEYTYPE_RSA,
+      ));
+      openssl_pkey_export($privateKey, $privateKeyStr, $passphrase);
+       
+      // get the public key $keyDetails['key'] from the private key;
+      $keyDetails = openssl_pkey_get_details($privateKey);
+      $publicKeyStr = $keyDetails['key'];
+
+      return array("public" => $publicKeyStr,
+                   "private" => $privateKeyStr);
+   }
+
    public function gen_bcrypt_salt() {
-      $rand_bits = fread(fopen('/dev/random', 32));
+      $rand_bits = fread(fopen('/dev/random', 'r'), 32);
       $rand_bits = base64_encode($rand_bits);
-      $rand_bits = preg_replace('/[\/=+]', '', $rand_bits);
-      $rand_bits = substr($randbits, 0, 22);
+      $rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
+      $rand_bits = substr($rand_bits, 0, 22);
       $salt = '$2a$07$' . $rand_bits . '$';
       return $salt;
    }
