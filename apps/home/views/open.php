@@ -12,7 +12,7 @@
    $(document).ready(function() {
       undead.settings.baseUrl = "<?= $web_root ?>";
       undead.token.set("<?= $token ?>");
-      undead.init.setupAjax();
+      undead.init.init();
       undead.stack.loadDefault();
    });
    </script>
