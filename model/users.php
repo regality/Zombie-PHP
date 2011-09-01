@@ -105,7 +105,7 @@ class UsersModel extends SqlModel {
    }
 
    public function gen_bcrypt_salt() {
-      $rand_bits = fread(fopen('/dev/random', 'r'), 32);
+      $rand_bits = fread(fopen('/dev/urandom', 'r'), 32);
       $rand_bits = base64_encode($rand_bits);
       $rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
       $rand_bits = substr($rand_bits, 0, 22);
@@ -174,6 +174,22 @@ class UsersModel extends SqlModel {
             return false;
          }
       } else {
+         return false;
+      }
+   }
+
+   public function update_password($username, $old_password, $new_password) {
+      if ($this->is_valid_user($username, $old_password)) {
+         $salt = $this->gen_bcrypt_salt();
+         $pass_hash = $this->bcrypt($new_password, $salt);
+         $query = "UPDATE users
+                   SET salt = $1
+                     , password = $2
+                   WHERE username = $3";
+         $params = array($salt, $pass_hash, $username);
+         return (boolean) $this->db->exec($query, $params, false);
+      } else {
+         trigger_error("Wrong password.", E_USER_WARNING);
          return false;
       }
    }

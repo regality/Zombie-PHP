@@ -22,9 +22,9 @@ ZOMBIE PHP
    - allow for client to override mobile
 
  - Add new apps
-   - password change
    - facebook/oauth/openid login app
-   - register app
+   - register/signup app
+   - move password app under users
 
 
 UNDEAD JS

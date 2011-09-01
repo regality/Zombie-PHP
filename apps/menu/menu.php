@@ -10,12 +10,14 @@ class Menu extends App {
       }
 
       $this->apps['welcome'] = array("name" => "Home");
-      if (!$this->session->is_set('username')) {
-         $this->apps['login'] = array("name" => "Login");
-      }
       if ($this->in_group('admin')) {
          $this->apps['users'] = array("name" => "Users");
          $this->apps['groups'] = array("name" => "Groups");
+      }
+      if (!$this->session->is_set('username')) {
+         $this->apps['login'] = array("name" => "Login");
+      } else {
+         $this->apps['password'] = array("name" => "Change Password");
       }
       $this->apps['console'] = array("name" => "Console");
       $this->active = (isset($request['active']) ? $request['active'] : '');
