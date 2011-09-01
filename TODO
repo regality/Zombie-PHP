@@ -50,6 +50,8 @@ FRONTEND
 
  - welcome page should be quick-start instructions
 
+ - sidenav doesn't scale to larger content
+
 TEMPLATING SYSTEM
 =================
 

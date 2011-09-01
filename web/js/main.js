@@ -1,8 +1,4 @@
 $(document).ready(function() {
-   setAjaxUrl();
-   undead.init.setupAjax();
-   undead.stack.loadDefault();
-
    $("#console-clear").click(function() {
       $("#console-messages").html("");
    });

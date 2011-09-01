@@ -1,6 +1,13 @@
 var undead = {};
 
-undead.debug = false;
+/**************************************************
+ * Undead settings                                *
+ **************************************************/
+
+undead.settings = {};
+
+undead.settings.debug = false;
+undead.settings.baseUrl = '';
 
 /**************************************************
  * UI functions                                   *
@@ -70,10 +77,14 @@ undead.ui.verifyForm = function(form) {
    return form_done;
 }
 
+undead.tinymceOptions = {
+   script_url : undead.settings.baseUrl + '/js/tiny_mce/tiny_mce.js',
+   theme : "simple"
+};
+
 undead.ui.wysiwyg = function(textarea) {
-   undead.util.loadCSS("/js/jwysiwyg/jquery.wysiwyg.css");
-   undead.util.loadScript("/js/jwysiwyg/jquery.wysiwyg.js");
-   $(textarea).wysiwyg();
+   undead.util.loadScript('/js/tiny_mce/jquery.tinymce.js');
+   $(textarea).tinymce(undead.tinymceOptions);
 }
 
 /**************************************************
@@ -119,7 +130,7 @@ undead.util.stylesheets = [];
 
 undead.util.loadScript = function(url) {
    if (typeof undead.util.scripts[url] == "undefined") {
-      $.ajax({"url":url,
+      $.ajax({"url":undead.settings.baseUrl + url,
               "dataType":"script",
               "async":false});
       undead.util.scripts[url] = "loaded";
@@ -132,7 +143,7 @@ undead.util.loadCSS = function(url) {
       $("head").children(":last").attr({
          rel:  "stylesheet",
          type: "text/css",
-         href: url
+         href: undead.settings.baseUrl + url
       });
       undead.util.stylesheets[url] = "loaded";
    }
@@ -318,17 +329,25 @@ undead.stack.push = function(appStack, action, data) {
 
 undead.init = {};
 
+undead.init.init = function() {
+   if (typeof JSON == "undefined") {
+      undead.util.loadScript("/js/json2.js");
+   }
+   undead.init.setupAjax();
+}
+
 // setup ajax for the undead
 undead.init.setupAjax = function() {
    $.ajaxSetup({
       "dataType":"json",
+      "url":undead.settings.baseUrl + "/app.php",
       "cache":"false",
       "error":function(xhr, status, error) {
          undead.ui.warn('An error occured:' + error + status);
          undead.ui.warn(xhr.getAllResponseHeaders());
       },
       "dataFilter":function(rawData, type) {
-         if (undead.debug) {
+         if (undead.settings.debug) {
             undead.ui.warn('raw data:' + rawData);
          }
          if (type == "json") {
@@ -386,7 +405,7 @@ undead.init.setupAjax = function() {
       } else {
          options.data = "format=" + options.dataType;
       }
-      if (undead.debug) {
+      if (undead.settings.debug) {
          undead.ui.warn("ajax data:" + options.data);
       }
    });
