@@ -21,9 +21,11 @@ ZOMBIE PHP
  - Move mobile detection to cookie/session
    - allow for client to override mobile
 
- - Need app for changing password
+ - Add new apps
+   - password change
+   - facebook/oauth/openid login app
+   - register app
 
- - Add a facebook/oauth/openid login app
 
 UNDEAD JS
 =========
