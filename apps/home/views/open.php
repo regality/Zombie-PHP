@@ -9,12 +9,12 @@
    <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
    <script type="text/javascript" src="<?= $web_root ?>/js/main.js"></script>
    <script type="text/javascript">
-   (function() {
+   $(document).ready(function() {
       undead.settings.baseUrl = "<?= $web_root ?>";
       undead.token.set("<?= $token ?>");
       undead.init.setupAjax();
       undead.stack.loadDefault();
-   })();
+   });
    </script>
 </head>
 <body>
