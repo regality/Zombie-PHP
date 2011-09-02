@@ -157,7 +157,7 @@ abstract class App {
    }
 
    public function get_model($model) {
-      require(dirname(__FILE__) . "/../../model/$model.php");
+      require_once(dirname(__FILE__) . "/../../model/$model.php");
       $class = underscore_to_class($model) . "Model";
       return new $class();
    }

@@ -26,17 +26,19 @@ ZOMBIE PHP
    - register/signup app
    - move password app under users
 
+ - make salt gen in user model os independent (linux only right now)
 
 UNDEAD JS
 =========
-
- - Allow for key/value pairs on url
 
  - deal with latency (loading screen)
 
  - create error/messages div on page, no more alerts
 
  - Check verifyForm() for bugs
+
+ - improve performance (everything is too slow in IE)
+   - May M$ burn in hell for their atrocities!
 
 FRONTEND
 ========
