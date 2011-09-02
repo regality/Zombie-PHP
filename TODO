@@ -40,6 +40,8 @@ UNDEAD JS
  - improve performance (everything is too slow in IE)
    - May M$ burn in hell for their atrocities!
 
+ - put get params in hash
+
 FRONTEND
 ========
 

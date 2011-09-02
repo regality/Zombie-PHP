@@ -9,7 +9,9 @@ abstract class Model {
    public static function purify_html($html) {
       if (self::$purifier == false) {
          require_once(__DIR__ . '/../util/htmlpurifier-standalone/HTMLPurifier.standalone.php');
-         self::$purifier = new HTMLPurifier();
+         $config = HTMLPurifier_Config::createDefault();
+         $config->set('Cache.DefinitionImpl', null);
+         self::$purifier = new HTMLPurifier($config);
       }
       $clean_html = self::$purifier->purify($html);
       return $clean_html;
