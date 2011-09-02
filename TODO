@@ -24,6 +24,7 @@ ZOMBIE PHP
  - Add new apps
    - facebook/oauth/openid login app
    - register/signup app
+   - captcha, add as option under frontend template
    - move password app under users
 
  - make salt gen in user model os independent (linux only right now)
