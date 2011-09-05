@@ -1,8 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../../brainz/app/page.php");
-
-class Home extends Page {
+class Home extends PageController {
    public function default_run($request) {
       $this->token = $this->get_csrf_token();
       $this->request = $request;

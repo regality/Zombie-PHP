@@ -1,8 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__) . "/app.php");
-
-abstract class SecureApp extends App {
+abstract class SecureController extends BasicController {
    public function run($action = null, $request = null) {
       $this->prepare($action, $request);
       

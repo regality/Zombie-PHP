@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__ . "/../../brainz/app/app.php");
 
-class Menu extends App {
+class Menu extends BasicController {
    public function index_run($request) {
       if ($this->session->is_set('username')) {
          $this->title = "Welcome, " . $this->session->get('username');

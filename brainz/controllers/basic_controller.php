@@ -2,10 +2,9 @@
 
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
-require_once(__DIR__ . "/../util/autoload.php");
 require_once(__DIR__ . "/../util/mobile.php");
 
-abstract class App {
+abstract class BasicController {
    protected $session;
    protected $save_status;
    protected $json;

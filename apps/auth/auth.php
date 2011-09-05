@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__ . "/../../brainz/app/app.php");
 
-class Auth extends App {
+class Auth extends BasicController {
    public function index_run($request) {
       if (!isset($request['username']) ||
           !isset($request['password'])) {

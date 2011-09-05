@@ -1,7 +1,6 @@
 <?php
-require_once(dirname(__FILE__) . "/../../brainz/app/secure_app.php");
 
-class Password extends SecureApp {
+class Password extends SecureController {
 
    /*********************************************
     * run functions

@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__ . " /../../brainz/app/secure_app.php");
 
-class Users extends SecureApp {
+class Users extends SecureController {
    public $groups = array('admin');
 
    public function index_run($request) {

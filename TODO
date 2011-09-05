@@ -43,6 +43,8 @@ UNDEAD JS
 
  - put get params in hash
 
+ - abstract out alert,logged in,etc, make extensible
+
 FRONTEND
 ========
 

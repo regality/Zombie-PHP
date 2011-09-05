@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__ . "/../../brainz/app/app.php");
 
-class Console extends App {
+class Console extends BasicController {
    public function index_run($request) {
    }
 }
