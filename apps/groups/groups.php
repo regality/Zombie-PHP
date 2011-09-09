@@ -1,25 +1,24 @@
 <?php
 
-class Groups extends SecureController {
+class Groups extends BasicController {
+   public $groups = array('admin');
 
    /*********************************************
     * run functions
     *********************************************/
 
    public function index_run($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       $this->groups = $groups_model->get_all();
    }
 
    public function edit_run($request) {
-
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       $this->groups = $groups_model->get_one($request['id']);
       $this->form_action = 'update';
    }
 
    public function new_run($request) {
-
       $this->view = 'edit';
       $this->form_action = 'create';
    }
@@ -38,7 +37,7 @@ class Groups extends SecureController {
     *********************************************/
 
    public function create_save($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       if ($groups_model->insert($request)) {
          $this->json['status'] = "success";
       } else {
@@ -47,7 +46,7 @@ class Groups extends SecureController {
    }
 
    public function update_save($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       if ($groups_model->update($request['id'], $request)) {
          $this->json['status'] = "success";
       } else {
@@ -56,7 +55,7 @@ class Groups extends SecureController {
    }
 
    public function delete_save($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       if ($groups_model->delete($request['id'])) {
          $this->json['status'] = "success";
       } else {

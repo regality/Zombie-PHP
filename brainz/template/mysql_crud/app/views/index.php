@@ -17,19 +17,19 @@
 $(document).ready(function() {
    $(".<SLUG>-delete").click(function(e) {
       e.preventDefault();
-      $row = $(this).parents("tr");
+      var row = $(this).parents("tr");
       $.ajax({"data":{"app":"<SLUG>",
                       "action":"delete",
                       "id":$(this).attr("<SLUG>_id")},
               "success":function(data) {
-                  $row.remove();
+                  row.remove();
               }
       });
    });
 
    $(".<SLUG>-create").die('click').live('click', function() {
-      $form = $(this).parents("div.form");
-      if (!undead.ui.verifyForm($form)) {
+      var form = $(this).parents("div.form");
+      if (!undead.ui.verifyForm(form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -45,8 +45,8 @@ $(document).ready(function() {
    });
 
    $(".<SLUG>-update").die('click').live('click', function() {
-      $form = $(this).parents("div.form");
-      if (!undead.ui.verifyForm($form)) {
+      var form = $(this).parents("div.form");
+      if (!undead.ui.verifyForm(form)) {
          alert("Some required fields are msising.");
          return;
       }
@@ -61,11 +61,5 @@ $(document).ready(function() {
       });
    });
 
-   $("#close-<SLUG>").die('click').live('click', function() {
-      $("#<SLUG>-modal").fadeOut();
-      $("#<SLUG>-edit").fadeOut(function() {
-         $("#<SLUG>-edit").remove();
-      });
-   });
 });
 </script>

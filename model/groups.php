@@ -1,13 +1,10 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../brainz/model/sql_model.php");
-
-class GroupsModel extends SqlModel {
+class GroupsModel extends SqlModelBase {
    public function get_all() {
       $query = "SELECT groups.id
                      , groups.name
                 FROM groups
-
                 ORDER BY groups.id";
       $result = $this->db->exec($query, array());
       return $result;
@@ -17,7 +14,6 @@ class GroupsModel extends SqlModel {
       $query = "SELECT groups.id
                      , groups.name
                 FROM groups
-
                 WHERE groups.id = $1";
       $params = array($id);
       $result = $this->db->exec($query, $params);

@@ -16,6 +16,14 @@ function load_model($class) {
    }
 }
 
+function load_model_base($class) {
+   if (substr($class, -9) == 'ModelBase') {
+      include(__DIR__ . '/../config.php');
+      $slug = class_to_underscore($class);
+      include($zombie_root . '/brainz/model/' . $slug . '.php');
+   }
+}
+
 function load_controller($class) {
    if (substr($class, -10) == 'Controller') {
       include(__DIR__ . '/../config.php');
@@ -25,6 +33,7 @@ function load_controller($class) {
 }
 
 spl_autoload_register('load_model');
+spl_autoload_register('load_model_base');
 spl_autoload_register('load_controller');
 spl_autoload_register('load_app');
 

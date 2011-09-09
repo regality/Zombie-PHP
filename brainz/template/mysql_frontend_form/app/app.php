@@ -1,7 +1,6 @@
 <?php
-require_once(dirname(__FILE__) . "/../../brainz/app/app.php");
 
-class <CLASS_NAME> extends App {
+class <CLASS_NAME> extends BasicController {
 
    /*********************************************
     * run functions

@@ -28,6 +28,44 @@ abstract class BasicController {
    function __destruct() {
    }
 
+   public function run($action = null, $request = null) {
+      $this->prepare($action, $request);
+      $this->execute();
+   }
+
+   public function prepare($action, $request) {
+      if (is_null($action) && !empty($_REQUEST['action'])) {
+         $this->action = $_REQUEST['action'];
+      } else if (is_null($action)) {
+         $this->action = 'index';
+      } else {
+         $this->action = $action;
+      }
+      $this->view = $this->action;
+
+      if (is_null($request)) {
+         $this->request = $_REQUEST;
+      } else {
+         $this->request = $request;
+      }
+      $this->format = (isset($this->request['format']) ? $this->request['format'] : 'html');
+   }
+
+   public function execute() {
+      $run_func = $this->action . "_run";
+      $this->save_safe($this->action, $this->request);
+      if (method_exists($this, $run_func)) {
+         $this->$run_func($this->request);
+         $this->render();
+      } else if (method_exists($this, 'default_run')) {
+         $this->view = 'default';
+         $this->default_run($this->request);
+         $this->render();
+      } else {
+         include($this->app_root . '/home/views/404.php');
+      }
+   }
+
    public function render() {
       if ($this->format == 'json') {
          $errors = get_error_array();
@@ -75,44 +113,6 @@ abstract class BasicController {
          return true;
       } else {
          return false;
-      }
-   }
-
-   public function run($action = null, $request = null) {
-      $this->prepare($action, $request);
-      $this->execute();
-   }
-
-   public function prepare($action, $request) {
-      if (is_null($action) && !empty($_REQUEST['action'])) {
-         $this->action = $_REQUEST['action'];
-      } else if (is_null($action)) {
-         $this->action = 'index';
-      } else {
-         $this->action = $action;
-      }
-      $this->view = $this->action;
-
-      if (is_null($request)) {
-         $this->request = $_REQUEST;
-      } else {
-         $this->request = $request;
-      }
-      $this->format = (isset($this->request['format']) ? $this->request['format'] : 'html');
-   }
-
-   public function execute() {
-      $run_func = $this->action . "_run";
-      $this->save_safe($this->action, $this->request);
-      if (method_exists($this, $run_func)) {
-         $this->$run_func($this->request);
-         $this->render();
-      } else if (method_exists($this, 'default_run')) {
-         $this->view = 'default';
-         $this->default_run($this->request);
-         $this->render();
-      } else {
-         include($this->app_root . '/home/views/404.php');
       }
    }
 

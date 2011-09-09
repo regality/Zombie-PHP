@@ -3,43 +3,42 @@
 abstract class SecureController extends BasicController {
    public function run($action = null, $request = null) {
       $this->prepare($action, $request);
-      
-      if (!$this->session->is_set('username')) {
+      if (!isset($this->secure_methods) || in_array($this->action, $this->secure_methods)) {
+         $access = $this->has_access();
+      } else {
+         $access = true;
+      }
+      if ($access === true) {
+         $this->execute();
+      } else {
          if ($this->format == 'json') {
-            $this->json['status'] = 'logged out';
+            $this->json['status'] = $access;
             $this->render_json();
          } else {
-            echo "logged out";
+            echo $access;
          }
-         return;
+      }
+   }
+
+   public function has_access() {
+      if (!$this->session->is_set('username')) {
+         return "logged out";
       }
       if (isset($this->groups)) {
          $user_groups = $this->session->get('groups');
          if (!is_array($user_groups)) {
-            if ($this->format == 'json') {
-               $this->json['status'] = 'access denied';
-               $this->render_json();
-            } else {
-               echo 'access denied';
-            }
-            return;
+            return "access denied";
          }
          foreach ($this->groups as $group) {
             foreach ($user_groups as $user_group) {
                if ($user_group == $group) {
-                  $this->execute();
-                  return;
+                  return true;
                }
             }
          }
-         if ($this->format == 'json') {
-            $this->json['status'] = 'access denied';
-            $this->render_json();
-         } else {
-            echo 'access denied';
-         }
+         return 'access denied';
       } else {
-         $this->execute();
+         return true;
       }
    }
 }

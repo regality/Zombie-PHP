@@ -6,6 +6,7 @@
 
 require("brainz/config.php");
 require("brainz/util/util.php");
+require("brainz/util/autoload.php");
 
 function cli_main($argv) {
    $argc = count($argv);

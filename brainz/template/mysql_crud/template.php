@@ -6,7 +6,7 @@ class MysqlCrudTemplate extends ZombieTemplate {
    public function template_prepare() {
       if (!isset($this->options['table'])) {
       print_r($this->options);
-         die("table option required:\nzombie.php mysql_crud <app> table=<table>\n");
+         die("table option required:\nzombie.php <app> template=mysql_crud table=<table>\n");
       }
       require(__DIR__ . "/../../config.php");
       require($db_file);
@@ -67,10 +67,10 @@ class MysqlCrudTemplate extends ZombieTemplate {
          $this->replace['SQL_FIELDS_COMMA_SEP'] .= 
             " " . $this->options['table'] . "." . $sql_field['Field'] . "\n                     ,";
 
-         $this->replace['AJAX_COMMA_SEP_FIELDS_WID'] .= '                      "'. $field_name . '":$form.find("'. $html_type .'[name='. $field_name . "]\").val(),\n";
+         $this->replace['AJAX_COMMA_SEP_FIELDS_WID'] .= '                      "'. $field_name . '":form.find("'. $html_type .'[name='. $field_name . "]\").val(),\n";
 
          if ($field_name != 'id') {
-            $this->replace['AJAX_COMMA_SEP_FIELDS'] .= '                      "'. $field_name . '":$form.find("'. $html_type . '[name='. $field_name . "]\").val(),\n";
+            $this->replace['AJAX_COMMA_SEP_FIELDS'] .= '                      "'. $field_name . '":form.find("'. $html_type . '[name='. $field_name . "]\").val(),\n";
 
             if (!$is_join) {
                $this->replace['HTML_FIELDS_TD'] .= 

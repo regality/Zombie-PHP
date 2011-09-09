@@ -1,6 +1,3 @@
-<div class="modal content-modal" id="groups-modal">
-   <div id="groups-ajax" class="awesome basic-ajax"></div>
-</div>
 <a href="/groups/new" id="groups-new">New +</a>
 <table>
    <tr>

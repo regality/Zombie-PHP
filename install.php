@@ -1,5 +1,6 @@
 <?php
 
+include('brainz/util/autoload.php');
 include('brainz/config.php');
 include('model/groups.php');
 include('model/users.php');
