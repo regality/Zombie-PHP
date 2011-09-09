@@ -18,7 +18,9 @@ function get_zombie_config() {
 
       $config['session'] = array();
       $config['session']['type'] = 'php';
-      $config['session']['timeout'] = '3600';
+      $config['session']['timeout'] = 3600;
+      $config['session']['secure'] = false;
+      $config['session']['http_only'] = true;
    }
 
    return $config;

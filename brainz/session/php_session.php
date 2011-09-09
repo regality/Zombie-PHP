@@ -1,5 +1,5 @@
 <?php
-require_once("session.php");
+
 require_once(__DIR__ . "/../config.php");
 
 class PhpSession extends Session {
@@ -11,8 +11,8 @@ class PhpSession extends Session {
          session_set_cookie_params($config['session']['timeout'],
                                    '/' . $config['config']['web_root'],
                                    $config['config']['domain'],
-                                   false,
-                                   true);
+                                   $config['session']['secure'],
+                                   $config['session']['http_only']);
          session_start();
       }
    }

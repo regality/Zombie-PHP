@@ -29,6 +29,14 @@ ZOMBIE PHP
 
  - make salt gen in user model os independent (linux only right now)
 
+ - install.php
+   - create database?
+   - only allows mysql right now
+
+ - pgsql has fallen far behind
+
+ - sql_session only allows for mysql, see clear_old()
+
 UNDEAD JS
 =========
 

@@ -1,6 +1,5 @@
 <?php
 
-require_once("session.php");
 require_once(dirname(__FILE__) . "/../config.php");
 
 class SqlSession extends Session {
