@@ -1,28 +1,26 @@
 <?php
 
-require("sql_connection.php");
-
-class MySqlConnection extends SqlConnection {
+class MysqlDatabase extends SqlDatabase {
    public static $db = false;
    public static $errors = "";
 
    public function __construct($server, $username, $password, $database) {
       if (!$this->is_connected()) {
-         MySqlConnection::$db = mysql_pconnect($server, $username, $password);
-         mysql_select_db($database, MySqlConnection::$db);
+         MysqlDatabase::$db = mysql_pconnect($server, $username, $password);
+         mysql_select_db($database, MysqlDatabase::$db);
       }
-      return MySqlConnection::$db;
+      return MysqlDatabase::$db;
    }
 
    public function __destruct() {
    }
 
    public function select_db($database) {
-      mysql_select_db($database, MySqlConnection::$db);
+      mysql_select_db($database, MysqlDatabase::$db);
    }
 
    public function is_connected() {
-     return (boolean) MySqlConnection::$db;
+     return (boolean) MysqlDatabase::$db;
    }
 
    public function exec($query, $params = array(), $html_safe = true, $debug = false) {
@@ -55,7 +53,7 @@ class MySqlConnection extends SqlConnection {
             echo "<pre>" . $p_query . "</pre>";
          }
          // Process the request.
-         $result = mysql_query($p_query, MySqlConnection::$db);
+         $result = mysql_query($p_query, MysqlDatabase::$db);
 
          // Check for errors.
          $my_error = mysql_error();
@@ -66,7 +64,7 @@ class MySqlConnection extends SqlConnection {
              trigger_error("Mysql Error: " . $my_error, E_USER_WARNING);
              return false;
          } else {
-             return new MySqlResult($result);
+             return new MysqlResult($result);
          }
       }
    }
@@ -93,7 +91,7 @@ class MySqlConnection extends SqlConnection {
    }
 }
 
-class MySqlResult extends SqlResult {
+class MysqlResult extends SqlResult {
    private $result;
    private $row_data;
    private $position;

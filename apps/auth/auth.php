@@ -6,7 +6,7 @@ class Auth extends BasicController {
           !isset($request['password'])) {
          $this->json['status'] = "failed";
       } else {
-         $users_model = $this->get_model("users");
+         $users_model = new UsersModel();
          $user = $users_model->is_valid_user($request['username'],
                                              $request['password']);
          if ($user !== false) {

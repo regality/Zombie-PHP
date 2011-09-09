@@ -1,13 +1,18 @@
 <?php
-require("session.php");
+require_once("session.php");
+require_once(__DIR__ . "/../config.php");
 
 class PhpSession extends Session {
    public static $instance;
 
    public function __construct() {
       if (!isset($_SESSION)) {
-         require(__DIR__ . "/../config.php");
-         session_set_cookie_params('3600', '/' . $web_root, $domain, false, true);
+         $config = get_zombie_config();
+         session_set_cookie_params($config['session']['timeout'],
+                                   '/' . $config['config']['web_root'],
+                                   $config['config']['domain'],
+                                   false,
+                                   true);
          session_start();
       }
    }

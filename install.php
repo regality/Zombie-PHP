@@ -1,13 +1,12 @@
 <?php
 
 include('brainz/util/autoload.php');
-include('brainz/config.php');
 include('model/groups.php');
 include('model/users.php');
 
 $groups_model = new GroupsModel();
 $users_model = new UsersModel();
-$db = new MysqlConnection("","","","");
+$db = new MysqlDatabase("","","","");
 
 $install_sql = file_get_contents("brainz/install.mysql");
 $sql_commands = explode(";", $install_sql);

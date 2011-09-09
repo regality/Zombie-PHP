@@ -4,7 +4,6 @@
 // licensed under the General Public License version 2.
 // See the LICENSE file.
 
-require("brainz/config.php");
 require("brainz/util/util.php");
 require("brainz/util/autoload.php");
 

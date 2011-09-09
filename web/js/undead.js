@@ -352,7 +352,6 @@ undead.init.setupAjax = function () {
       "cache" : "false",
       "error" : function (xhr, status, error) {
          undead.ui.warn('An error occured:' + error + status);
-         undead.ui.warn(xhr.getAllResponseHeaders());
       },
       "dataFilter" : function (rawData, type) {
          var data, mesg, i;

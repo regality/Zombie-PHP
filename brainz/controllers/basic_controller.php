@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/mobile.php");
+require_once(__DIR__ . "/../config.php");
 
 abstract class BasicController {
    protected $session;
@@ -10,17 +11,12 @@ abstract class BasicController {
    protected $json;
 
    function __construct($sess = null) {
-      require(__DIR__ . "/../config.php");
-
-      $this->zombie_root = $zombie_root;
-      $this->app_root = $app_root;
-      $this->web_root = $web_root;
-      $this->domain = $domain;
+      $this->config = get_zombie_config();
       $this->json = array();
       $this->is_page = false;
       $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
       if ($sess == null) {
-         require_once($sess_file);
+         $sess_class = underscore_to_class($this->config['session']['type'] . '_' . 'session');
          $this->session = $sess_class::get_session();
       }
    }
@@ -62,7 +58,7 @@ abstract class BasicController {
          $this->default_run($this->request);
          $this->render();
       } else {
-         include($this->app_root . '/home/views/404.php');
+         include($this->config['config']['zombie_root'] . '/apps/home/views/404.php');
       }
    }
 
@@ -78,7 +74,7 @@ abstract class BasicController {
          }
          $this->render_json();
       } else {
-         $file = $this->app_root . "/" . class_to_underscore(get_class($this)) . 
+         $file = $this->config['config']['zombie_root'] . "/apps//" . class_to_underscore(get_class($this)) . 
                  "/views/" . $this->view . ".php";
          if (file_exists($file)) {
             foreach (get_object_vars($this) as $var => $val) {
@@ -86,15 +82,15 @@ abstract class BasicController {
             }
             if ($this->is_page) {
                if (!method_exists($menu, 'run')) {
-                  require_once($this->app_root . '/menu/menu.php');
+                  require_once($this->config['config']['zombie_root'] . '/apps/menu/menu.php');
                   $menu = new Menu(); 
                }
                if (isset($token)) {
                   $token= $this->get_csrf_token();
                }
-               include($this->app_root . "/home/views/open.php");
+               include($this->config['config']['zombie_root'] . "/apps/home/views/open.php");
                include($file);
-               include($this->app_root . "/home/views/close.php");
+               include($this->config['config']['zombie_root'] . "/apps/home/views/close.php");
             } else {
                include($file);
             }
@@ -132,7 +128,7 @@ abstract class BasicController {
             if (isset($_SERVER['referer'])) {
                $domain = parse_url($_SERVER['referer']);
                $domain = $domain['host'];
-               if ($domain != $this->domain) {
+               if ($domain != $this->config['config']['domain']) {
                   $this->save_status = "bad referer";
                   return;
                }
@@ -153,20 +149,6 @@ abstract class BasicController {
          $this->session->set('csrf_token', $token);
       }
       return $token;
-   }
-
-   public function get_model($model) {
-      require_once(dirname(__FILE__) . "/../../model/$model.php");
-      $class = underscore_to_class($model) . "Model";
-      return new $class();
-   }
-
-   public function dynamic_url() {
-      return "http://" . $this->domain . "/";
-   }
-
-   public function static_url() {
-      return "http://" . $this->domain . "/";
    }
 
 }

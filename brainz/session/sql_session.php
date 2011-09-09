@@ -1,6 +1,7 @@
 <?php
 
-require("session.php");
+require_once("session.php");
+require_once(dirname(__FILE__) . "/../config.php");
 
 class SqlSession extends Session {
    private static $instance;
@@ -15,9 +16,15 @@ class SqlSession extends Session {
    }
 
    public function __construct() {
-      require(dirname(__FILE__) . "/../config.php");
-      require_once($db_file);
-      $this->sql = new $db_class($db_host, $db_user, $db_pass, $database);
+      $config = get_zombie_config();
+      $this->timeout = $config['session']['timeout'];
+      require_once($config['database']['file']);
+      $db_class = underscore_to_class($config['database']['type'] .'_' .
+                                      'database');
+      $this->sql = new $db_class($config['database']['host'],
+                                 $config['database']['user'],
+                                 $config['database']['pass'],
+                                 $config['database']['database']);
       $this->clear_old();
       $this->session = false;
       if (isset($_COOKIE['s'])) {
@@ -46,8 +53,8 @@ class SqlSession extends Session {
    }
 
    public function clear_old() {
-      //$query = "DELETE FROM session WHERE DATE_ADD(last_access, INTERVAL 1 HOUR) < now()";
-      $query = "DELETE FROM session WHERE last_access < DATE_SUB(NOW(), INTERVAL 10 HOUR)";
+      // only works for mysql?
+      $query = "DELETE FROM session WHERE last_access < DATE_SUB(NOW(), INTERVAL " $this->timeout . " SECOND)";
       $this->sql->exec($query);
    }
 
@@ -74,7 +81,7 @@ class SqlSession extends Session {
       $this->session_id = md5(time() . rand() . rand());
       setcookie('s',
                 $this->session_id,
-                time() + 60*30,
+                time() + $this->timeout,
                 '/',
                 $_SERVER['SERVER_NAME'],
                 false,

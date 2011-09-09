@@ -1,18 +1,27 @@
 <?php
 
-$zombie_root = '/var/www/zombie';
-$app_root = $zombie_root . '/apps';
-$web_root = '';
-$domain = 'zombiephp.com';
+function get_zombie_config() {
+   static $config = array();
 
-$db_class = 'MySqlConnection';
-$db_file = $zombie_root . '/brainz/sql/mysql_connection.php';
-$db_host = 'localhost';
-$db_user = 'mysql';
-$db_pass = 'password';
-$database = 'zombie';
+   if (empty($config)) {
+      $config['config'] = array();
+      $config['config']['zombie_root'] = '/var/www/zombie';
+      $config['config']['web_root'] = ''; 
+      $config['config']['domain'] = 'zombiephp.com';
 
-$sess_file = $zombie_root . '/brainz/session/php_session.php';
-$sess_class = 'PhpSession';
+      $config['database'] = array();
+      $config['database']['type'] = 'mysql';
+      $config['database']['host'] = 'localhost';
+      $config['database']['user'] = 'mysql';
+      $config['database']['pass'] = 'password';
+      $config['database']['database'] = 'zombie';
+
+      $config['session'] = array();
+      $config['session']['type'] = 'php';
+      $config['session']['timeout'] = '3600';
+   }
+
+   return $config;
+}
 
 ?>

@@ -20,7 +20,7 @@ class Password extends SecureController {
     *********************************************/
 
    public function update_save($request) {
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       $success = $users_model->update_password($this->session->get("username"),
                                                $request['old_password'],
                                                $request['new_password']);

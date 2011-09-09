@@ -1,11 +1,17 @@
 <?php
 
+require_once(__DIR__ . "/../util/util.php");
+require_once(__DIR__ . "/../config.php");
+
 abstract class SqlModelBase extends ModelBase {
    public function __construct() {
       parent::__construct();
-      require(__DIR__ . "/../config.php");
-      require_once($db_file);
-      $this->db = new $db_class($db_host, $db_user, $db_pass, $database);
+      $config = get_zombie_config();
+      $db_class = underscore_to_class($config['database']['type'] . '_' . 'database');
+      $this->db = new $db_class($config['database']['host'],
+                                $config['database']['user'],
+                                $config['database']['pass'],
+                                $config['database']['database']);
    }
 }
 

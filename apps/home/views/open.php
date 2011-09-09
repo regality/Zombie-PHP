@@ -4,13 +4,13 @@
    <title>Zombie PHP</title>
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-   <link rel="stylesheet" href="<?= $web_root ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>light.css" type="text/css" />
-   <script type="text/javascript" src="<?= $web_root ?>/js/jquery.min.js"></script>
-   <script type="text/javascript" src="<?= $web_root ?>/js/undead.js"></script>
-   <script type="text/javascript" src="<?= $web_root ?>/js/main.js"></script>
+   <link rel="stylesheet" href="<?= $config['config']['web_root'] ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>light.css" type="text/css" />
+   <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/jquery.min.js"></script>
+   <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/undead.js"></script>
+   <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/main.js"></script>
    <script type="text/javascript">
    $(document).ready(function() {
-      undead.settings.baseUrl = "<?= $web_root ?>";
+      undead.settings.baseUrl = "<?= $config['config']['web_root'] ?>";
       undead.token.set("<?= $token ?>");
       undead.init.init();
       undead.stack.loadDefault();
@@ -20,7 +20,7 @@
 <body>
    <div id="main">
       <div id="header">
-         <img src="<?= $web_root ?>/images/zombie-glasses.png" alt="logo" />
+         <img src="<?= $config['config']['web_root'] ?>/images/zombie-glasses.png" alt="logo" />
          <h1>Zombie PHP</h1>
       </div>
       <div id="sidenav">

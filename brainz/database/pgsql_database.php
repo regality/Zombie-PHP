@@ -1,8 +1,6 @@
 <?php
 
-require("sql_connection.php");
-
-class PgSqlConnection extends SqlConnection {
+class PgsqlDatabase extends SqlDatabase {
     private $db = false;
     private $errors = Array();
     private $numErrors = 0;
@@ -39,7 +37,7 @@ class PgSqlConnection extends SqlConnection {
              echo $pg_error;
              return false;
          } else {
-             return new PgSqlResult($result);
+             return new PgsqlResult($result);
          }
     }
 
@@ -60,7 +58,7 @@ class PgSqlConnection extends SqlConnection {
    }
 }
 
-class PgSqlResult extends SqlResult {
+class PgsqlResult extends SqlResult {
     private $result; // MySQL result
     private $row;
     private $position;

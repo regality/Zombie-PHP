@@ -4,22 +4,22 @@ class Users extends SecureController {
    public $groups = array('admin');
 
    public function index_run($request) {
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       $this->users = $users_model->get_all();
    }
 
    public function edit_run($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       $this->groups = $groups_model->get_all();
 
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       $this->users = $users_model->get_one($request['id']);
 
       $this->form_action = 'update';
    }
 
    public function new_run($request) {
-      $groups_model = $this->get_model("groups");
+      $groups_model = new GroupsModel();
       $this->groups = $groups_model->get_all();
 
       $this->view = 'edit';
@@ -36,7 +36,7 @@ class Users extends SecureController {
    }
 
    public function create_save($request) {
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       if ($users_model->insert($request)) {
          $this->json['status'] = "success";
       } else {
@@ -45,7 +45,7 @@ class Users extends SecureController {
    }
 
    public function update_save($request) {
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       if ($users_model->update($request['id'], $request)) {
          $this->json['status'] = "success";
       } else {
@@ -54,7 +54,7 @@ class Users extends SecureController {
    }
 
    public function delete_save($request) {
-      $users_model = $this->get_model("users");
+      $users_model = new UsersModel();
       if ($users_model->delete($request['id'])) {
          $this->json['status'] = "success";
       } else {

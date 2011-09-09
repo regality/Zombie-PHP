@@ -1,6 +1,6 @@
 <?php
 
-abstract class SqlConnection {
+abstract class SqlDatabase {
     private $errors = "";
 
     abstract public function __construct($server, $username,
