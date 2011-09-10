@@ -23,7 +23,4 @@
          <img src="<?= $config['config']['web_root'] ?>/images/zombie-glasses.png" alt="logo" />
          <h1>Zombie PHP</h1>
       </div>
-      <div id="sidenav">
-         <?php $menu->run("index", array('active' => $action)) ?>
-      </div>
       <div id="content">

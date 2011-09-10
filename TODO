@@ -9,13 +9,6 @@ correct section.
 ZOMBIE PHP
 ==========
 
- - add session hijacking protection
-   - Check based on user-agent header?
-   - Add option to check based on IP
-   - Add option to check based on client public key
-   - Add session regenerate id
-   - Destroy cookie on logout
-
  - Make sure session times out properly
 
  - Move mobile detection to cookie/session
@@ -33,9 +26,13 @@ ZOMBIE PHP
    - create database?
    - only allows mysql right now
 
- - pgsql has fallen far behind
+ - update PgsqlDatabase
 
- - sql_session only allows for mysql, see clear_old()
+ - SessionModel only allows for mysql, see clear_old()
+
+ - make simple way to use multiple db in same app
+
+ - NEEDS unit tests for EVERYTHING
 
 UNDEAD JS
 =========
@@ -52,6 +49,8 @@ UNDEAD JS
  - put get params in hash
 
  - abstract out alert,logged in,etc, make extensible
+
+ - NEEDS unit tests for EVERYTHING
 
 FRONTEND
 ========
@@ -83,6 +82,9 @@ TEMPLATING SYSTEM
  - Check mysql_frontend_form for bugs
    - it was copied from mysql_crud and modified
 
+ - abstract out database
+   - use template=crud instead of template=mysql_crud and check config
+
 DATABASE
 ========
 
@@ -111,10 +113,11 @@ FUTURE FEATURES
  - Include ORM? I don't like them, but some people do.
    - DooPHP has a really cool ORM, use or do something like that?
    - Doctrine or propel?
+      - propel looks more cooler
 
  - automagic upgrade zombie
 
- - put a stack within a stack (unead)
+ - put a stack within a stack (undead)
 
  - db migration
 

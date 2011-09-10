@@ -15,6 +15,7 @@ class Auth extends BasicController {
             $sess_vars['id'] = $user['id'];
             $sess_vars['groups'] = $user['groups'];
             $this->session->set($sess_vars);
+            $this->session->regenerate_id();
             $this->json['status'] = "success";
             $this->json['app'] = "welcome";
          } else {
@@ -24,8 +25,8 @@ class Auth extends BasicController {
    }
 
    public function logout_run($request) {
+      $this->session->destroy();
       $this->json['status'] = "success";
-      $this->session->clear();
    }
 }
 

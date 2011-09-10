@@ -1,37 +1,31 @@
 <?php
 
-require_once(__DIR__ . "/../config.php");
-
 class PhpSession extends Session {
-   public static $instance;
 
-   public function __construct() {
-      if (!isset($_SESSION)) {
-         $config = get_zombie_config();
-         session_set_cookie_params($config['session']['timeout'],
-                                   '/' . $config['config']['web_root'],
-                                   $config['config']['domain'],
-                                   $config['session']['secure'],
-                                   $config['session']['http_only']);
-         session_start();
-      }
+   protected function __construct() {
+      parent::__construct();
+      session_set_cookie_params($this->config['session']['timeout'],
+                                '/' . $this->config['config']['web_root'],
+                                $this->config['config']['domain'],
+                                $this->config['session']['secure'],
+                                $this->config['session']['http_only']);
+      $this->create();
+      $this->prevent_hijack();
    }
 
    public function get_array() {
       return $_SESSION;
    }
 
-   public static function get_session() {
-      if (!isset(PhpSession::$instance)) {
-         PhpSession::$instance = new PhpSession();
-      }
-      return PhpSession::$instance;
-   }
-
    public function save() {
    }
 
    public function create() {
+      session_start();
+   }
+
+   public function regenerate_id() {
+      session_regenerate_id();
    }
 
    public function is_set($key) {
@@ -54,9 +48,9 @@ class PhpSession extends Session {
       }
    }
 
-   public function clear() {
+   public function destroy() {
+      setcookie(session_name(),'',time() - 1);
       session_destroy();
-      session_start();
    }
 
 }
