@@ -20,7 +20,7 @@ ZOMBIE PHP
    - captcha, add as option under frontend template
    - move password app under users
 
- - make salt gen in user model os independent (linux only right now)
+ - make salt gen in user model os independent (linux/unix only right now)
 
  - install.php
    - create database?
@@ -40,6 +40,7 @@ UNDEAD JS
  - deal with latency (loading screen)
 
  - create error/messages div on page, no more alerts
+   - in progress
 
  - Check verifyForm() for bugs
 
@@ -48,7 +49,7 @@ UNDEAD JS
 
  - put get params in hash
 
- - abstract out alert,logged in,etc, make extensible
+ - abstract out alert,logged in,etc, for ajax requests and make extensible
 
  - NEEDS unit tests for EVERYTHING
 

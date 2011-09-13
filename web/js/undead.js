@@ -15,50 +15,75 @@ undead.settings.baseUrl = '';
 
 undead.ui = {};
 
+undead.ui.alertShowTime = 2000;
+
 // reports an error 
 undead.ui.error = function (mesg) {
-   window.alert(mesg);
+   undead.ui.addAlert("error", mesg);
+   undead.ui.logError(102, mesg);
 };
 
 // warning message
 undead.ui.warn = function (mesg) {
-   window.alert(mesg);
+   undead.ui.addAlert("warning", mesg);
+   undead.ui.logError(101, mesg);
 };
 
 // you just wanted to say hi
 undead.ui.message = function (mesg) {
-   window.alert(mesg);
+   undead.ui.addAlert("message", mesg);
+   undead.ui.logMessage("message", mesg);
 };
 
+undead.ui.addAlert = function(type, mesg) {
+   var flash = $("<div style=\"display:none;\" class=\"" + type + "\"></div>");
+   flash.text(mesg);
+   flash.prepend("<span class=\"title\">" + type + ":</span> ");
+   $("#alerts").append(flash);
+   flash.slideDown("slow", function() {
+      $(this).animate({"left":1}, undead.ui.alertShowTime, function() {
+         $(this).slideUp("slow");
+      });
+   });
+   flash.click(function() {
+      $(this).stop(true).css({"border-color":"black"}).unbind('click').click(function() {
+         $(this).slideUp("slow");
+      });
+   });
+}
+
 // add a message to the console
-undead.ui.addMessage = function (title, mesg) {
-   var html = "<div class=\"console-title\">" + title + "</div>" + mesg;
-   undead.ui.consoleAdd(html);
+undead.ui.logMessage = function (title, mesg) {
+   var html = "<div class=\"console-title\">" + title + "</div>";
+   undead.ui.consoleAdd(html, mesg);
 };
 
 // add an error to the console
-undead.ui.addError = function (level, mesg) {
+undead.ui.logError = function (level, mesg) {
    var levels, title, html;
-   levels = {0 : "Javascript Error",
-                 2 : "PHP Warning",
-                 8 : "PHP Notice",
-                 512 : "PHP User Warning",
-                 1024 : "PHP User Notice",
-                 2048 : "PHP Strict"};
+   levels = {100 : "Message",
+             101 : "Warning",
+             102 : "Error",
+             2 : "PHP Warning",
+             8 : "PHP Notice",
+             512 : "PHP User Warning",
+             1024 : "PHP User Notice",
+             2048 : "PHP Strict"};
    title = levels[level];
-   html = "<div class=\"console-error\">" + title + "</div>" + mesg;
+   html = "<div class=\"console-error\">" + title + "</div>";
    // fix this ugly hack that doesn't work properly
    undead.oldConsoleColor = $("a[href^='/console']").css("color");
    $("a[href^='/console']").css({"color" : "red", "font-weight" : "bold"}).click(function () {
       $(this).css({"color" : undead.oldConsoleColor, "font-weight" : "normal"});
    });
-   undead.ui.consoleAdd(html);
+   undead.ui.consoleAdd(html, mesg);
 };
 
 // add html to the console
-undead.ui.consoleAdd = function (html) {
+undead.ui.consoleAdd = function (html, text) {
+   text = $("<div/>").text(text).html();
    html = "<div class=\"console-mesg\">" +
-          "<div class=\"console-mesg-close\">X</div>" + html + "</div>";
+          "<div class=\"console-mesg-close\">X</div>" + html + text + "</div>";
    $("#console-messages").append(html);
    $(".console-mesg:first").css({"border-top-width" : "1px"});
    $(".console-mesg:first").css({"padding" : "0px 2px"});
@@ -277,7 +302,7 @@ undead.stack.refresh = function (appStack) {
            success : function (data) {
                topFrame.html(data);
                undead.stack.focus(appStack);
-               undead.ui.addMessage("App Refreshed", "The app <i>" + 
+               undead.ui.logMessage("App Refreshed", "The app <i>" + 
                                  appStack + "." + topFrame.attr("action") + 
                                  "</i> was successfully refreshed");
            }
@@ -324,9 +349,9 @@ undead.stack.push = function (appStack, appAction, data) {
                stackDiv.append(div);
                stackDiv.show();
                undead.stack.focus(appStack);
-               undead.ui.addMessage("App Loaded", "The app <i>" + 
+               undead.ui.logMessage("App Loaded", "The app " + 
                                  appStack + "." + appAction + 
-                                 "</i> was successfully loaded");
+                                 " was successfully loaded");
            }
    });
 };
@@ -356,7 +381,7 @@ undead.init.setupAjax = function () {
       "dataFilter" : function (rawData, type) {
          var data, mesg, i;
          if (undead.settings.debug) {
-            undead.ui.warn('raw data:' + rawData);
+            undead.ui.message('raw data:' + rawData);
          }
          if (type === "json") {
             try {
@@ -367,14 +392,14 @@ undead.init.setupAjax = function () {
                   window.location.reload();
                }
                if (typeof data.query !== "undefined") {
-                  undead.ui.warn(data.query);
+                  undead.ui.message(data.query);
                }
                if (typeof data.errors === "object") {
                   for (i = 0; i < data.errors.length; i += 1) {
                      mesg = "<i>" + data.errors[i].errstr + "</i> in " +
                             data.errors[i].errfile + " on line " +
                             data.errors[i].errline + ".";
-                     undead.ui.addError(data.errors[i].errno, mesg);
+                     undead.ui.logError(data.errors[i].errno, mesg);
                   }
                }
                if (typeof data.alert === "object") {
@@ -415,7 +440,7 @@ undead.init.setupAjax = function () {
          options.data = "format=" + options.dataType;
       }
       if (undead.settings.debug) {
-         undead.ui.warn("ajax data:" + options.data);
+         undead.ui.message("ajax data:" + options.data);
       }
    });
 };

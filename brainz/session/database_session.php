@@ -43,6 +43,12 @@ class DatabaseSession extends Session {
 
    public function create() {
       $this->session_id = $this->generate_id();
+      $this->set_cookie();
+      $this->state = 'new';
+      $this->session = array();
+   }
+
+   public function set_cookie() {
       setcookie(session_name(),
                 $this->session_id,
                 time() + $this->config['session']['timeout'],
@@ -50,14 +56,13 @@ class DatabaseSession extends Session {
                 $_SERVER['SERVER_NAME'],
                 false,
                 true);
-      $this->state = 'new';
-      $this->session = array();
    }
 
    public function regenerate_id() {
       $old_id = $this->session_id;
       $this->session_id = $this->generate_id();
       $this->session_model->update_id($this->session_id, $old_id);
+      $this->set_cookie();
    }
 
    public function set($a, $b = null) {

@@ -1,6 +1,6 @@
 <?php
 
-class Welcome extends BasicController {
+class Welcome extends Controller {
    public function index_run($request) {
    }
 }

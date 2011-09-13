@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/mobile.php");
 require_once(__DIR__ . "/../config.php");
 
-abstract class BasicController {
+abstract class Controller {
    protected $session;
    protected $save_status;
    protected $json;

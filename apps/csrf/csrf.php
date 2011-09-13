@@ -1,6 +1,6 @@
 <?php
 
-class Csrf extends BasicController {
+class Csrf extends Controller {
    public function index_run($request) {
       $csrf = $this->get_csrf_token();
       $this->json = array("status" => "success",

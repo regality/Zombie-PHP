@@ -8,9 +8,12 @@ class MysqlCrudTemplate extends ZombieTemplate {
       print_r($this->options);
          die("table option required:\nzombie.php <app> template=mysql_crud table=<table>\n");
       }
-      require(__DIR__ . "/../../config.php");
-      require($db_file);
-      $this->db = new $db_class($db_host, $db_user, $db_pass, $database);
+      $config = get_zombie_config();
+      $db_class = underscore_to_class($config['database']['type'] . '_' . 'database');
+      $this->db = new $db_class($config['database']['host'],
+                                $config['database']['user'],
+                                $config['database']['pass'],
+                                $config['database']['database']);
       $this->add_view('index');
       $this->add_view('edit');
       $this->add_model();
@@ -94,8 +97,9 @@ class MysqlCrudTemplate extends ZombieTemplate {
                $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
             } else if ($is_join) {
                $other_table = substr($field_name, 0, strlen($field_name) - 3);
+               $other_table_model_class = underscore_to_class($other_table . '_' . 'model');
                $this->replace['MODEL_GET_ALL'] .= 
-                  "      \${$other_table}_model = \$this->get_model(\"$other_table\");\n" . 
+                  "      \${$other_table}_model = new $other_table_model_class();\n" . 
                   "      \$this->$other_table = \${$other_table}_model->get_all();\n";
                $join_field = $this->get_table_join_field($other_table, $this->db);
                $this->replace['JOIN_FIELD'] = $join_field;

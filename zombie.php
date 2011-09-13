@@ -4,8 +4,8 @@
 // licensed under the General Public License version 2.
 // See the LICENSE file.
 
-require("brainz/util/util.php");
-require("brainz/util/autoload.php");
+require_once("brainz/util/util.php");
+require_once("brainz/util/autoload.php");
 
 function cli_main($argv) {
    $argc = count($argv);

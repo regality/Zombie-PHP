@@ -37,7 +37,7 @@ abstract class ZombieTemplate {
 
       $this->replace = array('SLUG' => $this->app,
                              'CLASS_NAME' => $class,
-                             'MODEL_CLASS_NAME' => $class . "Model");
+                             'MODEL_CLASS_NAME' => underscore_to_class($this->options['table'] . "_model"));
 
       $this->files = array();
       array_push(
@@ -65,11 +65,16 @@ abstract class ZombieTemplate {
    abstract function template_execute(); // user defined
 
    function add_model() {
-      array_push(
-         $this->files,
-         new TemplateFile($this->config['config']['zombie_root'] . "/model/" . $this->app . ".php",
-                          $this->config['config']['zombie_root'] . "/brainz/template/" . $this->template . "/model/model.php")
-      );
+      $model_file = $this->config['config']['zombie_root'] . "/model/" . $this->options['table'] . ".php";
+      if (!empty($this->options['table']) && !file_exists($model_file)) {
+         array_push(
+            $this->files,
+            new TemplateFile($model_file,
+                             $this->config['config']['zombie_root'] . "/brainz/template/" . $this->template . "/model/model.php")
+         );
+      } else {
+         echo "Model already exists. Not creating model.\n\n";
+      }
    }
 
    function add_view($view_name) {

@@ -1,6 +1,6 @@
 <?php
 
-class Console extends BasicController {
+class Console extends Controller {
    public function index_run($request) {
    }
 }

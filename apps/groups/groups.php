@@ -1,6 +1,6 @@
 <?php
 
-class Groups extends BasicController {
+class Groups extends SecureController {
    public $groups = array('admin');
 
    /*********************************************

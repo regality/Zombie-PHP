@@ -1,6 +1,6 @@
 <?php
 
-class Menu extends BasicController {
+class Menu extends Controller {
    public function index_run($request) {
       if ($this->session->is_set('username')) {
          $this->title = "Welcome, " . $this->session->get('username');

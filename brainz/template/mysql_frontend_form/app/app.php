@@ -1,6 +1,6 @@
 <?php
 
-class <CLASS_NAME> extends BasicController {
+class <CLASS_NAME> extends Controller {
 
    /*********************************************
     * run functions
@@ -21,7 +21,7 @@ class <CLASS_NAME> extends BasicController {
     *********************************************/
 
    public function create_save($request) {
-      $<SLUG>_model = $this->get_model("<SLUG>");
+      $<SLUG>_model = new <MODEL_CLASS_NAME>();
       if ($<SLUG>_model->insert($request)) {
          $this->json['status'] = "success";
       } else {

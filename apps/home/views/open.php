@@ -24,3 +24,10 @@
          <h1>Zombie PHP</h1>
       </div>
       <div id="content">
+      <div id="alerts">
+         <!--
+         <div class="error"><span class="title">ERROR:</span> This is an error.</div>
+         <div class="warn"><span class="title">WARNING:</span> This is a warning.</div>
+         <div class="mesg"><span class="title">MESSAGE:</span> This is a message.</div>
+         -->
+      </div>

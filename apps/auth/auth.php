@@ -1,6 +1,6 @@
 <?php
 
-class Auth extends BasicController {
+class Auth extends Controller {
    public function index_run($request) {
       if (!isset($request['username']) ||
           !isset($request['password'])) {

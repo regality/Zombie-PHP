@@ -1,6 +1,6 @@
 <?php
 
-abstract class SecureController extends BasicController {
+abstract class SecureController extends Controller {
    public function run($action = null, $request = null) {
       $this->prepare($action, $request);
       if (!isset($this->secure_methods) || in_array($this->action, $this->secure_methods)) {
