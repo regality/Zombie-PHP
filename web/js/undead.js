@@ -109,7 +109,7 @@ undead.tinymceOptions = {
 };
 
 undead.ui.wysiwyg = function (textarea) {
-   undead.util.loadScript('/js/tiny_mce/jquery.tinymce.js');
+   undead.util.importJs('/js/tiny_mce/jquery.tinymce.js');
    $(textarea).tinymce(undead.tinymceOptions);
 };
 
@@ -154,7 +154,7 @@ undead.util = {};
 undead.util.scripts = [];
 undead.util.stylesheets = [];
 
-undead.util.loadScript = function (url) {
+undead.util.importJs = function (url) {
    if (typeof undead.util.scripts[url] === "undefined") {
       $.ajax({"url" : undead.settings.baseUrl + url,
               "dataType" : "script",
@@ -182,7 +182,7 @@ undead.util.loadCSS = function (url) {
 undead.crypt = {};
 
 undead.crypt.hash = function (m) {
-   undead.util.loadScript("/js/sha256.min.js");
+   undead.util.importJs("/js/sha256.min.js");
    return Sha256.hash(m);
 };
 
@@ -364,7 +364,7 @@ undead.init = {};
 
 undead.init.init = function () {
    if (typeof JSON === "undefined") {
-      undead.util.loadScript("/js/json2.js");
+      undead.util.importJs("/js/json2.js");
    }
    undead.init.setupAjax();
 };
