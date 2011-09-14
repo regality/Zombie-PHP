@@ -42,8 +42,8 @@ abstract class ZombieTemplate {
       $this->files = array();
       array_push(
          $this->files,
-         new TemplateFile($this->config['config']['zombie_root'] . "/apps/" . $this->app . "/" . $this->app . ".php",
-                          $this->config['config']['zombie_root'] . "/brainz/template/" . $this->template . "/app/app.php")
+         new TemplateFile($this->config['zombie_root'] . "/apps/" . $this->app . "/" . $this->app . ".php",
+                          $this->config['zombie_root'] . "/brainz/template/" . $this->template . "/app/app.php")
       );
    }
 
@@ -65,12 +65,12 @@ abstract class ZombieTemplate {
    abstract function template_execute(); // user defined
 
    function add_model() {
-      $model_file = $this->config['config']['zombie_root'] . "/model/" . $this->options['table'] . ".php";
+      $model_file = $this->config['zombie_root'] . "/model/" . $this->options['table'] . ".php";
       if (!empty($this->options['table']) && !file_exists($model_file)) {
          array_push(
             $this->files,
             new TemplateFile($model_file,
-                             $this->config['config']['zombie_root'] . "/brainz/template/" . $this->template . "/model/model.php")
+                             $this->config['zombie_root'] . "/brainz/template/" . $this->template . "/model/model.php")
          );
       } else {
          echo "Model already exists. Not creating model.\n\n";
@@ -80,19 +80,19 @@ abstract class ZombieTemplate {
    function add_view($view_name) {
       array_push(
          $this->files,
-         new TemplateFile($this->config['config']['zombie_root'] . "/apps/" . $this->app . "/views/" . $view_name . ".php",
-                          $this->config['config']['zombie_root'] . "/brainz/template/" . $this->template . "/app/views/" . $view_name . ".php")
+         new TemplateFile($this->config['zombie_root'] . "/apps/" . $this->app . "/views/" . $view_name . ".php",
+                          $this->config['zombie_root'] . "/brainz/template/" . $this->template . "/app/views/" . $view_name . ".php")
       );
    }
 
    function get_field($field_name) {
       $field = new TemplateFile("/dev/null",
-          $this->config['config']['zombie_root'] . "/brainz/template/fields/" . $field_name . ".php");
+          $this->config['zombie_root'] . "/brainz/template/fields/" . $field_name . ".php");
       return $field;
    }
 
    function create_app_dirs($override = false) {
-      $app_dir = $this->config['config']['zombie_root'] . "/apps/" . $this->app;
+      $app_dir = $this->config['zombie_root'] . "/apps/" . $this->app;
       echo "creating directory $app_dir\n";
       if (!@mkdir($app_dir)) {
          echo "app folder already exists, not creating app\n" .
@@ -106,7 +106,7 @@ abstract class ZombieTemplate {
    }
 
    function does_model_exist($override = false) {
-      return file_exists($config['config']['zombie_root'] . "/model/" . $this->get_opt('app') . ".php");
+      return file_exists($config['zombie_root'] . "/model/" . $this->get_opt('app') . ".php");
    }
 
    function get_opt($name) {

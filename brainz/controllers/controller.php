@@ -85,7 +85,7 @@ abstract class Controller {
             $this->view = 'default';
             $this->default_run($this->request);
          } else {
-            include($this->config['config']['zombie_root'] .
+            include($this->config['zombie_root'] .
                     '/apps/home/views/404.php');
             return;
          }
@@ -112,7 +112,7 @@ abstract class Controller {
          }
          $this->render_json();
       } else {
-         $file = $this->config['config']['zombie_root'] . "/apps/" . $this->view_base . 
+         $file = $this->config['zombie_root'] . "/apps/" . $this->view_base . 
                  "/views/" . $this->view . ".php";
          if (file_exists($file)) {
             foreach (get_object_vars($this) as $var => $val) {
@@ -120,15 +120,15 @@ abstract class Controller {
             }
             if ($this->is_page) {
                if (!method_exists($menu, 'run')) {
-                  require_once($this->config['config']['zombie_root'] . '/apps/menu/menu.php');
+                  require_once($this->config['zombie_root'] . '/apps/menu/menu.php');
                   $menu = new Menu(); 
                }
                if (isset($token)) {
                   $token= $this->get_csrf_token();
                }
-               include($this->config['config']['zombie_root'] . "/apps/home/views/open.php");
+               include($this->config['zombie_root'] . "/apps/home/views/open.php");
                include($file);
-               include($this->config['config']['zombie_root'] . "/apps/home/views/close.php");
+               include($this->config['zombie_root'] . "/apps/home/views/close.php");
             } else {
                include($file);
             }
@@ -139,7 +139,7 @@ abstract class Controller {
    }
 
    public function handle_exception($e) {
-      if ($this->config['config']['env'] == 'dev') {
+      if ($this->config['env'] == 'dev') {
          $this->error((string)$e);
       } else {
          $this->error($e->getMessage());
@@ -202,7 +202,7 @@ abstract class Controller {
             if (isset($_SERVER['referer'])) {
                $domain = parse_url($_SERVER['referer']);
                $domain = $domain['host'];
-               if ($domain != $this->config['config']['domain']) {
+               if ($domain != $this->config['domain']) {
                   $this->save_status = "bad referer";
                   return;
                }
