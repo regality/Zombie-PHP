@@ -53,9 +53,10 @@ undead.ui.message = function (mesg) {
 };
 
 undead.ui.addAlert = function(type, title, mesg) {
+   mesg = $("<div/>").text(mesg).html();
+   mesg = mesg.replace(/\n/g,"<br />");
    var flash = $("<div style=\"display:none;\" class=\"" + type + "\"></div>");
-   flash.text(mesg);
-   flash.prepend("<span class=\"title\">" + title + ":</span> ");
+   flash.html("<span class=\"title\">" + title + ":</span>" + mesg);
    $("#alerts").append(flash);
    flash.slideDown("slow", function() {
       $(this).animate({"left":1}, undead.ui.alertShowTime, function() {
@@ -90,6 +91,7 @@ undead.ui.logError = function (title, mesg) {
 // add html to the console
 undead.ui.consoleAdd = function (html, text) {
    text = $("<div/>").text(text).html();
+   text = text.replace(/\n/g,"<br />");
    html = "<div class=\"console-mesg\">" +
           "<div class=\"console-mesg-close\">X</div>" + html + text + "</div>";
    $("#console-messages").append(html);

@@ -1,8 +1,9 @@
 <?php
 
+class MysqlException extends Exception { }
+
 class MysqlDatabase extends SqlDatabase {
    public static $db = false;
-   public static $errors = "";
 
    public function __construct($server, $username, $password, $database) {
       if (!$this->is_connected()) {
@@ -23,12 +24,13 @@ class MysqlDatabase extends SqlDatabase {
      return (boolean) MysqlDatabase::$db;
    }
 
-   public function exec($query, $params = array(), $html_safe = true, $debug = false) {
+   public function exec($query, $params = array(),
+                        $html_safe = true, $debug = false) {
+      $o_query = $query;
       $p_query = $query;
       $matches = array();
       $key = 0;
       foreach ($params as $value) {
-         
          ++$key;
          $match = '/\$' . $key . '\b/';
          $query = preg_replace($match, "", $query);
@@ -45,9 +47,7 @@ class MysqlDatabase extends SqlDatabase {
          }
       }
       if (preg_match('/\$\d+\b/', $query, $match)) {
-         trigger_error("Unkown SQL param in query: '" .
-                       $match[0] . "'", E_USER_WARNING);
-         return null;
+         throw new MysqlException("Wrong number of params in query: " .  $o_query);
       } else {
          if ($debug) {
             echo "<pre>" . $p_query . "</pre>";
@@ -57,24 +57,15 @@ class MysqlDatabase extends SqlDatabase {
 
          // Check for errors.
          $my_error = mysql_error();
-
-         // If there are errors, put them in the error list
          if (strlen($my_error) > 0) {
-             $this->errors .= $my_error;
-             trigger_error("Mysql Error: " . $my_error, E_USER_WARNING);
-             return false;
-         } else {
-             return new MysqlResult($result);
+             throw new MysqlException("Mysql Error: " . $my_error);
          }
+
+         return new MysqlResult($result);
       }
    }
 
-   public function get_errors() {
-     return $this->errors;
-   }
-
    public function last_insert_id($table = null) {
-      // $table only their for postgres compatability
       return mysql_insert_id();
    }
 

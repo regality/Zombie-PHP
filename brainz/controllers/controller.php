@@ -76,18 +76,27 @@ abstract class Controller {
    }
 
    public function execute() {
-      $run_func = $this->action . "_run";
-      $this->save_safe($this->action, $this->request);
-      if (method_exists($this, $run_func)) {
-         $this->$run_func($this->request);
-         $this->render();
-      } else if (method_exists($this, 'default_run')) {
-         $this->view = 'default';
-         $this->default_run($this->request);
-         $this->render();
-      } else {
-         include($this->config['config']['zombie_root'] . '/apps/home/views/404.php');
+      try {
+         $run_func = $this->action . "_run";
+         $this->save_safe($this->action, $this->request);
+         if (method_exists($this, $run_func)) {
+            $this->$run_func($this->request);
+         } else if (method_exists($this, 'default_run')) {
+            $this->view = 'default';
+            $this->default_run($this->request);
+         } else {
+            include($this->config['config']['zombie_root'] .
+                    '/apps/home/views/404.php');
+            return;
+         }
+      } catch (Exception $e) {
+         if ($this->config['config']['env'] == 'dev') {
+            $this->error((string)$e);
+         } else {
+            $this->error($e->getMessage());
+         }
       }
+      $this->render();
    }
 
    public function render() {

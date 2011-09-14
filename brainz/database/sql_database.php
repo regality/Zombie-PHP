@@ -10,7 +10,6 @@ abstract class SqlDatabase {
                                   $html_safe = true, $debug = false);
     abstract public function begin();
     abstract public function commit();
-    abstract public function get_errors();
 }
 
 abstract class SqlResult implements Iterator {

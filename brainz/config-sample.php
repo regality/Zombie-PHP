@@ -4,6 +4,7 @@ function get_zombie_config() {
    $config = array();
 
    $config['config'] = array();
+   $config['config']['env'] = 'dev';
    $config['config']['zombie_root'] = '/var/www/zombie';
    $config['config']['web_root'] = ''; 
    $config['config']['domain'] = 'zombiephp.com';

@@ -182,6 +182,8 @@ class UsersModel extends SqlModelBase {
          $user_id = $user['id'];
          return $this->update_password($user_id, $new_password);
       } else {
+         throw new Exception("Wrong password");
+         trigger_error("Wrong password", E_USER_WARNING);
          return false;
       }
    }
