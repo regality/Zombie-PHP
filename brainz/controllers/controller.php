@@ -90,11 +90,7 @@ abstract class Controller {
             return;
          }
       } catch (Exception $e) {
-         if ($this->config['config']['env'] == 'dev') {
-            $this->error((string)$e);
-         } else {
-            $this->error($e->getMessage());
-         }
+         $this->handle_exception($e);
       }
       $this->render();
    }
@@ -139,6 +135,14 @@ abstract class Controller {
          }
          render_errors_js();
          $this->render_js_mesg();
+      }
+   }
+
+   public function handle_exception($e) {
+      if ($this->config['config']['env'] == 'dev') {
+         $this->error((string)$e);
+      } else {
+         $this->error($e->getMessage());
       }
    }
 
