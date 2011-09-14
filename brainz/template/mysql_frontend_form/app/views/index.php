@@ -13,7 +13,7 @@ $(document).ready(function() {
    $(".<SLUG>-create").die('click').live('click', function() {
       var $form = $(this).parents("div.form");
       if (!undead.ui.verifyForm($form)) {
-         alert("Some required fields are msising.");
+         undead.ui.error("Some required fields are msising.");
          return;
       }
       $.ajax({"url":"app.php",

@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../config.php');
 function autoload_app($class) {
    $config = get_zombie_config();
    $slug = class_to_underscore($class);
-   include($config['config']['zombie_root'] . '/apps/' . $slug . '/' . $slug . '.php');
+   @include($config['config']['zombie_root'] . '/apps/' . $slug . '/' . $slug . '.php');
 }
 
 function autoload_session($class) {

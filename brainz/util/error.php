@@ -28,11 +28,11 @@ function render_errors_js() {
       ?>
       <script type="text/javascript">
       $(document).ready(function() {
+      var mesg;
       <?php foreach ($errors as $error): ?>
-
-         mesg = "<i><?= $error['errstr'] ?></i> in <?= $error['errfile'] ?>" +
-                " on line <?= $error['errline'] ?>.";
-         undead.ui.addError(<?= $error['errno'] ?>, mesg);
+      mesg = "<?= $error['errstr'] ?> in <?= $error['errfile'] ?>" +
+             " on line <?= $error['errline'] ?>.";
+      undead.ui.error(mesg, <?= $error['errno'] ?>);
       <?php endforeach ?>
       });
       </script>

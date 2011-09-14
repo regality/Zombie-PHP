@@ -18,7 +18,6 @@ ZOMBIE PHP
    - facebook/oauth/openid login app
    - register/signup app
    - captcha, add as option under frontend template
-   - move password app under users
 
  - make salt gen in user model os independent (linux/unix only right now)
 
@@ -32,17 +31,14 @@ ZOMBIE PHP
 
  - make simple way to use multiple db in same app
 
+ - Add dev,production modes
+
  - NEEDS unit tests for EVERYTHING
 
 UNDEAD JS
 =========
 
  - deal with latency (loading screen)
-
- - create error/messages div on page, no more alerts
-   - in progress
-
- - Check verifyForm() for bugs
 
  - improve performance (everything is too slow in IE)
    - May M$ burn in hell for their atrocities!

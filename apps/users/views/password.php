@@ -1,12 +1,9 @@
 <div class="form">
    <table>
       <tr>
-         <td>
-            <label>Old Password</label>
-         </td>
-         <td>
-            <input class="required" type="password" name="old_password" value="" />
-         </td>
+         <th colspan="2">
+            Changing password for <?= $username ?>
+         </th>
       </tr>
       <tr>
          <td>
@@ -25,16 +22,20 @@
          </td>
       </tr>
       <tr>
-         <td colspan="2">
+         <td>
             <button class="password-update">Update Password</button>
+         </td>
+         <td>
+            <button class="pop-active">Cancel</button>
          </td>
       </tr>
    </table>
+   <input type="hidden" name="id" value="<?= $request['id'] ?>" />
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
    $(".password-update").die('click').live('click', function() {
-      $form = $(this).parents("div.form");
+      var $form = $(this).parents("div.form");
       if (!undead.ui.verifyForm($form)) {
          undead.ui.error("Some required fields are msising.");
          return;
@@ -44,17 +45,17 @@ $(document).ready(function() {
          undead.ui.error("Passwords do not match.");
          return;
       }
-      oldPass = undead.crypt.hash($form.find("input[name=old_password]").val());
-      newPass = undead.crypt.hash($form.find("input[name=new_password_a]").val());
+      var newPass = undead.crypt.hash($form.find("input[name=new_password_a]").val());
+      var id = $form.find("input[name=id]").val();
       $.ajax({"url":"app.php",
-              "data":{"app":"password",
-                      "old_password":oldPass,
+              "data":{"app":"users",
+                      "id":id,
                       "new_password":newPass,
-                      "action":"update"},
+                      "action":"password_update"},
               "success":function(data) {
                   if (data.status === "success") {
-                     undead.stack.pop("password");
-                     undead.stack.push("password", "success");
+                     undead.stack.pop("users");
+                     undead.stack.refresh("users");
                   }
               }
       });

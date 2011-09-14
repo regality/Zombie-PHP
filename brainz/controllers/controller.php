@@ -10,21 +10,26 @@ abstract class Controller {
    protected $save_status;
    protected $json;
 
-   function __construct($sess = null) {
+   public function __construct($sess = null) {
       $this->config = get_zombie_config();
       $this->json = array();
       $this->is_page = false;
       $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
+      $this->view_base = class_to_underscore(get_class($this));
       if ($sess == null) {
          $sess_class = underscore_to_class($this->config['session']['type'] . '_' . 'session');
          $this->session = $sess_class::get_session();
       }
    }
 
-   function __destruct() {
+   public function __destruct() {
+   }
+
+   public function init() {
    }
 
    public function run($action = null, $request = null) {
+      $this->init();
       $this->prepare($action, $request);
       $this->execute();
    }
@@ -65,16 +70,21 @@ abstract class Controller {
    public function render() {
       if ($this->format == 'json') {
          $errors = get_error_array();
-         if (is_array($errors)) {
-            if (isset($this->json['errors'])) {
-               $this->json['errors'] = array_merge($this->json['errors'], $errors);
-            } else {
-               $this->json['errors'] = $errors;
-            }
+         if (!empty($errors)) {
+            $this->json['php_errors'] = $errors;
+         }
+         if (!empty($this->errors)) {
+            $this->json['errors'] = $this->errors;
+         }
+         if (!empty($this->warnings)) {
+            $this->json['warnings'] = $this->warnings;
+         }
+         if (!empty($this->messages)) {
+            $this->json['messages'] = $this->messages;
          }
          $this->render_json();
       } else {
-         $file = $this->config['config']['zombie_root'] . "/apps//" . class_to_underscore(get_class($this)) . 
+         $file = $this->config['config']['zombie_root'] . "/apps/" . $this->view_base . 
                  "/views/" . $this->view . ".php";
          if (file_exists($file)) {
             foreach (get_object_vars($this) as $var => $val) {
@@ -96,6 +106,34 @@ abstract class Controller {
             }
          }
          render_errors_js();
+         $this->render_js_mesg();
+      }
+   }
+
+   public function render_js_mesg() {
+      if (!empty($this->errors) ||
+          !empty($this->warnings) ||
+          !empty($this->messages)) {
+         echo '<script type="text/javascript">';
+         if (!empty($this->errors)) {
+            foreach ($this->errors as $error) {
+               echo "undead.ui.error(\"" . 
+                    htmlentities($error, ENT_QUOTES) . "\");\n";
+            }
+         }
+         if (!empty($this->warnings)) {
+            foreach ($this->warnings as $warning) {
+               echo "undead.ui.warn(\"" . 
+                    htmlentities($warning, ENT_QUOTES) . "\");\n";
+            }
+         }
+         if (!empty($this->messages)) {
+            foreach ($this->messages as $message) {
+               echo "undead.ui.message(\"" . 
+                    htmlentities($message, ENT_QUOTES) . "\");\n";
+            }
+         }
+         echo '</script>';
       }
    }
 
@@ -149,6 +187,27 @@ abstract class Controller {
          $this->session->set('csrf_token', $token);
       }
       return $token;
+   }
+
+   public function error($mesg) {
+      if (empty($this->errors)) {
+         $this->errors = array();
+      }
+      array_push($this->errors, $mesg);
+   }
+
+   public function warn($mesg) {
+      if (empty($this->warnings)) {
+         $this->warnings = array();
+      }
+      array_push($this->warnings, $mesg);
+   }
+
+   public function message($mesg) {
+      if (empty($this->messages)) {
+         $this->messages = array();
+      }
+      array_push($this->messages, $mesg);
    }
 
 }

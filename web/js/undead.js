@@ -17,28 +17,45 @@ undead.ui = {};
 
 undead.ui.alertShowTime = 2000;
 
+undead.ui.errorLevels = {
+   100 : "Message",
+   101 : "Warning",
+   102 : "Error",
+   2 : "PHP Warning",
+   8 : "PHP Notice",
+   512 : "PHP User Warning",
+   1024 : "PHP User Notice",
+   2048 : "PHP Strict"
+};
+
 // reports an error 
-undead.ui.error = function (mesg) {
-   undead.ui.addAlert("error", mesg);
-   undead.ui.logError(102, mesg);
+undead.ui.error = function (mesg, level) {
+   var title;
+   if (level != null) {
+      title = undead.ui.errorLevels[level];
+   } else {
+      title = "error";
+   }
+   undead.ui.addAlert("error", title, mesg);
+   undead.ui.logError(title, mesg);
 };
 
 // warning message
 undead.ui.warn = function (mesg) {
-   undead.ui.addAlert("warning", mesg);
-   undead.ui.logError(101, mesg);
+   undead.ui.addAlert("warning", "warning", mesg);
+   undead.ui.logError("Warning", mesg);
 };
 
 // you just wanted to say hi
 undead.ui.message = function (mesg) {
-   undead.ui.addAlert("message", mesg);
+   undead.ui.addAlert("message", "message", mesg);
    undead.ui.logMessage("message", mesg);
 };
 
-undead.ui.addAlert = function(type, mesg) {
+undead.ui.addAlert = function(type, title, mesg) {
    var flash = $("<div style=\"display:none;\" class=\"" + type + "\"></div>");
    flash.text(mesg);
-   flash.prepend("<span class=\"title\">" + type + ":</span> ");
+   flash.prepend("<span class=\"title\">" + title + ":</span> ");
    $("#alerts").append(flash);
    flash.slideDown("slow", function() {
       $(this).animate({"left":1}, undead.ui.alertShowTime, function() {
@@ -59,17 +76,8 @@ undead.ui.logMessage = function (title, mesg) {
 };
 
 // add an error to the console
-undead.ui.logError = function (level, mesg) {
-   var levels, title, html;
-   levels = {100 : "Message",
-             101 : "Warning",
-             102 : "Error",
-             2 : "PHP Warning",
-             8 : "PHP Notice",
-             512 : "PHP User Warning",
-             1024 : "PHP User Notice",
-             2048 : "PHP Strict"};
-   title = levels[level];
+undead.ui.logError = function (title, mesg) {
+   var html;
    html = "<div class=\"console-error\">" + title + "</div>";
    // fix this ugly hack that doesn't work properly
    undead.oldConsoleColor = $("a[href^='/console']").css("color");
@@ -154,12 +162,17 @@ undead.util = {};
 undead.util.scripts = [];
 undead.util.stylesheets = [];
 
-undead.util.importJs = function (url) {
+undead.util.importJs = function (url, callback) {
    if (typeof undead.util.scripts[url] === "undefined") {
-      $.ajax({"url" : undead.settings.baseUrl + url,
-              "dataType" : "script",
-              "async" : false});
+      var ajaxData = {"url" : undead.settings.baseUrl + url,
+                      "dataType" : "script"};
+      if (typeof callback == "function") {
+         ajaxData.success = callback;
+      } else {
+         ajaxData.async = false;
+      }
       undead.util.scripts[url] = "loaded";
+      $.ajax(ajaxData);
    }
 };
 
@@ -394,23 +407,32 @@ undead.init.setupAjax = function () {
                if (typeof data.query !== "undefined") {
                   undead.ui.message(data.query);
                }
+               if (typeof data.php_errors === "object") {
+                  for (i = 0; i < data.php_errors.length; i += 1) {
+                     mesg = data.php_errors[i].errstr + " in " +
+                            data.php_errors[i].errfile + " on line " +
+                            data.php_errors[i].errline + ".";
+                     undead.ui.error(mesg, data.php_errors[i].errno);
+                  }
+               }
                if (typeof data.errors === "object") {
                   for (i = 0; i < data.errors.length; i += 1) {
-                     mesg = "<i>" + data.errors[i].errstr + "</i> in " +
-                            data.errors[i].errfile + " on line " +
-                            data.errors[i].errline + ".";
-                     undead.ui.logError(data.errors[i].errno, mesg);
+                     undead.ui.error(data.errors[i]);
                   }
                }
-               if (typeof data.alert === "object") {
-                  for (i = 0; i < data.alert.length; i += 1) {
-                     undead.ui.warn(data.alert[i]);
+               if (typeof data.messages === "object") {
+                  for (i = 0; i < data.messages.length; i += 1) {
+                     undead.ui.message(data.messages[i]);
                   }
-               } else if (typeof data.alert !== "undefined") {
-                  undead.ui.warn(data.alert);
+               }
+               if (typeof data.warnings === "object") {
+                  for (i = 0; i < data.warnings.length; i += 1) {
+                     undead.ui.warn(data.warnings[i]);
+                  }
                }
             } catch (e) {
-               undead.ui.warn('error parsing json:' + rawData);
+               // this needs to only catch json exceptions
+               undead.ui.error('error parsing json:' + rawData);
             }
          } else {
             if (rawData === "logged out") {

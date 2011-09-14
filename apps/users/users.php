@@ -35,6 +35,27 @@ class Users extends SecureController {
    public function create_run($request) {
    }
 
+   public function password_run($request) {
+      $users_model = new UsersModel();
+      $user = $users_model->get_one($request['id']);
+      $this->username = $user['username'];
+   }
+
+   public function password_update_run($request) {
+   }
+
+   public function password_update_save($request) {
+      $users_model = new UsersModel();
+      $success = $users_model->update_password($request['id'],
+                                               $request['new_password']);
+      if ($success) {
+         $this->json['status'] = "success";
+      } else {
+         $this->json['status'] = "failed";
+         $this->error('Could not update password.');
+      }
+   }
+
    public function create_save($request) {
       $users_model = new UsersModel();
       if ($users_model->insert($request)) {

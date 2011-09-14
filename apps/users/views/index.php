@@ -9,13 +9,15 @@
       <th>Lastname</th>
       <th></th>
       <th></th>
+      <th></th>
    </tr>
    <?php foreach ($users as $row): ?>
    <tr>
       <td><?= $row['username'] ?></td>
       <td><?= $row['firstname'] ?></td>
       <td><?= $row['lastname'] ?></td>
-      <td><a class="users-edit" href="#" users_id="<?= $row['id'] ?>">edit</a></td>
+      <td><a href="/users/edit?id=<?= $row['id'] ?>">edit</a></td>
+      <td><a href="/users/password?id=<?= $row['id'] ?>">change password</a></td>
       <td><a class="users-delete" href="#" users_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
    <?php endforeach ?>
@@ -23,11 +25,6 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-   $(".users-edit").click(function(e) {
-      e.preventDefault();
-      undead.stack.push("users", "edit", {"id":$(this).attr("users_id")});
-   });
-
    $(".users-delete").click(function(e) {
       e.preventDefault();
       $row = $(this).parents("tr");
@@ -43,7 +40,7 @@ $(document).ready(function() {
    $(".users-create").die('click').live('click', function() {
       $form = $(this).parents("div.form");
       if (!undead.ui.verifyForm($form)) {
-         alert("Some required fields are msising.");
+         undead.ui.error("Some required fields are msising.");
          return;
       }
       groups = new Array();
@@ -51,13 +48,13 @@ $(document).ready(function() {
          groups.push($(this).val());
       });
       if (groups.length == 0) {
-         alert("You must select at least one group.");
+         undead.ui.error("You must select at least one group.");
          return
       }
       pw1 = $form.find("input[name=password1]").val();
       pw2 = $form.find("input[name=password2]").val();
       if (pw1 != pw2) {
-         alert('Passwords do not match');
+         undead.ui.error('Passwords do not match');
          retun;
       }
       hex_pass = undead.crypt.hash(pw1);
@@ -80,7 +77,7 @@ $(document).ready(function() {
    $(".users-update").die('click').live('click', function() {
       $form = $(this).parents("div.form");
       if (!undead.ui.verifyForm($form)) {
-         alert("Some required fields are msising.");
+         undead.ui.error("Some required fields are msising.");
          return;
       }
       groups = new Array();
@@ -88,7 +85,7 @@ $(document).ready(function() {
          groups.push($(this).val());
       });
       if (groups.length == 0) {
-         alert("You must select at least one group.");
+         undead.ui.error("You must select at least one group.");
          return
       }
       $.ajax({"url":"app.php",
