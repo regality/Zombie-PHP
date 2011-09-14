@@ -111,14 +111,14 @@ undead.ui.verifyForm = function (form) {
    return formDone;
 };
 
-undead.tinymceOptions = {
+undead.ui.tinymceOptions = {
    script_url : undead.settings.baseUrl + '/js/tiny_mce/tiny_mce.js',
    theme : "simple"
 };
 
 undead.ui.wysiwyg = function (textarea) {
    undead.util.importJs('/js/tiny_mce/jquery.tinymce.js');
-   $(textarea).tinymce(undead.tinymceOptions);
+   $(textarea).tinymce(undead.ui.tinymceOptions);
 };
 
 /**************************************************
