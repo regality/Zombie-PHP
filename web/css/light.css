@@ -17,7 +17,7 @@ height: 100%;
 body {
 font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
-background: white;
+background: white url('/images/bg-light.png') repeat-y left top;
 color: black;
 height: 100%;
 }
@@ -51,22 +51,42 @@ background-color: #e8edff;
 color: black;
 }
 
-.demoHeaders { margin-top: 2em; }
-#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
-ul#icons {margin: 0; padding: 0;}
-ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
-ul#icons span.ui-icon {float: left; margin: 0 4px;}
+#main {
+width: 900px;
+height: 90%;
+}
+
+#sidenav {
+width: 200px;
+padding-left: 100px;
+padding-top: 100px;
+height: 93%;
+float: left;
+}
 
 #header {
-position: absolute;
-top: 0px;
-left: 300px;
 width: 550px;
-margin: 0px auto;
 height: 90px;
 padding: 15px;
 padding-bottom: 0px;
+float: left;
+}
+
+#content {
+width: 550px;
+padding: 15px 20px;
+float: left;
+}
+
+#footer {
+width: 100%;
+float: left;
+}
+
+#footer-content {
+border-top: 1px solid #999;
+padding: 5px 20px;
+margin-left: 300px;
 }
 
 #header h1 {
@@ -78,24 +98,9 @@ float: left;
 }
 
 #header img {
-float: left;
 height: 90px;
 display: inline-block;
-}
-
-#main {
-width: 1000px;
-position: absolute;
-height: 100%;
-}
-
-#sidenav {
-width: 200px;
-height: 100%;
-min-height: 100%;
-padding-left: 100px;
-padding-top: 100px;
-background: #b9d1ff;
+float: left;
 }
 
 a.item {
@@ -125,15 +130,6 @@ text-align: right;
 background: white;
 color: #f60;
 font-weight: bold;
-}
-
-#content {
-position: absolute;
-top: 100px;
-left: 300px;
-width: 550px;
-padding: 15px 20px;
-height: 100%;
 }
 
 #login {
@@ -244,3 +240,11 @@ color: white;
 background-color: #3355cc;
 border-color: #223377;
 }
+
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+

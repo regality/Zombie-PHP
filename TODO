@@ -11,9 +11,6 @@ ZOMBIE PHP
 
  - Make sure session times out properly
 
- - Move mobile detection to cookie/session
-   - allow for client to override mobile
-
  - Add new apps
    - facebook/oauth/openid login app
    - register/signup app
@@ -47,23 +44,19 @@ UNDEAD JS
 
  - abstract out alert,logged in,etc, for ajax requests and make extensible
 
+ - add refresh attribute to app launchers
+
  - NEEDS unit tests for EVERYTHING
 
 FRONTEND
 ========
 
  - beautify mobile version
-   - dark template looks ugly in android
+   - buttons break with larger content
    - wrong scale in mobile firefox
    - needs testing in iphone, windows ce, etc
 
- - add a footer
-   - copyright or something
-   - option to switch to full version if looking at mobile
-
  - welcome page should be quick-start instructions
-
- - sidenav doesn't scale to larger content
 
 TEMPLATING SYSTEM
 =================

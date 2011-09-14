@@ -9,28 +9,51 @@ abstract class Controller {
    protected $session;
    protected $save_status;
    protected $json;
+   static protected $mobile_set = false;
 
-   public function __construct($sess = null) {
+   public function __construct() {
       $this->config = get_zombie_config();
       $this->json = array();
       $this->is_page = false;
-      $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
       $this->view_base = class_to_underscore(get_class($this));
-      if ($sess == null) {
-         $sess_class = underscore_to_class($this->config['session']['type'] . '_' . 'session');
-         $this->session = $sess_class::get_session();
-      }
+      $sess_class = underscore_to_class($this->config['session']['type'] . '_' . 'session');
+      $this->session = $sess_class::get_session();
+      $this->mobile_init();
    }
 
    public function __destruct() {
+   }
+
+   public function mobile_init() {
+      if (!Controller::$mobile_set && isset($_GET['mobile'])) {
+         $this->is_mobile = (boolean)$_GET['mobile'];
+         $mobile_device = is_mobile($_SERVER['HTTP_USER_AGENT']);
+         if (!$this->is_mobile && $mobile_device) {
+            $cookie = 'o';
+         } else if ($this->is_mobile) {
+            $cookie = 'y';
+         } else {
+            $cookie = 'n';
+         }
+         setcookie('m', $cookie, time() + 86400);
+         $_COOKIE['m'] = $cookie;
+         Controller::$mobile_set = true;
+      } else if (!isset($_COOKIE['m'])) {
+         $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
+         $cookie = ($this->is_mobile ? 'y' : 'n');
+         setcookie('m', $cookie, time() + 31536000);
+         $_COOKIE['m'] = $cookie;
+      } else {
+         $this->is_mobile = ($_COOKIE['m'] == 'y' ? true : false);
+      }
    }
 
    public function init() {
    }
 
    public function run($action = null, $request = null) {
-      $this->init();
       $this->prepare($action, $request);
+      $this->init();
       $this->execute();
    }
 

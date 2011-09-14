@@ -65,7 +65,8 @@ top: -20px;
 display: none;
 }
 
-#main {
+#footer {
+border-top: 1px solid #999;
 }
 
 #sidenav {
@@ -180,4 +181,42 @@ color: #dd7500;
 h3 {
 color: black;
 text-transform: uppercase;
+}
+
+#alerts {
+font-family: "Courier New";
+font-weight: bold;
+}
+
+#alerts div {
+width: 550px;
+position: relative;
+padding: 3px;
+z-index: 10;
+border-width: 0px 2px 2px 2px;
+border-style: solid;
+}
+
+#alerts .title {
+font-size: medium;
+text-transform: uppercase;
+font-weight: bold;
+}
+
+#alerts .error {
+color: white;
+background-color: #cc0000;
+border-color: #770000;
+}
+
+#alerts .warning {
+color: black;
+background-color: #cccc00;
+border-color: #777700;
+}
+
+#alerts .message {
+color: white;
+background-color: #3355cc;
+border-color: #223377;
 }

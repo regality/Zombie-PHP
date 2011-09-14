@@ -180,14 +180,7 @@ class UsersModel extends SqlModelBase {
       $user = $this->is_valid_user($username, $old_password);
       if ($user) {
          $user_id = $user['id'];
-         $salt = $this->gen_bcrypt_salt();
-         $pass_hash = $this->bcrypt($new_password, $salt);
-         $query = "UPDATE users
-                   SET salt = $1
-                     , password = $2
-                   WHERE id = $3";
-         $params = array($salt, $pass_hash, $user_id);
-         return (boolean) $this->db->exec($query, $params, false);
+         return $this->update_password($user_id, $new_password);
       } else {
          return false;
       }

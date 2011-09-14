@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
    <title>Zombie PHP</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-   <link rel="stylesheet" href="<?= $config['config']['web_root'] ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>light.css" type="text/css" />
+   <link rel="stylesheet" href="<?= $config['config']['web_root'] ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>dark.css" type="text/css" />
    <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/jquery.min.js"></script>
    <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/undead.js"></script>
    <script type="text/javascript" src="<?= $config['config']['web_root'] ?>/js/main.js"></script>
@@ -19,15 +19,12 @@
 </head>
 <body>
    <div id="main">
+      <div id="sidenav">
+         <?php $menu->run("index", array('active' => $action)) ?>
+      </div>
       <div id="header">
          <img src="<?= $config['config']['web_root'] ?>/images/zombie-glasses.png" alt="logo" />
          <h1>Zombie PHP</h1>
       </div>
       <div id="content">
-      <div id="alerts">
-         <!--
-         <div class="error"><span class="title">ERROR:</span> This is an error.</div>
-         <div class="warn"><span class="title">WARNING:</span> This is a warning.</div>
-         <div class="mesg"><span class="title">MESSAGE:</span> This is a message.</div>
-         -->
-      </div>
+         <div id="alerts"></div>
