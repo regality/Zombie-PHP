@@ -3,10 +3,9 @@
 function get_zombie_config() {
    $config = array();
 
-   $config = array();
    $config['env'] = 'dev';
    $config['domain'] = 'zombiephp.com';
-   $config['web_root'] = ''; 
+   $config['web_root'] = '';
    $config['zombie_root'] = '/var/www/zombie';
 
    $config['database'] = array();
