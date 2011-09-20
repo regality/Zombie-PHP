@@ -6,7 +6,7 @@
 <?php if ($action != 'console'): ?>
    <div class="app-stack" id="console-stack" app="console" style="display:none;">
       <div class="app-content" action="index">
-         <?php $console->run() ?>
+         <?php $console->run("index") ?>
       </div>
    </div>
 <?php endif ?>

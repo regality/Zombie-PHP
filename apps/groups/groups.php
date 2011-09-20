@@ -1,42 +1,43 @@
 <?php
 
-class Groups extends SecureController {
+//class Groups extends SecureController {
+class Groups extends Controller {
    public $groups = array('admin');
 
    /*********************************************
     * run functions
     *********************************************/
 
-   public function index_run($request) {
+   public function indexRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->get_all();
+      $this->groups = $groups_model->getAll();
    }
 
-   public function edit_run($request) {
+   public function editRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->get_one($request['id']);
+      $this->groups = $groups_model->getOne($request['id']);
       $this->form_action = 'update';
    }
 
-   public function new_run($request) {
+   public function newRun($request) {
       $this->view = 'edit';
       $this->form_action = 'create';
    }
 
-   public function update_run($request) {
+   public function updateRun($request) {
    }
 
-   public function delete_run($request) {
+   public function deleteRun($request) {
    }
 
-   public function create_run($request) {
+   public function createRun($request) {
    }
 
    /*********************************************
     * save functions
     *********************************************/
 
-   public function create_save($request) {
+   public function createSave($request) {
       $groups_model = new GroupsModel();
       if ($groups_model->insert($request)) {
          $this->json['status'] = "success";
@@ -45,7 +46,7 @@ class Groups extends SecureController {
       }
    }
 
-   public function update_save($request) {
+   public function updateSave($request) {
       $groups_model = new GroupsModel();
       if ($groups_model->update($request['id'], $request)) {
          $this->json['status'] = "success";
@@ -54,7 +55,7 @@ class Groups extends SecureController {
       }
    }
 
-   public function delete_save($request) {
+   public function deleteSave($request) {
       $groups_model = new GroupsModel();
       if ($groups_model->delete($request['id'])) {
          $this->json['status'] = "success";

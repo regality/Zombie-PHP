@@ -7,11 +7,11 @@ class DatabaseSession extends Session {
    protected function __construct() {
       parent::__construct();
       $this->session_model = new SessionModel();
-      $this->session_model->clear_old($this->config['session']['timeout']);
+      $this->session_model->clearOld($this->config['session']['timeout']);
       $this->session = false;
       if (isset($_COOKIE[session_name()])) {
          $this->session_id = $_COOKIE[session_name()];
-         $this->session = $this->session_model->get_session($this->session_id);
+         $this->session = $this->session_model->getSession($this->session_id);
       }
       if (!$this->session) {
          $this->create();
@@ -28,7 +28,7 @@ class DatabaseSession extends Session {
       $this->save();
    }
 
-   public function get_array() {
+   public function getArray() {
       return $this->session;
    }
 
@@ -42,13 +42,13 @@ class DatabaseSession extends Session {
    }
 
    public function create() {
-      $this->session_id = $this->generate_id();
-      $this->set_cookie();
+      $this->session_id = $this->generateId();
+      $this->setCookie();
       $this->state = 'new';
       $this->session = array();
    }
 
-   public function set_cookie() {
+   public function setCookie() {
       setcookie(session_name(),
                 $this->session_id,
                 time() + $this->config['session']['timeout'],
@@ -58,11 +58,11 @@ class DatabaseSession extends Session {
                 true);
    }
 
-   public function regenerate_id() {
+   public function regenerateId() {
       $old_id = $this->session_id;
-      $this->session_id = $this->generate_id();
-      $this->session_model->update_id($this->session_id, $old_id);
-      $this->set_cookie();
+      $this->session_id = $this->generateId();
+      $this->session_model->updateId($this->session_id, $old_id);
+      $this->setCookie();
    }
 
    public function set($a, $b = null) {
@@ -81,7 +81,7 @@ class DatabaseSession extends Session {
       }
    }
 
-   public function is_set($key) {
+   public function exists($key) {
       return isset($this->session[$key]);
    }
 

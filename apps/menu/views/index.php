@@ -7,6 +7,6 @@
    <a href="/<?= $app ?>" class="item <?= $is_active ?>"><?= $settings['name'] ?></a>
 <?php endforeach ?>
 
-<?php if ($session->is_set("username")): ?>
+<?php if ($session->exists("username")): ?>
    <a href="javascript:void(0)" class="item" id="logout">Logout</a>
 <?php endif ?>

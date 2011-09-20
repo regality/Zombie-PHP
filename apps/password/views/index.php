@@ -1,6 +1,9 @@
 <div class="form">
    <table>
       <tr>
+         <th colspan="2">Changing Your Password</th>
+      </tr>
+      <tr>
          <td>
             <label>Old Password</label>
          </td>

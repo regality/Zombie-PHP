@@ -6,22 +6,22 @@ class Password extends SecureController {
     * run functions
     *********************************************/
 
-   public function index_run($request) {
+   public function indexRun($request) {
    }
 
-   public function update_run($request) {
+   public function updateRun($request) {
    }
 
-   public function success_run($request) {
+   public function successRun($request) {
    }
 
    /*********************************************
     * save functions
     *********************************************/
 
-   public function update_save($request) {
+   public function updateSave($request) {
       $users_model = new UsersModel();
-      $success = $users_model->update_my_password($this->session->get("username"),
+      $success = $users_model->updateMyPassword($this->session->get("username"),
                                                   $request['old_password'],
                                                   $request['new_password']);
       if ($success) {

@@ -3,7 +3,7 @@
 global $_ERRORS;
 $_ERRORS = array();
 
-function error_store($errno, $errstr, $errfile, $errline) {
+function errorStore($errno, $errstr, $errfile, $errline) {
    if (!(error_reporting() & $errno)) {
       return;
    }
@@ -14,15 +14,15 @@ function error_store($errno, $errstr, $errfile, $errline) {
    array_push($GLOBALS['_ERRORS'], $e);
 }
 
-function get_error_array() {
+function getErrorArray() {
    return $GLOBALS['_ERRORS'];
 }
 
-function clear_errors() {
+function clearErrors() {
    $GLOBALS['_ERRORS'] = array();
 }
 
-function render_errors_js() {
+function renderErrorsJs() {
    $errors = $GLOBALS['_ERRORS'];
    if (count($errors) > 0) {
       ?>
@@ -41,6 +41,6 @@ function render_errors_js() {
    $GLOBALS['_ERRORS'] = array();
 }
 
-set_error_handler("error_store");
+set_error_handler("errorStore");
 
 ?>

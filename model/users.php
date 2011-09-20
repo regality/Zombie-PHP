@@ -1,41 +1,46 @@
 <?php
 
-class UsersModel extends SqlModelBase {
-   public function get_all() {
-      $query = 'SELECT users.id
-                     , users.username
-                     , users.firstname
-                     , users.lastname
-                     , users.password
-                FROM users
-                ORDER BY username';
-      $result = $this->db->exec($query);
-      return $result;
+class UsersModel extends ModelBase {
+   public function getAll() {
+      $query = new MysqlQuery(
+         'SELECT users.id
+               , users.username
+               , users.firstname
+               , users.lastname
+               , users.password
+          FROM users
+          ORDER BY username'
+      );
+      return $query->query();
    }
 
-   public function get_one($id) {
-      $query = 'SELECT users.id
-                     , users.username
-                     , users.firstname
-                     , users.lastname
-                     , users.password
-                FROM users
-                WHERE id = $1';
-      $params = array($id);
-      $result = $this->db->exec($query, $params)->fetch_one();
+   public function getOne($id) {
+      $query = new MysqlQuery(
+         'SELECT id
+               , username
+               , firstname
+               , lastname
+               , password
+          FROM users
+          WHERE id = $1'
+      );
+      $query->addParam($id);
+      $result = $query->query()->fetchOne();
       if (is_array($result)) {
-         $result['groups'] = $this->get_user_groups($result['id']);
+         $result['groups'] = $this->getUserGroups($result['id']);
       }
       return $result;
    }
 
-   public function get_user_groups($id) {
-      $query = 'SELECT name
-                FROM users_groups
-                LEFT JOIN groups on groups_id = groups.id
-                WHERE users_id = $1';
-      $params = array($id);
-      $result = $this->db->exec($query, $params);
+   public function getUserGroups($id) {
+      $query = new MysqlQuery(
+         'SELECT name
+          FROM users_groups
+          LEFT JOIN groups on groups_id = groups.id
+          WHERE users_id = $1'
+      );
+      $query->addParam($id);
+      $result = $query->query();
 
       if ($result) {
          $groups_arr = array();
@@ -49,44 +54,48 @@ class UsersModel extends SqlModelBase {
    }
 
    public function delete($id) {
-      $user_query = "DELETE FROM users
-                     WHERE id = $1";
-      $group_query = "DELETE FROM users_groups
-                      WHERE users_id = $1";
-      $params = array($id);
-      return (boolean)$this->db->exec($user_query, $params) &&
-             (boolean)$this->db->exec($group_query, $params);
+      $user_query = new MysqlQuery(
+         'DELETE FROM users
+          WHERE id = $1'
+      );
+      $user_query->addParam($id);
+
+      $group_query = new MysqlQuery(
+         'DELETE FROM users_groups
+          WHERE users_id = $1'
+      );
+      $group_query->addParam($id);
+
+      return $user_query->exec() && $group_query->exec();
    }
 
-   public function insert($request) {
-      $query = 'INSERT into users
-                  ( id
-                  , username
-                  , firstname
-                  , lastname
-                  , salt
-                  , password)
-                VALUES
-                  (DEFAULT, $1, $2, $3, $4, $5)';
+   public function insert($username, $firstname, $lastname,
+                          $password, array $groups) {
+      $query = new MysqlQuery(
+         'INSERT into users
+          (id, username, firstname, lastname, salt, password)
+          VALUES
+          (DEFAULT, $1, $2, $3, $4, $5)'
+      );
 
-      $salt = $this->gen_bcrypt_salt();
+      $salt = $this->genBcryptSalt();
+      $password = $this->bcrypt($password, $salt);
 
-      $params = array();
-      $params[] = $request['username'];
-      $params[] = $request['firstname'];
-      $params[] = $request['lastname'];
-      $params[] = $salt;
-      $params[] = $this->bcrypt($request['password'], $salt);
+      $query->addParam($username);
+      $query->addParam($firstname);
+      $query->addParam($lastname);
+      $query->addParam($salt);
+      $query->addParam($password);
 
-      if ((boolean) $this->db->exec($query, $params)) {
-         $user_id = $this->db->last_insert_id('users');
-         return $this->insert_users_groups($user_id, $request['groups']);
+      if ($query->exec()) {
+         $user_id = $query->lastInsertId('users');
+         return $this->insertUsersGroups($user_id, $groups);
       } else {
          return false;
       }
    }
 
-   public function gen_rsa_keys($passphrase) {
+   public function getRSAKeys($passphrase) {
       // generate a 1024 bit rsa private key, returns a php resource, save to file
       $privateKey = openssl_pkey_new(array(
          'private_key_bits' => 512,
@@ -102,7 +111,7 @@ class UsersModel extends SqlModelBase {
                    "private" => $privateKeyStr);
    }
 
-   public function gen_bcrypt_salt() {
+   public function genBcryptSalt() {
       $rand_bits = fread(fopen('/dev/urandom', 'r'), 32);
       $rand_bits = base64_encode($rand_bits);
       $rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
@@ -116,57 +125,63 @@ class UsersModel extends SqlModelBase {
       return $hash;
    }
 
-   public function insert_users_groups($user_id, $groups_arr) {
-      $query = 'DELETE FROM users_groups
-                WHERE users_id = $1';
-      $params = array($user_id);
-      $this->db->exec($query, $params);
+   public function insertUsersGroups($user_id, array $groups_arr) {
+      $query = new MysqlQuery(
+         'DELETE FROM users_groups
+          WHERE users_id = $1'
+      );
+      $query->addParam($user_id);
+      $query->exec();
 
-      $query = 'INSERT INTO users_groups
+      $query_str = 'INSERT INTO users_groups
                  (users_id, groups_id)
                 VALUES ';
-      $i = 1;
-      foreach ($groups_arr as $group_id) {
-         ++$i;
-         $query .= '($1, $' . $i . '),';
-         array_push($params, $group_id);
+      for ($i = 0; $i < count($groups_arr); ++$i) {
+         $query_str .= '($1, $' . ($i + 1) . '),';
       }
-      $query = rtrim($query, ',');
-      return (boolean) $this->db->exec($query, $params);
+      $query_str = rtrim($query_str, ',');
+      $query = new MysqlQuery($query_str);
+      $query->addParam($user_id);
+      $query->addParams($groups_arr);
+      return $query->exec();
    }
 
-   public function update($id, $request) {
-      $query = 'UPDATE users
-                SET username = $2 
-                  , firstname = $3 
-                  , lastname = $4 
-                WHERE id = $1';
-      $params = array();
-      $params[] = $request['id'];
-      $params[] = $request['username'];
-      $params[] = $request['firstname'];
-      $params[] = $request['lastname'];
-      if ((boolean) $this->db->exec($query, $params)) {
-         return $this->insert_users_groups($request['id'], $request['groups']);
+   public function update($id, $username, $firstname,
+                          $lastname, array $groups) {
+      $query = new MysqlQuery(
+         'UPDATE users
+          SET username = $2 
+            , firstname = $3 
+            , lastname = $4 
+          WHERE id = $1'
+      );
+      $query->addParam($username);
+      $query->addParam($firstname);
+      $query->addParam($lastname);
+      $query->addParam($id);
+      if ($query->exec()) {
+         return $this->insertUsersGroups($id, $groups);
       } else {
          return false;
       }
    }
 
-   public function is_valid_user($username, $password) {
-      $query = "SELECT id
-                     , firstname
-                     , lastname
-                     , salt
-                     , password
-                FROM users
-                WHERE username = $1";
-      $params = array($username);
-      $result = $this->db->exec($query, $params);
-      if ($result->num_rows() == 1) {
-         $user = $result->fetch_one();
+   public function isValidUser($username, $password) {
+      $query = new MysqlQuery(
+         'SELECT id
+               , firstname
+               , lastname
+               , salt
+               , password
+          FROM users
+          WHERE username = $1'
+      );
+      $query->addParam($username);
+      $result = $query->query();
+      if ($result->numRows() == 1) {
+         $user = $result->fetchOne();
          if ($this->bcrypt($password, $user['salt']) == $user['password']) {
-            $user['groups'] = $this->get_user_groups($user['id']);
+            $user['groups'] = $this->getUserGroups($user['id']);
             return $user;
          } else {
             return false;
@@ -176,27 +191,31 @@ class UsersModel extends SqlModelBase {
       }
    }
 
-   public function update_my_password($username, $old_password, $new_password) {
-      $user = $this->is_valid_user($username, $old_password);
+   public function updateMyPassword($username,
+                                    $old_password,
+                                    $new_password) {
+      $user = $this->isValidUser($username, $old_password);
       if ($user) {
          $user_id = $user['id'];
-         return $this->update_password($user_id, $new_password);
+         return $this->updatePassword($user_id, $new_password);
       } else {
          throw new Exception("Wrong password");
-         trigger_error("Wrong password", E_USER_WARNING);
-         return false;
       }
    }
 
-   public function update_password($user_id, $new_password) {
-      $salt = $this->gen_bcrypt_salt();
+   public function updatePassword($user_id, $new_password) {
+      $salt = $this->genBcryptSalt();
       $pass_hash = $this->bcrypt($new_password, $salt);
-      $query = "UPDATE users
-                SET salt = $1
-                  , password = $2
-                WHERE id = $3";
-      $params = array($salt, $pass_hash, $user_id);
-      return (boolean) $this->db->exec($query, $params, false);
+      $query = new MysqlQuery(
+         'UPDATE users
+          SET salt = $1
+            , password = $2
+          WHERE id = $3'
+      );
+      $query->addParam($salt);
+      $query->addParam($pass_hash);
+      $query->addParam($user_id);
+      return $query->exec();
    }
 }
 

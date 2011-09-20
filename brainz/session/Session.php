@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../config/config.php");
 
 abstract class Session {
    protected $session;
@@ -9,10 +9,10 @@ abstract class Session {
    protected static $instance;
 
    protected function __construct() {
-      $this->config = get_zombie_config();
+      $this->config = getZombieConfig();
    }
 
-   public static function get_session() {
+   public static function getSession() {
       $class = get_called_class();
       if (!isset($class::$instance)) {
          $class::$instance = new $class();
@@ -20,8 +20,8 @@ abstract class Session {
       return $class::$instance;
    }
 
-   public function prevent_hijack() {
-      if (!$this->is_set('REMOTE_ADDR')) {
+   public function preventHijack() {
+      if (!$this->exists('REMOTE_ADDR')) {
          $this->set('REMOTE_ADDR', $_SERVER['REMOTE_ADDR']);
          $this->set('HTTP_USER_AGENT', $_SERVER['HTTP_USER_AGENT']);
       } else if (($this->config['session']['ip_sticky'] &&
@@ -31,15 +31,16 @@ abstract class Session {
       }
    }
 
-   public function generate_id() {
+   public function generateId() {
       // make this cryptographically strong
       return sha1(time() . rand() . rand());
    }
 
-   abstract public function regenerate_id();
+   abstract public function regenerateId();
    abstract public function save();
-   abstract public function get_array();
+   abstract public function getArray();
    abstract public function create();
+   abstract public function exists($a);
    abstract public function set($a, $b = null);
    abstract public function get($key);
    abstract public function destroy();

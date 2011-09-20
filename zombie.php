@@ -1,4 +1,3 @@
-#!/usr/bin/php
 <?php
 // Copyright (c) 2011, Regaltic LLC.  This file is
 // licensed under the General Public License version 2.
@@ -31,7 +30,7 @@ function cli_main($argv) {
       die("unknown template: " . $template . "\n");
    }
    require(__DIR__ . "/brainz/template/" . $template . "/template.php");
-   $template_class = underscore_to_class($template . "_template");
+   $template_class = underscoreToClass($template . "_template");
    $template = new $template_class($template, $app, $options);
    $template->run();
 }

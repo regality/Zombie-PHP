@@ -1,8 +1,8 @@
 <?php
 
 class Home extends PageController {
-   public function default_run($request) {
-      $this->token = $this->get_csrf_token();
+   public function defaultRun($request) {
+      $this->token = $this->getCsrfToken();
       $this->request = $request;
 
       $this->menu = new Menu();
@@ -15,7 +15,7 @@ class Home extends PageController {
                                ? $request['preload_action']
                                : "index");
       if (class_exists($this->action)) {
-         $preload_class = underscore_to_class($this->action);
+         $preload_class = underscoreToClass($this->action);
          $this->preload = new $preload_class();
       } else {
          $this->view = '404';

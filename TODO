@@ -26,9 +26,9 @@ ZOMBIE PHP
 
  - SessionModel only allows for mysql, see clear_old()
 
- - make simple way to use multiple db in same app
-
- - Add dev,production modes
+ - session id is not cyrpto-strong
+   - fix it
+   - piggyback off php session?
 
  - NEEDS unit tests for EVERYTHING
 

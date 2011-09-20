@@ -10,6 +10,6 @@
          <?php endif ?>
       </div>
    </div>
-   <? render_errors_js() ?>
+   <? renderErrorsJs() ?>
 </body>
 </html>

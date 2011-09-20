@@ -5,11 +5,11 @@
       <th></th>
       <th></th>
    </tr>
-   <?php foreach ($<SLUG> as $row): ?>
+   <?php foreach ($<TABLE_NAME> as $row): ?>
    <tr>
 <HTML_FIELDS_TD>
       <td><a href="/<SLUG>/edit?id=<?= $row['id'] ?>">edit</a></td>
-      <td><a class="<SLUG>-delete" href="#" <SLUG>_id="<?= $row['id'] ?>">delete</a></td>
+      <td><a class="<SLUG>-delete" href="#" <TABLE_NAME>_id="<?= $row['id'] ?>">delete</a></td>
    </tr>
    <?php endforeach ?>
 </table>
@@ -20,7 +20,7 @@ $(document).ready(function() {
       var row = $(this).parents("tr");
       $.ajax({"data":{"app":"<SLUG>",
                       "action":"delete",
-                      "id":$(this).attr("<SLUG>_id")},
+                      "id":$(this).attr("<TABLE_NAME>_id")},
               "success":function(data) {
                   row.remove();
               }

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../config/config.php");
 
 abstract class ZombieTemplate {
    public $options;
@@ -8,7 +8,7 @@ abstract class ZombieTemplate {
    public $files;
 
    function __construct($template, $app, $options = array()) {
-      $this->config = get_zombie_config();
+      $this->config = getZombieConfig();
       $this->template = $template;
       $this->app = strtolower($app);
       $this->options = $options;
@@ -16,14 +16,14 @@ abstract class ZombieTemplate {
 
    public function run() {
       $this->prepare();
-      $this->template_prepare();
+      $this->templatePrepare();
       $this->execute();
-      $this->template_execute();
+      $this->templateExecute();
       $this->write();
    }
 
    function prepare() {
-      $class = underscore_to_class($this->app);
+      $class = underscoreToClass($this->app);
 
       $options = array('template'    => $this->template,
                        'app'         => $this->app,
@@ -37,7 +37,7 @@ abstract class ZombieTemplate {
 
       $this->replace = array('SLUG' => $this->app,
                              'CLASS_NAME' => $class,
-                             'MODEL_CLASS_NAME' => underscore_to_class($this->options['table'] . "_model"));
+                             'MODEL_CLASS_NAME' => underscoreToClass($this->options['table'] . "_model"));
 
       $this->files = array();
       array_push(
@@ -48,7 +48,7 @@ abstract class ZombieTemplate {
    }
 
    function execute() {
-      $this->create_app_dirs() or die();
+      $this->createAppDirs() or die();
       foreach ($this->files as $file) {
          $file->replace($this->replace);
       }
@@ -61,10 +61,10 @@ abstract class ZombieTemplate {
       }
    }
 
-   abstract function template_prepare(); // user defined
-   abstract function template_execute(); // user defined
+   abstract function templatePrepare(); // user defined
+   abstract function templateExecute(); // user defined
 
-   function add_model() {
+   function addModel() {
       $model_file = $this->config['zombie_root'] . "/model/" . $this->options['table'] . ".php";
       if (!empty($this->options['table']) && !file_exists($model_file)) {
          array_push(
@@ -77,7 +77,7 @@ abstract class ZombieTemplate {
       }
    }
 
-   function add_view($view_name) {
+   function addView($view_name) {
       array_push(
          $this->files,
          new TemplateFile($this->config['zombie_root'] . "/apps/" . $this->app . "/views/" . $view_name . ".php",
@@ -85,13 +85,13 @@ abstract class ZombieTemplate {
       );
    }
 
-   function get_field($field_name) {
+   function getField($field_name) {
       $field = new TemplateFile("/dev/null",
           $this->config['zombie_root'] . "/brainz/template/fields/" . $field_name . ".php");
       return $field;
    }
 
-   function create_app_dirs($override = false) {
+   function createAppDirs($override = false) {
       $app_dir = $this->config['zombie_root'] . "/apps/" . $this->app;
       echo "creating directory $app_dir\n";
       if (!@mkdir($app_dir)) {
@@ -105,15 +105,15 @@ abstract class ZombieTemplate {
       }
    }
 
-   function does_model_exist($override = false) {
+   function doesModelExist($override = false) {
       return file_exists($config['zombie_root'] . "/model/" . $this->get_opt('app') . ".php");
    }
 
-   function get_opt($name) {
+   function getOpt($name) {
       return $this->options[$name];
    }
 
-   function set_opt($name, $value) {
+   function setOpt($name, $value) {
       $this->options[$name] = $value;
    }
 }
@@ -125,7 +125,7 @@ class TemplateFile {
       $this->file_contents = file_get_contents($this->template_location);
    }
 
-   function get_contents() {
+   function getContents() {
       return $this->file_contents;
    }
 
@@ -134,10 +134,10 @@ class TemplateFile {
    }
 
    function replace($replacement_fields) {
-      $this->file_contents = $this->replace_fields($replacement_fields, $this->file_contents);
+      $this->file_contents = $this->replaceFields($replacement_fields, $this->file_contents);
    }
 
-   function replace_fields($fields, $string) {
+   function replaceFields($fields, $string) {
       foreach ($fields as $ml => $value) {
          $string = str_replace("<$ml>", $value, $string);
       }

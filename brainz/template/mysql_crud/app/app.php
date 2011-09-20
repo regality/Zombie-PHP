@@ -6,58 +6,60 @@ class <CLASS_NAME> extends Controller {
     * run functions
     *********************************************/
 
-   public function index_run($request) {
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      $this-><SLUG> = $<SLUG>_model->get_all();
+   public function indexRun($request) {
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      $this-><TABLE_NAME> = $<TABLE_NAME>_model->getAll();
    }
 
-   public function edit_run($request) {
+   public function editRun($request) {
 <MODEL_GET_ALL>
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      $this-><SLUG> = $<SLUG>_model->get_one($request['id']);
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      $this-><TABLE_NAME> = $<TABLE_NAME>_model->getOne($request['id']);
       $this->form_action = 'update';
    }
 
-   public function new_run($request) {
+   public function newRun($request) {
 <MODEL_GET_ALL>
       $this->view = 'edit';
       $this->form_action = 'create';
    }
 
-   public function update_run($request) {
+   public function updateRun($request) {
    }
 
-   public function delete_run($request) {
+   public function deleteRun($request) {
    }
 
-   public function create_run($request) {
+   public function createRun($request) {
    }
 
    /*********************************************
     * save functions
     *********************************************/
 
-   public function create_save($request) {
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      if ($<SLUG>_model->insert($request)) {
+   public function createSave($request) {
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      $status = $<TABLE_NAME>_model->insert(<INSERT_FUNC_PARAMS_APP>);
+      if ($status) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
       }
    }
 
-   public function update_save($request) {
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      if ($<SLUG>_model->update($request['id'], $request)) {
+   public function updateSave($request) {
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      $status = $<TABLE_NAME>_model->update($request['id'], <INSERT_FUNC_PARAMS_APP>);
+      if ($status) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
       }
    }
 
-   public function delete_save($request) {
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      if ($<SLUG>_model->delete($request['id'])) {
+   public function deleteSave($request) {
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      if ($<TABLE_NAME>_model->delete($request['id'])) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";

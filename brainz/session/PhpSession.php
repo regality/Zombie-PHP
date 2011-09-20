@@ -10,10 +10,10 @@ class PhpSession extends Session {
                                 $this->config['session']['secure'],
                                 $this->config['session']['http_only']);
       $this->create();
-      $this->prevent_hijack();
+      $this->preventHijack();
    }
 
-   public function get_array() {
+   public function getArray() {
       return $_SESSION;
    }
 
@@ -24,11 +24,11 @@ class PhpSession extends Session {
       session_start();
    }
 
-   public function regenerate_id() {
+   public function regenerateId() {
       session_regenerate_id();
    }
 
-   public function is_set($key) {
+   public function exists($key) {
       return isset($_SESSION[$key]);
    }
 

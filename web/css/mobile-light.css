@@ -80,7 +80,7 @@ margin: 0px;
 a.item {
 text-decoration: none;
 display: inline-block;
-width: 120px;
+min-width: 120px;
 height: 25px;
 padding: 20px 5px;
 margin: 2px;

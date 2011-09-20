@@ -3,20 +3,20 @@
 require_once(__DIR__ . "/../zombie_template.php");
 
 class MysqlFrontendFormTemplate extends ZombieTemplate {
-   public function template_prepare() {
+   public function templatePrepare() {
       if (!isset($this->options['table'])) {
       print_r($this->options);
          die("table option required:\nzombie.php mysql_crud <app> table=<table>\n");
       }
-      $config = get_zombie_config();
-      $db_class = underscore_to_class($config['database']['type'] . '_' . 'database');
+      $config = getZombieConfig();
+      $db_class = underscoreToClass($config['database']['type'] . '_' . 'database');
       $this->db = new $db_class($config['database']['host'],
                                 $config['database']['user'],
                                 $config['database']['pass'],
                                 $config['database']['database']);
-      $this->add_view('index');
-      $this->add_view('success');
-      $this->add_model();
+      $this->addView('index');
+      $this->addView('success');
+      $this->addModel();
 
       $this->replace['AJAX_COMMA_SEP_FIELDS'] = '';
       $this->replace['AJAX_COMMA_SEP_FIELDS_WID'] = '';
@@ -50,17 +50,17 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
          $is_join = false;
          if ($field_type == "text") {
             $html_type = "textarea";
-            $field_template = $this->get_field("textarea");
+            $field_template = $this->getField("textarea");
          } else if (preg_match('/_id$/', $field_name)) {
             $html_type = "select";
             $is_join = true;
-            $field_template = $this->get_field("table_select");
+            $field_template = $this->getField("table_select");
          } else if (strpos($field_type, 'enum') === 0) {
             $html_type = "select";
-            $field_template = $this->get_field("enum_select");
+            $field_template = $this->getField("enum_select");
          } else {
             $html_type = "input";
-            $field_template = $this->get_field("textbox");
+            $field_template = $this->getField("textbox");
          }
 
          $this->replace['INSERT_FIELDS_COMMA_SEP'] .= " " . $sql_field['Field'] . "\n                     ,";
@@ -97,11 +97,11 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
                $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
             } else if ($is_join) {
                $other_table = substr($field_name, 0, strlen($field_name) - 3);
-               $other_table_model_class = underscore_to_class($other_table . '_' . 'model');
+               $other_table_model_class = underscoreToClass($other_table . '_' . 'model');
                $this->replace['MODEL_GET_ALL'] .= 
                   "      \${$other_table}_model = new $other_table_model_class();\n" . 
                   "      \$this->$other_table = \${$other_table}_model->get_all();\n";
-               $join_field = $this->get_table_join_field($other_table, $this->db);
+               $join_field = $this->getTableJoinField($other_table, $this->db);
                $this->replace['JOIN_FIELD'] = $join_field;
                if (strlen($join_field) > 0) {
                   $this->replace['OTHER_TABLE_NAME'] = $other_table;
@@ -114,7 +114,7 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
                   $this->replace['HTML_FIELDS_TH'] .= 
                      "      <th>$field_name_nice</th>\n";
                   $field_template->replace($this->replace);
-                  $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
+                  $this->replace['HTML_EDIT_FIELDS'] .= $field_template->getContents();
                }
             } else if (strpos($field_type, 'enum') === 0) {
                $enums = explode(",",str_replace("'","",substr(substr($field_type,5),0, -1)));
@@ -123,10 +123,10 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
                   $this->replace['ENUM_OPTIONS'] .= "            <option value=\"$enum\">$enum</option>\n";
                }
                $field_template->replace($this->replace);
-               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
+               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->getContents();
             } else {
                $field_template->replace($this->replace);
-               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
+               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->getContents();
             }
          }
 
@@ -147,10 +147,10 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
 
    }
 
-   public function template_execute() {
+   public function templateExecute() {
    }
 
-   function get_table_join_field($table, $db) {
+   function getTableJoinField($table, $db) {
       $fields = $db->desc($table);
       $field_name = '';
       foreach ($fields as $field) {

@@ -1,6 +1,6 @@
 <?php
 
-function get_zombie_config() {
+function getZombieConfig() {
    $config = array();
 
    $config['env'] = 'dev';
@@ -8,12 +8,11 @@ function get_zombie_config() {
    $config['web_root'] = '';
    $config['zombie_root'] = '/var/www/zombie';
 
-   $config['database'] = array();
-   $config['database']['type'] = 'mysql';
-   $config['database']['host'] = 'localhost';
-   $config['database']['user'] = 'mysql';
-   $config['database']['pass'] = 'password';
-   $config['database']['database'] = 'zombie';
+   $config['mysql'] = array();
+   $config['mysql']['host'] = 'localhost';
+   $config['mysql']['user'] = 'mysql';
+   $config['mysql']['pass'] = 'password';
+   $config['mysql']['database'] = 'zombie';
 
    $config['session'] = array();
    $config['session']['type'] = 'php';

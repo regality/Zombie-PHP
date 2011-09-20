@@ -1,8 +1,17 @@
 <div class="form">
+<?php if (isset($users['id'])): ?>
+   <input type="hidden" value="<?= $users['id'] ?>" name="id" />
+<?php endif ?>
 <table>
-   <?php if (isset($users['id'])): ?>
-      <input type="hidden" value="<?= $users['id'] ?>" name="id" />
-   <?php endif ?>
+   <tr>
+      <th colspan="2">
+         <?php if ($form_action == "update"): ?>
+            Updating User <?= $users['username'] ?>
+         <?php else: ?>
+            Creating New User
+         <?php endif ?>
+      </th>
+   </tr>
    <tr>
       <td>
          <label>Username</label>

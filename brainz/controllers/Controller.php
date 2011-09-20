@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/mobile.php");
-require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/../config/config.php");
 
 abstract class Controller {
    protected $session;
@@ -12,22 +12,22 @@ abstract class Controller {
    static protected $mobile_set = false;
 
    public function __construct() {
-      $this->config = get_zombie_config();
+      $this->config = getZombieConfig();
       $this->json = array();
       $this->is_page = false;
-      $this->view_base = class_to_underscore(get_class($this));
-      $sess_class = underscore_to_class($this->config['session']['type'] . '_' . 'session');
-      $this->session = $sess_class::get_session();
-      $this->mobile_init();
+      $this->view_base = classToUnderscore(get_class($this));
+      $sess_class = underscoreToClass($this->config['session']['type'] . '_' . 'session');
+      $this->session = $sess_class::getSession();
+      $this->mobileInit();
    }
 
    public function __destruct() {
    }
 
-   public function mobile_init() {
+   public function mobileInit() {
       if (!Controller::$mobile_set && isset($_GET['mobile'])) {
          $this->is_mobile = (boolean)$_GET['mobile'];
-         $mobile_device = is_mobile($_SERVER['HTTP_USER_AGENT']);
+         $mobile_device = isMobile($_SERVER['HTTP_USER_AGENT']);
          if (!$this->is_mobile && $mobile_device) {
             $cookie = 'o';
          } else if ($this->is_mobile) {
@@ -39,7 +39,7 @@ abstract class Controller {
          $_COOKIE['m'] = $cookie;
          Controller::$mobile_set = true;
       } else if (!isset($_COOKIE['m'])) {
-         $this->is_mobile = is_mobile($_SERVER['HTTP_USER_AGENT']);
+         $this->is_mobile = isMobile($_SERVER['HTTP_USER_AGENT']);
          $cookie = ($this->is_mobile ? 'y' : 'n');
          setcookie('m', $cookie, time() + 31536000);
          $_COOKIE['m'] = $cookie;
@@ -77,27 +77,27 @@ abstract class Controller {
 
    public function execute() {
       try {
-         $run_func = $this->action . "_run";
-         $this->save_safe($this->action, $this->request);
+         $run_func = underscoreToMethod($this->action) . "Run";
+         $this->saveSafe($this->action, $this->request);
          if (method_exists($this, $run_func)) {
             $this->$run_func($this->request);
-         } else if (method_exists($this, 'default_run')) {
+         } else if (method_exists($this, 'defaultRun')) {
             $this->view = 'default';
-            $this->default_run($this->request);
+            $this->defaultRun($this->request);
          } else {
             include($this->config['zombie_root'] .
                     '/apps/home/views/404.php');
             return;
          }
       } catch (Exception $e) {
-         $this->handle_exception($e);
+         $this->handleException($e);
       }
       $this->render();
    }
 
    public function render() {
       if ($this->format == 'json') {
-         $errors = get_error_array();
+         $errors = getErrorArray();
          if (!empty($errors)) {
             $this->json['php_errors'] = $errors;
          }
@@ -110,7 +110,7 @@ abstract class Controller {
          if (!empty($this->messages)) {
             $this->json['messages'] = $this->messages;
          }
-         $this->render_json();
+         $this->renderJson();
       } else {
          $file = $this->config['zombie_root'] . "/apps/" . $this->view_base . 
                  "/views/" . $this->view . ".php";
@@ -124,7 +124,7 @@ abstract class Controller {
                   $menu = new Menu(); 
                }
                if (isset($token)) {
-                  $token= $this->get_csrf_token();
+                  $token= $this->getCsrfToken();
                }
                include($this->config['zombie_root'] . "/apps/home/views/open.php");
                include($file);
@@ -133,12 +133,12 @@ abstract class Controller {
                include($file);
             }
          }
-         render_errors_js();
-         $this->render_js_mesg();
+         renderErrorsJs();
+         $this->renderJsMesg();
       }
    }
 
-   public function handle_exception($e) {
+   public function handleException($e) {
       if ($this->config['env'] == 'dev') {
          $this->error((string)$e);
       } else {
@@ -146,7 +146,7 @@ abstract class Controller {
       }
    }
 
-   public function render_js_mesg() {
+   public function renderJsMesg() {
       if (!empty($this->errors) ||
           !empty($this->warnings) ||
           !empty($this->messages)) {
@@ -173,11 +173,11 @@ abstract class Controller {
       }
    }
 
-   public function render_json() {
+   public function renderJson() {
       echo json_encode($this->json);
    }
 
-   public function in_group($group_name) {
+   public function inGroup($group_name) {
       $groups = $this->session->get('groups');
       if (is_array($groups) && in_array($group_name, $groups)) {
          return true;
@@ -186,8 +186,8 @@ abstract class Controller {
       }
    }
 
-   public function save_safe($action, $request) {
-      $save_func = $action . "_save";
+   public function saveSafe($action, $request) {
+      $save_func = underscoreToMethod($action) . "Save";
       if (!method_exists($this, $save_func)) {
          return;
       }
@@ -216,7 +216,7 @@ abstract class Controller {
          $this->$save_func($request);
    }
 
-   public function get_csrf_token() {
+   public function getCsrfToken() {
       $token = $this->session->get('csrf_token');
       if (!$token) {
          $token = md5(rand() . time());

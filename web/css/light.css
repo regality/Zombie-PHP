@@ -34,21 +34,27 @@ text-transform: uppercase;
 
 table {
 border-collapse: collapse;
+border: 1px solid #b9c9fe;
 }
 
 table tr th {
-padding: 1px 10px;
-border-bottom: 1px solid white;
-background-color: #b9c9fe;
+padding: 5px 10px;
+border-bottom: 1px solid #b9c9fe;
+background-color: #e8edff;
 color: #001f6b;
-font-weight:normal;
+font-weight: bold;
 }
 
 table tr td {
-border-bottom: 1px solid white;
 padding: 4px 10px;
-background-color: #e8edff;
+background-color: white;
+border-bottom: 1px dotted #b9c9fe;
 color: black;
+}
+
+table tr td input {
+border: 1px solid #999;
+padding: 2px;
 }
 
 #main {

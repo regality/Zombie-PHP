@@ -1,6 +1,6 @@
 <?php
 
-function is_mobile($user_agent, $default_to_mobile = true) {
+function isMobile($user_agent, $default_to_mobile = true) {
    // Common mobile browsers
    if (preg_match("/iphone|ipod|blackberry|android|palm|windows ce|fennec/i", $user_agent) === 1)
       return true;

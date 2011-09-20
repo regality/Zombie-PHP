@@ -4,7 +4,7 @@ abstract class SecureController extends Controller {
    public function run($action = null, $request = null) {
       $this->prepare($action, $request);
       if (!isset($this->secure_methods) || in_array($this->action, $this->secure_methods)) {
-         $access = $this->has_access();
+         $access = $this->hasAccess();
       } else {
          $access = true;
       }
@@ -13,15 +13,15 @@ abstract class SecureController extends Controller {
       } else {
          if ($this->format == 'json') {
             $this->json['status'] = $access;
-            $this->render_json();
+            $this->renderJson();
          } else {
             echo $access;
          }
       }
    }
 
-   public function has_access() {
-      if (!$this->session->is_set('username')) {
+   public function hasAccess() {
+      if (!$this->session->exists('username')) {
          return "logged out";
       }
       if (isset($this->groups)) {

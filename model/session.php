@@ -1,7 +1,7 @@
 <?php
 
-class SessionModel extends SqlModelBase {
-   public function get_session($id) {
+class SessionModel extends ModelBase {
+   public function getSession($id) {
       $query = "SELECT data
                 FROM session 
                 WHERE id = $1";
@@ -34,7 +34,7 @@ class SessionModel extends SqlModelBase {
       return (boolean)$this->db->exec($query, $params, false);
    }
 
-   public function update_id($new_id, $old_id) {
+   public function updateId($new_id, $old_id) {
       $query = "UPDATE session
                 SET id = $1
                 WHERE id = $2";
@@ -42,7 +42,7 @@ class SessionModel extends SqlModelBase {
       return (boolean)$this->db->exec($query, $params, false);
    }
 
-   public function clear_old($timeout) {
+   public function clearOld($timeout) {
       // only works for mysql?
       $query = "DELETE FROM session
                 WHERE last_access < DATE_SUB(NOW(), INTERVAL " . intval($timeout) . " SECOND)";

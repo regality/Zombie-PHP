@@ -1,12 +1,16 @@
 <?php
 
+require_once(__DIR__ . "/../util/util.php");
+require_once(__DIR__ . "/../config/config.php");
+
 abstract class ModelBase {
    public static $purifier = false;
 
    public function __construct() {
+      $this->config = getZombieConfig();
    }
 
-   public static function purify_html($html) {
+   public static function purifyHtml($html) {
       if (self::$purifier == false) {
          require_once(__DIR__ . '/../util/htmlpurifier-standalone/HTMLPurifier.standalone.php');
          $config = HTMLPurifier_Config::createDefault();

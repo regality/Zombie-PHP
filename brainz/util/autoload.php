@@ -1,59 +1,51 @@
 <?php
 
 require_once('util.php');
-require_once(__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../config/config.php');
+$config = getZombieConfig();
+$GLOBALS['zombie_root'] =  $config['zombie_root'];
 
-function autoload_app($class) {
-   $config = get_zombie_config();
-   $slug = class_to_underscore($class);
-   @include($config['zombie_root'] . '/apps/' . $slug . '/' . $slug . '.php');
+function autoloadApp($class) {
+   $slug = classToUnderscore($class);
+   @include($GLOBALS['zombie_root'] . '/apps/' . $slug . '/' . $slug . '.php');
 }
 
-function autoload_session($class) {
-   if (substr($class, -7) == 'Session') {
-      $config = get_zombie_config();
-      $slug = class_to_underscore($class);
-      include($config['zombie_root'] . '/brainz/session/' . $slug . '.php');
-   }
-}
-
-function autoload_database($class) {
-   if (substr($class, -8) == 'Database') {
-      $config = get_zombie_config();
-      $slug = class_to_underscore($class);
-      include($config['zombie_root'] . '/brainz/database/' . $slug . '.php');
-   }
-}
-
-function autoload_model($class) {
+function autoloadModel($class) {
    if (substr($class, -5) == 'Model') {
-      $config = get_zombie_config();
-      $slug = class_to_underscore(substr($class, 0, strlen($class) - 5)); 
-      include($config['zombie_root'] . '/model/' . $slug . '.php');
+      $slug = classToUnderscore(substr($class, 0, strlen($class) - 5)); 
+      include($GLOBALS['zombie_root'] . '/model/' . $slug . '.php');
    }
 }
 
-function autoload_model_base($class) {
+function autoloadSession($class) {
+   if (substr($class, -7) == 'Session') {
+      include($GLOBALS['zombie_root'] . '/brainz/session/' . $class . '.php');
+   }
+}
+
+function autoloadQuery($class) {
+   if (substr($class, -5) == 'Query') {
+      include($GLOBALS['zombie_root'] . '/brainz/database/' . $class . '.php');
+   }
+}
+
+function autoloadModelBase($class) {
    if (substr($class, -9) == 'ModelBase') {
-      $config = get_zombie_config();
-      $slug = class_to_underscore($class);
-      include($config['zombie_root'] . '/brainz/model/' . $slug . '.php');
+      include($GLOBALS['zombie_root'] . '/brainz/model/' . $class . '.php');
    }
 }
 
-function autoload_controller($class) {
+function autoloadController($class) {
    if (substr($class, -10) == 'Controller') {
-      $config = get_zombie_config();
-      $slug = class_to_underscore($class);
-      include($config['zombie_root'] . '/brainz/controllers/' . $slug . '.php');
+      include($GLOBALS['zombie_root'] . '/brainz/controllers/' . $class . '.php');
    }
 }
 
-spl_autoload_register('autoload_model');
-spl_autoload_register('autoload_database');
-spl_autoload_register('autoload_session');
-spl_autoload_register('autoload_model_base');
-spl_autoload_register('autoload_controller');
-spl_autoload_register('autoload_app');
+spl_autoload_register('autoloadModel');
+spl_autoload_register('autoloadQuery');
+spl_autoload_register('autoloadSession');
+spl_autoload_register('autoloadModelBase');
+spl_autoload_register('autoloadController');
+spl_autoload_register('autoloadApp');
 
 ?>
