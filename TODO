@@ -10,6 +10,7 @@ ZOMBIE PHP
 ==========
 
  - Make sure session times out properly
+   - it doesn't, fix it (db session)
 
  - Add new apps
    - facebook/oauth/openid login app

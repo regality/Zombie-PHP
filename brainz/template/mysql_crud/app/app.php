@@ -40,30 +40,19 @@ class <CLASS_NAME> extends Controller {
    public function createSave($request) {
       $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
       $status = $<TABLE_NAME>_model->insert(<INSERT_FUNC_PARAMS_APP>);
-      if ($status) {
-         $this->json['status'] = "success";
-      } else {
-         $this->json['status'] = "failed";
-      }
+      $this->json['status'] = ($status ? "success" : "failed");
    }
 
    public function updateSave($request) {
       $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
       $status = $<TABLE_NAME>_model->update($request['id'], <INSERT_FUNC_PARAMS_APP>);
-      if ($status) {
-         $this->json['status'] = "success";
-      } else {
-         $this->json['status'] = "failed";
-      }
+      $this->json['status'] = ($status ? "success" : "failed");
    }
 
    public function deleteSave($request) {
       $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
-      if ($<TABLE_NAME>_model->delete($request['id'])) {
-         $this->json['status'] = "success";
-      } else {
-         $this->json['status'] = "failed";
-      }
+      $status = $<TABLE_NAME>_model->delete($request['id']);
+      $this->json['status'] = ($status ? "success" : "failed");
    }
 
 }

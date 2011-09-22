@@ -84,7 +84,7 @@ class MysqlCrudTemplate extends ZombieTemplate {
             }
 
             $this->replace['INSERT_FUNC_PARAMS_APP'] .=
-               '$request[\'' . $field_name . "'],\n" . str_repeat(" ", 32 + strlen($this->app));
+               '$request[\'' . $field_name . "'],\n" . str_repeat(" ", 32 + strlen($this->replace['TABLE_NAME']));
             $this->replace['INSERT_FUNC_PARAMS_MODEL'] .=
                '$' . $field_name . ",\n                          ";
             $this->replace['QUERY_INSERT_ADD_PARAMS'] .=

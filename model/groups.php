@@ -41,14 +41,14 @@ class GroupsModel extends ModelBase {
       $query->exec();
    }
 
-   public function insert($request) {
+   public function insert($name) {
       $query = new MysqlQuery(
          "INSERT INTO groups
           (id, name)
           VALUES
           (DEFAULT, $1)"
       );
-      $query->addParam($request['name']);
+      $query->addParam($name);
       $query->exec();
    }
 
@@ -58,9 +58,9 @@ class GroupsModel extends ModelBase {
           SET name = $2
           WHERE id = $1"
       );
-      $query->addParam($name);
       $query->addParam($id);
-      $query->exec();
+      $query->addParam($name);
+      return $query->exec();
    }
 
 }

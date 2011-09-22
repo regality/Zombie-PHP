@@ -39,7 +39,8 @@ class Groups extends Controller {
 
    public function createSave($request) {
       $groups_model = new GroupsModel();
-      if ($groups_model->insert($request)) {
+      $status = $groups_model->insert($request['name']);
+      if ($status) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
@@ -48,7 +49,8 @@ class Groups extends Controller {
 
    public function updateSave($request) {
       $groups_model = new GroupsModel();
-      if ($groups_model->update($request['id'], $request)) {
+      $status = $groups_model->update($request['id'], $request['name']);
+      if ($status) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
@@ -57,7 +59,8 @@ class Groups extends Controller {
 
    public function deleteSave($request) {
       $groups_model = new GroupsModel();
-      if ($groups_model->delete($request['id'])) {
+      $status = $groups_model->delete($request['id']);
+      if ($status) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
