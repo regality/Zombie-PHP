@@ -1,26 +1,24 @@
 <?php
 
-include('brainz/util/autoload.php');
-include('model/groups.php');
-include('model/users.php');
+include(__DIR__ . '/../util/autoload.php');
 
 $groups_model = new GroupsModel();
 $users_model = new UsersModel();
-$db = new MysqlDatabase("","","","");
 
-$install_sql = file_get_contents("brainz/install.mysql");
+$install_sql = file_get_contents(__DIR__ . "/install.mysql");
 $sql_commands = explode(";", $install_sql);
 
 foreach ($sql_commands as $sql) {
    if (strlen(trim($sql))) {
-      $db->exec($sql);
+      $query = new MysqlQuery($sql);
+      $query->exec();
    }
 }
 
-$groups_model->insert(array("name" => "admin"));
-$groups_model->insert(array("name" => "users"));
+$groups_model->insert("admin");
+$groups_model->insert("users");
 
-$groups = $groups_model->get_all();
+$groups = $groups_model->getAll();
 $user_groups = array();
 foreach ($groups as $group) {
    if ($group['name'] == 'admin' ||
@@ -29,13 +27,23 @@ foreach ($groups as $group) {
    }
 }
 
-$new_user = array(
-   "username" => "admin",
-   "firstname" => "rob",
-   "lastname" => "zombie",
-   "password" => hash("sha256", "brainz"),
-   "groups" => $user_groups
-);
-$users_model->insert($new_user);
+echo "Info for admin user:\n";
+echo "username: ";
+$username = trim(fgets(STDIN));
+
+echo "firstname: ";
+$firstname = trim(fgets(STDIN));
+
+echo "lastname: ";
+$lastname = trim(fgets(STDIN));
+
+echo "password: ";
+$password = hash("sha256", trim(fgets(STDIN)));
+
+$users_model->insert($username,
+                     $firstname,
+                     $lastname,
+                     $password,
+                     $user_groups);
 
 ?>
