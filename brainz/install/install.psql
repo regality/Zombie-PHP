@@ -1,8 +1,6 @@
-CREATE FUNCTION sha1(bytea) RETURNS text
-    LANGUAGE sql IMMUTABLE STRICT
-    AS $_$
-SELECT encode(digest($1, 'sha1'), 'hex')
-$_$;
+-- Copyright (c) 2011, Regaltic LLC.  This file is
+-- licensed under the General Public License version 3.
+-- See the LICENSE file.
 
 CREATE TABLE groups (
     id integer NOT NULL PRIMARY KEY,
@@ -31,16 +29,3 @@ CREATE SEQUENCE users_id_seq
     NO MAXVALUE
     NO MINVALUE
     CACHE 1;
-
-INSERT INTO users VALUES (
-   1,
-   'admin',
-   'rob',
-   'zombie',
-   'c95cf3fa429a84ffc1969dc10eac5674a9621e06',
-   'a:2:{i:0;s:5:"admin";i:1;s:5:"users";}'
-);
-
-INSERT INTO groups VALUES
-   (1, 'admin'),
-   (2, 'users');
