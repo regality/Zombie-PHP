@@ -9,10 +9,12 @@ require_once("brainz/util/autoload.php");
 function cli_main($argv) {
    $argc = count($argv);
    if ($argc < 2) {
-      die ("Usage: zombie.php <app name> <template=template_name> <option=value> ...\n");
+      die("Usage: zombie.php <action> <option=value> ...\n" .
+           "Availabe actions:\n" .
+           "\tcreate-app\n");
    }
 
-   $app = $argv[1];
+   $action = $argv[1];
 
    $options = array();
    for ($i = 2; $i < $argc; ++$i) {
@@ -24,15 +26,25 @@ function cli_main($argv) {
       }
    }
 
-   $template = (isset($options['template']) ? $options['template'] : 'basic');
+   if ($action == "create-app") {
+      if (!isset($options['app'])) {
+         die ("Usage: zombie.php create-app app=<app name> [template=<template_name>] [option=<value>] ...\n");
+      }
 
-   if (!file_exists("brainz/template/" . $template . "/template.php")) {
-      die("unknown template: " . $template . "\n");
+      $template = (isset($options['template']) ? $options['template'] : 'basic');
+      if (!file_exists("brainz/template/" . $template . "/template.php")) {
+         die("unknown template: " . $template . "\n");
+      }
+
+      $app = $options['app'];
+
+      require(__DIR__ . "/brainz/template/" . $template . "/template.php");
+      $template_class = underscoreToClass($template . "_template");
+      $template = new $template_class($template, $app, $options);
+      $template->run();
+   } else if ($action == "kachow") {
+      echo "kachow!\n";
    }
-   require(__DIR__ . "/brainz/template/" . $template . "/template.php");
-   $template_class = underscoreToClass($template . "_template");
-   $template = new $template_class($template, $app, $options);
-   $template->run();
 }
 
 cli_main($argv);

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . "/../zombie_template.php");
+require_once(__DIR__ . "/../ZombieTemplate.php");
 
 class BasicTemplate extends ZombieTemplate {
    public function templatePrepare() {

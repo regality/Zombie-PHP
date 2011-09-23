@@ -31,6 +31,10 @@ ZOMBIE PHP
    - fix it
    - piggyback off php session?
 
+ - session cookie only works for config domain
+   - fix it or leave it?
+      - is it more secure?
+
  - NEEDS unit tests for EVERYTHING
 
 UNDEAD JS

@@ -36,8 +36,10 @@ abstract class ZombieTemplate {
       $this->options = array_merge($this->options, $options);
 
       $this->replace = array('SLUG' => $this->app,
-                             'CLASS_NAME' => $class,
-                             'MODEL_CLASS_NAME' => underscoreToClass($this->options['table'] . "_model"));
+                             'CLASS_NAME' => $class);
+      if (isset($this->options['table'])) {
+         $this->replace['MODEL_CLASS_NAME'] = underscoreToClass($this->options['table'] . "_model");
+      }
 
       $this->files = array();
       array_push(

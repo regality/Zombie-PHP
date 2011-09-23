@@ -7,7 +7,7 @@ require_once(__DIR__ . "/../ZombieTemplate.php");
 class MysqlCrudTemplate extends ZombieTemplate {
    public function templatePrepare() {
       if (!isset($this->options['table'])) {
-         die("table option required:\nzombie.php <app> template=mysql_crud table=<table>\n");
+         die("table option required:\nzombie.php create-app app=<app> template=mysql_crud table=<table>\n");
       }
       $config = getZombieConfig();
       $this->addView('index');
@@ -23,8 +23,8 @@ class MysqlCrudTemplate extends ZombieTemplate {
       $this->replace['HTML_EDIT_FIELDS'] = '';
       $this->replace['HTML_FIELDS_TD'] = '';
       $this->replace['HTML_FIELDS_TH'] = '';
-      $this->replace['INSERT_DOLLAR_PARAMS'] = '';
       $this->replace['INSERT_FIELDS_COMMA_SEP'] = '';
+      $this->replace['INSERT_DOLLAR_PARAMS'] = '';
       $this->replace['INSERT_FUNC_PARAMS_APP'] = '';
       $this->replace['INSERT_FUNC_PARAMS_MODEL'] = '';
       $this->replace['INSERT_REQUEST_PARAMS'] = '';

@@ -9,8 +9,6 @@ class <MODEL_CLASS_NAME> extends ModelBase {
           ORDER BY <TABLE_NAME>.id'
       );
       return $query->query();
-      $result = $this->db->exec($query, array());
-      return $result;
    }
 
    public function getOne($id) {

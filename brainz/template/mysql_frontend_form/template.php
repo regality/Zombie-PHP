@@ -1,19 +1,15 @@
 <?php
 
-require_once(__DIR__ . "/../zombie_template.php");
+require_once(__DIR__ . "/../../config/config.php");
+require_once(__DIR__ . "/../../util/autoload.php");
+require_once(__DIR__ . "/../ZombieTemplate.php");
 
 class MysqlFrontendFormTemplate extends ZombieTemplate {
    public function templatePrepare() {
       if (!isset($this->options['table'])) {
-      print_r($this->options);
-         die("table option required:\nzombie.php mysql_crud <app> table=<table>\n");
+         die("table option required:\nzombie.php create-app app=<app> template=mysql_fontend_form table=<table>\n");
       }
       $config = getZombieConfig();
-      $db_class = underscoreToClass($config['database']['type'] . '_' . 'database');
-      $this->db = new $db_class($config['database']['host'],
-                                $config['database']['user'],
-                                $config['database']['pass'],
-                                $config['database']['database']);
       $this->addView('index');
       $this->addView('success');
       $this->addModel();
@@ -29,9 +25,13 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
       $this->replace['HTML_FIELDS_TH'] = '';
       $this->replace['INSERT_FIELDS_COMMA_SEP'] = '';
       $this->replace['INSERT_DOLLAR_PARAMS'] = '';
+      $this->replace['INSERT_FUNC_PARAMS_APP'] = '';
+      $this->replace['INSERT_FUNC_PARAMS_MODEL'] = '';
+      $this->replace['INSERT_REQUEST_PARAMS'] = '';
       $this->replace['INSERT_REQUEST_PARAMS'] = '';
       $this->replace['JOIN_FIELD'] = '';
       $this->replace['MODEL_GET_ALL'] = '';
+      $this->replace['QUERY_INSERT_ADD_PARAMS'] = '';
       $this->replace['REQUIRED_CLASS'] = '';
       $this->replace['SET_FIELDS_COMMA_SEP'] = '';
       $this->replace['SQL_FIELDS_COMMA_SEP'] = '';
@@ -39,7 +39,8 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
       $this->replace['TABLE_NAME'] = $this->options['table'];
       $this->replace['UPDATE_REQUEST_PARAMS'] = '';
 
-      $table_desc = $this->db->desc($this->options['table']);
+      $query = new MysqlQuery();
+      $table_desc = $query->describe($this->options['table']);
       $i = 0;
       $field_templates = array();
       foreach ($table_desc as $sql_field) {
@@ -63,17 +64,17 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
             $field_template = $this->getField("textbox");
          }
 
-         $this->replace['INSERT_FIELDS_COMMA_SEP'] .= " " . $sql_field['Field'] . "\n                     ,";
+         $this->replace['INSERT_FIELDS_COMMA_SEP'] .= " " . $sql_field['Field'] . "\n          ,";
 
          $this->replace['UPDATE_REQUEST_PARAMS'] .= "\$request['$field_name'],\n                      ";
 
          $this->replace['SQL_FIELDS_COMMA_SEP'] .= 
-            " " . $this->options['table'] . "." . $sql_field['Field'] . "\n                     ,";
+            " " . $this->options['table'] . "." . $sql_field['Field'] . "\n               ,";
 
-         $this->replace['AJAX_COMMA_SEP_FIELDS_WID'] .= '                      "'. $field_name . '":$form.find("'. $html_type .'[name='. $field_name . "]\").val(),\n";
+         $this->replace['AJAX_COMMA_SEP_FIELDS_WID'] .= '                      "'. $field_name . '":form.find("'. $html_type .'[name='. $field_name . "]\").val(),\n";
 
          if ($field_name != 'id') {
-            $this->replace['AJAX_COMMA_SEP_FIELDS'] .= '                      "'. $field_name . '":$form.find("'. $html_type . '[name='. $field_name . "]\").val(),\n";
+            $this->replace['AJAX_COMMA_SEP_FIELDS'] .= '                      "'. $field_name . '":form.find("'. $html_type . '[name='. $field_name . "]\").val(),\n";
 
             if (!$is_join) {
                $this->replace['HTML_FIELDS_TD'] .= 
@@ -82,8 +83,14 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
                   "      <th>$field_name_nice</th>\n";
             }
 
+            $this->replace['INSERT_FUNC_PARAMS_APP'] .=
+               '$request[\'' . $field_name . "'],\n" . str_repeat(" ", 32 + strlen($this->replace['TABLE_NAME']));
+            $this->replace['INSERT_FUNC_PARAMS_MODEL'] .=
+               '$' . $field_name . ",\n                          ";
+            $this->replace['QUERY_INSERT_ADD_PARAMS'] .=
+               '      $query->addParam($' . $field_name . ');' . "\n";
             $this->replace['SET_FIELDS_COMMA_SEP'] .= 
-               " " . $sql_field['Field'] . " = \$$i \n                  ,";
+               " " . $sql_field['Field'] . " = \$$i \n            ,";
 
             $this->replace['INSERT_REQUEST_PARAMS'] .=
                "\$request['$field_name'],\n                      ";
@@ -94,19 +101,19 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
             $this->replace['FIELD_NAME_NICE'] = $field_name_nice;
             if ($field_type == "text") {
                $field_template->replace($this->replace);
-               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->get_contents();
+               $this->replace['HTML_EDIT_FIELDS'] .= $field_template->getContents();
             } else if ($is_join) {
                $other_table = substr($field_name, 0, strlen($field_name) - 3);
                $other_table_model_class = underscoreToClass($other_table . '_' . 'model');
                $this->replace['MODEL_GET_ALL'] .= 
                   "      \${$other_table}_model = new $other_table_model_class();\n" . 
-                  "      \$this->$other_table = \${$other_table}_model->get_all();\n";
-               $join_field = $this->getTableJoinField($other_table, $this->db);
+                  "      \$this->$other_table = \${$other_table}_model->getAll();\n";
+               $join_field = $this->getTableJoinField($other_table);
                $this->replace['JOIN_FIELD'] = $join_field;
                if (strlen($join_field) > 0) {
                   $this->replace['OTHER_TABLE_NAME'] = $other_table;
-                  $this->replace['SQL_JOINS'] .= "                LEFT JOIN $other_table ON $other_table.id = {$other_table}_id\n";
-                  $this->replace['SQL_FIELDS_COMMA_SEP'] .= " $other_table.$join_field {$other_table}_{$join_field}\n                     ,";
+                  $this->replace['SQL_JOINS'] .= "          LEFT JOIN $other_table ON $other_table.id = {$other_table}_id\n";
+                  $this->replace['SQL_FIELDS_COMMA_SEP'] .= " $other_table.$join_field {$other_table}_{$join_field}\n               ,";
                   $this->replace['HTML_FIELDS_TD'] .= 
                      "      <td><?= \$row['{$other_table}_{$join_field}'] ?></td>\n";
                   $field_name_nice = ucwords(str_replace("_", " ", $other_table . " " . $join_field));
@@ -144,14 +151,17 @@ class MysqlFrontendFormTemplate extends ZombieTemplate {
       $this->replace['INSERT_FIELDS_COMMA_SEP'] = rtrim($this->replace['INSERT_FIELDS_COMMA_SEP'], " ,\n");
       $this->replace['INSERT_REQUEST_PARAMS'] = rtrim($this->replace['INSERT_REQUEST_PARAMS'], " ,\n");
       $this->replace['UPDATE_REQUEST_PARAMS'] = rtrim($this->replace['UPDATE_REQUEST_PARAMS'], " ,\n");
+      $this->replace['INSERT_FUNC_PARAMS_APP'] = rtrim($this->replace['INSERT_FUNC_PARAMS_APP'], " ,\n");
+      $this->replace['INSERT_FUNC_PARAMS_MODEL'] = rtrim($this->replace['INSERT_FUNC_PARAMS_MODEL'], " ,\n");
 
    }
 
    public function templateExecute() {
    }
 
-   function getTableJoinField($table, $db) {
-      $fields = $db->desc($table);
+   function getTableJoinField($table) {
+      $query = new MysqlQuery();
+      $fields = $query->describe($table);
       $field_name = '';
       foreach ($fields as $field) {
          if ($field['Field'] == 'name') {

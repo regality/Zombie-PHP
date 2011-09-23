@@ -6,27 +6,24 @@ class <CLASS_NAME> extends Controller {
     * run functions
     *********************************************/
 
-   public function index_run($request) {
+   public function indexRun($request) {
 <MODEL_GET_ALL>
    }
 
-   public function create_run($request) {
+   public function createRun($request) {
    }
 
-   public function success_run($request) {
+   public function successRun($request) {
    }
 
    /*********************************************
     * save functions
     *********************************************/
 
-   public function create_save($request) {
-      $<SLUG>_model = new <MODEL_CLASS_NAME>();
-      if ($<SLUG>_model->insert($request)) {
-         $this->json['status'] = "success";
-      } else {
-         $this->json['status'] = "failed";
-      }
+   public function createSave($request) {
+      $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
+      $status = $<TABLE_NAME>_model->insert(<INSERT_FUNC_PARAMS_APP>);
+      $this->json['status'] = ($status ? "success" : "failed");
    }
 
 }
