@@ -6,7 +6,7 @@
 require_once(__DIR__ . "/../util/error.php");
 require_once(__DIR__ . "/../util/util.php");
 require_once(__DIR__ . "/../util/mobile.php");
-require_once(__DIR__ . "/../config/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 
 abstract class Controller {
    protected $session;

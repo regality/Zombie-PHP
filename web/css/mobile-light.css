@@ -2,7 +2,7 @@
 font-family: 'Orbitron';
 font-style: normal;
 font-weight: normal;
-src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
+src: local('Orbitron'), url('/css/fonts/Orbitron.woff') format('woff');
 }
 
 * {

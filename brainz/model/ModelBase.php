@@ -4,7 +4,7 @@
 # See the LICENSE file.
 
 require_once(__DIR__ . "/../util/util.php");
-require_once(__DIR__ . "/../config/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 
 abstract class ModelBase {
    public static $purifier = false;

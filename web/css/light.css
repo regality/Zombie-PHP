@@ -2,7 +2,7 @@
 font-family: 'Orbitron';
 font-style: normal;
 font-weight: normal;
-src: local('Orbitron'), url('/css/Orbitron.woff') format('woff');
+src: local('Orbitron'), url('/css/fonts/Orbitron.woff') format('woff');
 }
 
 * {
@@ -178,6 +178,20 @@ width: 300px;
 display: block;
 text-align: left;
 font-size: 1.2em;
+}
+
+#console-run {
+width: 490px;
+border: 1px solid #999;
+margin: 2px 0px;
+height: 25px;
+padding: 4px;
+font-size: large;
+font-family: "Courier New", Courier, monospace;
+}
+
+#console-mesgs {
+width: 500px;
 }
 
 .console-mesg {

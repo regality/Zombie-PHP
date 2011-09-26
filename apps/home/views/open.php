@@ -4,15 +4,18 @@
    <title>Zombie PHP</title>
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-   <link rel="stylesheet" href="<?= $config['web_root'] ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>light.css" type="text/css" />
-   <script type="text/javascript" src="<?= $config['web_root'] ?>/js/jquery.min.js"></script>
-   <script type="text/javascript" src="<?= $config['web_root'] ?>/js/undead.js"></script>
-   <script type="text/javascript" src="<?= $config['web_root'] ?>/js/main.js"></script>
+   <link rel="stylesheet" href="<?= $config['web_root'] ?>/css/<?= ($this->is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+   <?php if ($config['env'] == 'dev'): ?>
+      <script type="text/javascript" src="/js/undead/jquery.js"></script>
+      <script type="text/javascript" src="/js/undead/undead.js"></script>
+      <script type="text/javascript" src="/js/home/main.js"></script>
+   <?php endif ?>
    <script type="text/javascript">
-   $(document).ready(function() {
+   $(function() {
+      undead.settings.mode = '<?= $config['env'] ?>';
       undead.settings.baseUrl = "<?= $config['web_root'] ?>";
-      undead.token.set("<?= $token ?>");
       undead.init.init();
+      undead.token.set("<?= $token ?>");
       undead.stack.loadDefault();
    });
    </script>

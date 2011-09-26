@@ -6,3 +6,6 @@
       <div id="login-btn"><input type="submit" class="login-btn" value="Login" /></div>
    </form>
 </div>
+<script type="text/javascript">
+undead.util.require("login/main");
+</script>

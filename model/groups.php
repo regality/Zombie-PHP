@@ -28,8 +28,8 @@ class GroupsModel extends ModelBase {
           WHERE id = $1"
       );
       $query->addParam($id);
-      $query->exec();
       $this->deleteUsersGroups($id);
+      return $query->exec();
    }
 
    public function deleteUsersGroups($group_id) {
@@ -38,7 +38,7 @@ class GroupsModel extends ModelBase {
           WHERE groups_id = $1"
       );
       $query->addParam($group_id);
-      $query->exec();
+      return $query->exec();
    }
 
    public function insert($name) {
@@ -49,7 +49,7 @@ class GroupsModel extends ModelBase {
           (DEFAULT, $1)"
       );
       $query->addParam($name);
-      $query->exec();
+      return $query->exec();
    }
 
    public function update($id, $name) {

@@ -3,7 +3,7 @@
 # licensed under the General Public License version 3.
 # See the LICENSE file.
 
-require_once(__DIR__ . "/../config/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 
 abstract class ZombieTemplate {
    public $options;

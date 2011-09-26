@@ -1,0 +1,42 @@
+#console-run {
+width: 490px;
+border: 1px solid #999;
+margin: 2px 0px;
+height: 25px;
+padding: 4px;
+font-size: large;
+font-family: "Courier New", Courier, monospace;
+}
+
+#console-mesgs {
+width: 500px;
+}
+
+.console-mesg {
+border: 1px solid #999;
+border-top-width: 0px;
+background-color: #eee;
+width: 80%;
+text-align: left;
+padding: 2px;
+}
+
+.console-error {
+font-weight: bold;
+color: red;
+}
+
+.console-title {
+font-weight: bold;
+color: blue;
+}
+
+.console-mesg-close {
+float: right;
+font-weight: bold;
+font-family: "Courier";
+}
+
+.console-mesg-close:hover {
+color: #aaa;
+}

@@ -1,0 +1,186 @@
+@include home/light.css;
+
+@font-face {
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/fonts/Orbitron.woff') format('woff');
+}
+
+* {
+padding: 0px;
+margin: 0px;
+}
+
+html {
+height: 100%;
+}
+
+body {
+font: 80.5% "Trebuchet MS", sans-serif;
+cursor:default;
+background: $background-color url('/images/$background-image') repeat-y left top;
+color: $text-color;
+height: 100%;
+}
+
+h2 {
+display: block;
+color: $h2-color;
+}
+
+h3 {
+color: $h3-color;
+text-transform: uppercase;
+}
+
+table {
+border-collapse: collapse;
+border: 1px solid $table-border-color;
+}
+
+table tr th {
+padding: 5px 10px;
+border-bottom: 1px solid $table-border-color;
+background-color: $th-background-color;
+color: $th-text-color;
+font-weight: bold;
+}
+
+table tr td {
+padding: 4px 10px;
+background-color: $td-background-color;
+border-bottom: 1px dotted $table-border-color;
+color: $text-color;
+}
+
+table tr td input {
+border: 1px solid $form-input-border-color;
+padding: 2px;
+}
+
+#main {
+width: 900px;
+height: 90%;
+}
+
+#sidenav {
+width: 200px;
+padding-left: 100px;
+padding-top: 100px;
+height: 93%;
+float: left;
+}
+
+#header {
+width: 550px;
+height: 90px;
+padding: 15px;
+padding-bottom: 0px;
+float: left;
+}
+
+#content {
+width: 550px;
+padding: 15px 20px;
+float: left;
+}
+
+#footer {
+width: 100%;
+float: left;
+}
+
+#footer-content {
+border-top: 1px solid $footer-border-color;
+padding: 5px 20px;
+margin-left: 300px;
+}
+
+#header h1 {
+font-family: 'Orbitron', 'Arial';
+font-size: 58px;
+padding-top: 20px;
+color: $h1-color;
+float: left;
+}
+
+#header img {
+height: 90px;
+display: inline-block;
+float: left;
+}
+
+a.item {
+text-decoration: none;
+display: block;
+width: 170px;
+height: 15px;
+margin: 0px 10px;
+padding: 10px 5px;
+color: $sidenav-item-color;
+font-family: 'Orbitron';
+}
+
+.menu-title {
+margin-left: 10px;
+height: 50px;
+font-family: 'Orbitron';
+color: $menu-title-color;
+}
+
+a.item:hover {
+color: $sidenav-item-hover;
+}
+
+a.item.active {
+text-align: right;
+background: $sidenav-item-active-bg;
+color: $sidenav-item-active;
+font-weight: bold;
+}
+
+#alerts {
+font-family: "Courier New";
+font-weight: bold;
+}
+
+#alerts div {
+width: 550px;
+position: relative;
+padding: 3px;
+z-index: 10;
+border-width: 0px 2px 2px 2px;
+border-style: solid;
+}
+
+#alerts .title {
+font-size: medium;
+text-transform: uppercase;
+font-weight: bold;
+}
+
+#alerts .error {
+color: $alert-error-color;
+background-color: $alert-error-bg;
+border-color: $alert-error-border;
+}
+
+#alerts .warning {
+color: $alert-warning-color;
+background-color: $alert-warning-bg;
+border-color: $alert-warning-border;
+}
+
+#alerts .message {
+color: $alert-message-color;
+background-color: $alert-message-bg;
+border-color: $alert-message-border;
+}
+
+.demoHeaders { margin-top: 2em; }
+#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}

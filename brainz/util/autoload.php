@@ -1,7 +1,7 @@
 <?php
 
 require_once('util.php');
-require_once(__DIR__ . '/../config/config.php');
+require_once(__DIR__ . '/../../config/config.php');
 $config = getZombieConfig();
 $GLOBALS['zombie_root'] =  $config['zombie_root'];
 

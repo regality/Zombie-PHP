@@ -1,0 +1,41 @@
+#login {
+position: relative;
+top: 15%;
+margin: 0px auto;
+width: 370px;
+height: 300px;
+text-align: center;
+}
+
+#login-error {
+color: red;
+font-size: small;
+float: right;
+}
+
+#login input {
+border: 1px solid #999;
+border-radius: 5px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+height: 30px;
+width: 300px;
+}
+
+#login-btn {
+width: 300px;
+text-align: center;
+margin: 20px auto;
+}
+
+#login-btn input {
+width: 100px;
+}
+
+#login label {
+margin: 10px auto;
+width: 300px;
+display: block;
+text-align: left;
+font-size: 1.2em;
+}

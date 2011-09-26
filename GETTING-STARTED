@@ -1,7 +1,18 @@
 GETTING STARTED
 ===============
 
-This is a brief guide to get you started with zombiePHP.
+This is a brief guide to get you started with ZombiePHP.
+
+Requirements:
+
+   PHP 5.3+
+
+   Apache with mod_rewrite or a comparable rewriting engine.
+
+   Mysql. Version 5+ recommended. Support for PostgreSQL and other dbms coming.
+
+   NOTE: ZombiePHP can be coerced to work with PHP 5+, 
+         but this isn't recommended.
 
 1. Download the latest version 
 
@@ -40,7 +51,7 @@ This is a brief guide to get you started with zombiePHP.
    The easiest thing is to copy the sample config and make
    a few changes.
 
-      bash> cd brainz/config/
+      bash> cd config/
       bash> mv config-sample.php config.php
  
    Open config.php with your favorite editor (vim is recommended)
@@ -66,12 +77,12 @@ This is a brief guide to get you started with zombiePHP.
 
       bash> php brainz/install/install.php
 
-   At this point zombiePHP should be up and running.
+   At this point ZombiePHP should be up and running.
    Open it in your browser and check if you can log in.
 
 6. Run the code generator.
 
-   Once you have zombiePHP installed, you can generate modules
+   Once you have ZombiePHP installed, you can generate modules
    with the zombie code generator.
 
    To create a basic module run the following command
@@ -136,7 +147,10 @@ This is a brief guide to get you started with zombiePHP.
       zombie/brainz
          This is the guts of the system. Unless you know what 
          you are doing or are a dev for zombie, you probably
-         shouldn't touch anything in here other than the config.
+         shouldn't touch anything in here.
+
+      zombie/config
+         Configuration files are kept here.
 
       zombie/model
          This is where all models are stored. Each model typically
@@ -145,8 +159,7 @@ This is a brief guide to get you started with zombiePHP.
 
       zombie/web
          This is visible to the interblag.
-         It contains css, javascript, images, and whatever else
-         you put in it.
+         It contains css, images, and whatever else you put in it.
          It also has two php files, index.php and app.php.
          These are launchers for zombie modules. Most users
          should leave these as they are.

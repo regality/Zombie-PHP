@@ -1,7 +1,7 @@
 <?php
-// Copyright (c) 2011, Regaltic LLC.  This file is
-// licensed under the General Public License version 3.
-// See the LICENSE file.
+# Copyright (c) 2011, Regaltic LLC.  This file is
+# licensed under the General Public License version 3.
+# See the LICENSE file.
 
 require_once("brainz/util/util.php");
 require_once("brainz/util/autoload.php");
@@ -42,6 +42,9 @@ function cli_main($argv) {
       $template_class = underscoreToClass($template . "_template");
       $template = new $template_class($template, $app, $options);
       $template->run();
+   } else if ($action == "compile") {
+      require(__DIR__ . "/brainz/util/compile/compile.php");
+      compile($options);
    } else if ($action == "kachow") {
       echo "kachow!\n";
    }
