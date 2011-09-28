@@ -91,8 +91,66 @@ undead.ui.consoleAdd = function (html, text) {
 // check for incomplete required fields
 undead.ui.verifyForm = function (form) {
    var formDone = true;
-   form.find("input.required, textarea.required, select.required").each(function () {
-      if ($(this).val() === "") {
+   /*
+   var radios = form.find("radio");
+   if (radios.length > 0) {
+      var radioNames = [];
+      radios.each(function () {
+      });
+   }
+   */
+   form.find("input, textarea, select").each(function () {
+      var validator, value, tmp, format, re;
+      var formValue = $(this).val();
+      var formName = $(this).attr("name");
+      var validatorsStr = $(this).attr("validate");
+      var fail = false;
+      if (!validatorsStr) {
+         return;
+      }
+      var validators = validatorsStr.split(",");
+      for (var i = 0; i < validators.length; ++i) {
+         validator = validators[i];
+         if (validator.match("=")) {
+            tmp = validator.split("=");
+            validator = tmp[0];
+            value = tmp[1];
+         }
+         if (validator == "required") {
+            if (!formValue) {
+               fail = true;
+               undead.ui.error(formName + " is required.");
+            }
+         } else if (validator == "maxlen") {
+            if (formValue && formValue.length > value) {
+               fail = true;
+               undead.ui.error(formName + " is too long (max length " + value + ".)");
+            }
+         } else if (validator == "minlen") {
+            if (formValue.length > 0 && formValue.length < value) {
+               fail = true;
+               undead.ui.error(formName + " is too short (min length " + value + ".)");
+            }
+         } else if (validator == "number") {
+            if (formValue && isNaN(formValue)) {
+               fail = true;
+               undead.ui.error(formName + " must be a number.");
+            }
+         } else if (validator == "int") {
+            if (formValue && parseInt(formValue) != formValue) {
+               fail = true;
+               undead.ui.error(formName + " must be a whole number.");
+            }
+         } else if (validator == "format") {
+            format = value;
+            re = new RegExp(format);
+            if (formValue && !formValue.match(re)) {
+               fail = true;
+               undead.ui.error(formName + " is in the wrong format.");
+            }
+         }
+      }
+      if (fail) {
          formDone = false;
          $(this).css({"background" : "#fdd"});
       } else {

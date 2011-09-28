@@ -18,7 +18,6 @@ $(function() {
    $(".groups-create").live('click', function() {
       var form = $(this).parents("div.form");
       if (!undead.ui.verifyForm(form)) {
-         undead.ui.error("Some required fields are msising.");
          return false;
       }
       $.ajax({"url":"app.php",
@@ -40,7 +39,6 @@ $(function() {
    $(".groups-update").live('click', function() {
       var form = $(this).parents("div.form");
       if (!undead.ui.verifyForm(form)) {
-         undead.ui.error("Some required fields are msising.");
          return false;
       }
       $.ajax({"url":"app.php",

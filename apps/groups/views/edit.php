@@ -15,7 +15,7 @@
                <label>Name</label>
             </td>
             <td>
-               <input validate="required,maxlength=50" type="text" name="name" value="<?= (isset($groups['name']) ? htmlentities($groups['name']) : '') ?>" />
+               <input validate="required,minlen=3,maxlen=50" type="text" name="name" value="<?= (isset($groups['name']) ? htmlentities($groups['name']) : '') ?>" />
             </td>
          </tr>
          <tr>

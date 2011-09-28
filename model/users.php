@@ -134,10 +134,10 @@ class UsersModel extends ModelBase {
       $query->exec();
 
       $query_str = 'INSERT INTO users_groups
-                 (users_id, groups_id)
-                VALUES ';
+                    (users_id, groups_id)
+                    VALUES ';
       for ($i = 0; $i < count($groups_arr); ++$i) {
-         $query_str .= '($1, $' . ($i + 1) . '),';
+         $query_str .= '($1, $' . ($i + 2) . '),';
       }
       $query_str = rtrim($query_str, ',');
       $query = new MysqlQuery($query_str);
@@ -155,11 +155,11 @@ class UsersModel extends ModelBase {
             , lastname = $4 
           WHERE id = $1'
       );
+      $query->addParam($id);
       $query->addParam($username);
       $query->addParam($firstname);
       $query->addParam($lastname);
-      $query->addParam($id);
-      if ($query->exec()) {
+      if ($query->exec() !== false) {
          return $this->insertUsersGroups($id, $groups);
       } else {
          return false;

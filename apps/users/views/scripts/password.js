@@ -2,13 +2,12 @@ $(function() {
    $(".password-update").live('click', function() {
       var form = $(this).parents("div.form");
       if (!undead.ui.verifyForm(form)) {
-         undead.ui.error("Some required fields are msising.");
-         return;
+         return false;
       }
-      if (form.find("input[name=new_password_a").val() !==
-          form.find("input[name=new_password_b").val()) {
+      if (form.find("input[name=new_password_a]").val() !==
+          form.find("input[name=new_password_b]").val()) {
          undead.ui.error("Passwords do not match.");
-         return;
+         return false;
       }
       var newPass = undead.crypt.hash(form.find("input[name=new_password_a]").val());
       var id = form.find("input[name=id]").val();
@@ -24,6 +23,7 @@ $(function() {
                   }
               }
       });
+      return false;
    });
 
 });

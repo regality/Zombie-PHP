@@ -38,6 +38,7 @@ class Users extends SecureController {
    public function passwordRun($request) {
       $users_model = new UsersModel();
       $user = $users_model->getOne($request['id']);
+      $this->data['id'] = $user['id'];
       $this->data['username'] = $user['username'];
    }
 
