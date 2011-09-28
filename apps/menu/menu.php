@@ -21,7 +21,7 @@ class Menu extends Controller {
          $this->data['apps']['password'] = array("name" => "Change Password");
       }
       if ($this->config['env'] == 'dev') {
-         $this->data['apps']['console'] = array("name" => "Console");
+         $this->data['apps']['console'] = array("name" => "Console", "refresh" => "no");
       }
       $this->data['active'] = (isset($request['active']) ? $request['active'] : '');
    }

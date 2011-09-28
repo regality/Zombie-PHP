@@ -3,7 +3,8 @@
 </div>
 <?php foreach ($apps as $app => $settings): ?>
    <?php $is_active = ($active == $app ? 'active' : '') ?>
-   <a href="/<?= $app ?>" class="item <?= $is_active ?>"><?= $settings['name'] ?></a>
+   <?php $refresh = (isset($settings['refresh']) ? 'refresh="' . $settings['refresh'] . '"' : '') ?>
+   <a href="/<?= $app ?>" <?= $refresh ?> class="item <?= $is_active ?>"><?= $settings['name'] ?></a>
 <?php endforeach ?>
 <?php if ($logged_in): ?>
    <a href="javascript:void(0)" class="item" id="logout">Logout</a>

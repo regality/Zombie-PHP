@@ -79,3 +79,6 @@
       </table>
    </form>
 </div>
+<script type="text/javascript">
+undead.util.require("users/main");
+</script>

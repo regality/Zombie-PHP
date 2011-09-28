@@ -3,7 +3,7 @@
          <label><FIELD_NAME_NICE></label>
       </td>
       <td>
-         <select name="<FIELD_NAME>">
+         <select <VALIDATE>name="<FIELD_NAME>">
             <option value=''></option>
             <?php foreach ($<OTHER_TABLE_NAME> as $option): ?>
                <?php $selected = ((isset($<TABLE_NAME>) && $option['id'] == $<TABLE_NAME>['<OTHER_TABLE_NAME>_id']) ? "selected" : "") ?>

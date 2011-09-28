@@ -3,7 +3,7 @@
          <label><FIELD_NAME_NICE></label>
       </td>
       <td>
-         <select name="<FIELD_NAME>">
+         <select <VALIDATE>name="<FIELD_NAME>">
             <option value=""></option>
 <ENUM_OPTIONS>
          </select>

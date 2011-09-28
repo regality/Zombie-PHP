@@ -25,3 +25,6 @@
       </table>
    </form>
 </div>
+<script type="text/javascript">
+undead.util.require("<SLUG>/main");
+</script>

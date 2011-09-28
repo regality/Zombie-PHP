@@ -8,20 +8,20 @@ class <CLASS_NAME> extends Controller {
 
    public function indexRun($request) {
       $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
-      $this-><TABLE_NAME> = $<TABLE_NAME>_model->getAll();
+      $this->data['<TABLE_NAME>'] = $<TABLE_NAME>_model->getAll();
    }
 
    public function editRun($request) {
 <MODEL_GET_ALL>
       $<TABLE_NAME>_model = new <MODEL_CLASS_NAME>();
-      $this-><TABLE_NAME> = $<TABLE_NAME>_model->getOne($request['id']);
-      $this->form_action = 'update';
+      $this->data['<TABLE_NAME>'] = $<TABLE_NAME>_model->getOne($request['id']);
+      $this->data['form_action'] = 'update';
    }
 
    public function newRun($request) {
 <MODEL_GET_ALL>
       $this->view = 'edit';
-      $this->form_action = 'create';
+      $this->data['form_action'] = 'create';
    }
 
    public function updateRun($request) {

@@ -15,6 +15,7 @@ class MysqlCrudTemplate extends ZombieTemplate {
       $config = getZombieConfig();
       $this->addView('index');
       $this->addView('edit');
+      $this->addScript('main');
       $this->addModel();
 
       $this->replace['AJAX_COMMA_SEP_FIELDS'] = '';
@@ -48,10 +49,16 @@ class MysqlCrudTemplate extends ZombieTemplate {
       $field_templates = array();
       foreach ($table_desc as $sql_field) {
          ++$i;
+         $validators = array();
          $field_name = $sql_field['Field'];
          $field_name_nice = ucwords(str_replace("_", " ", $field_name));
          $field_type = $sql_field['Type'];
          $is_join = false;
+
+         if ($sql_field['Null'] == 'NO') {
+            array_push($validators, "required");
+         }
+
          if ($field_type == "text") {
             $html_type = "textarea";
             $field_template = $this->getField("textarea");
@@ -65,6 +72,22 @@ class MysqlCrudTemplate extends ZombieTemplate {
          } else {
             $html_type = "input";
             $field_template = $this->getField("textbox");
+            $matches = array();
+            if (preg_match('/char\((\d+)\)$/', $field_type, $matches)) {
+               $len = $matches[1];
+               $v = "maxlen=" . $len;
+               array_push($validators, $v);
+            } else if (preg_match('/^int/', $field_type, $matches)) {
+               array_push($validators, "int");
+            } else if (preg_match('/^decimal|^float|^double/', $field_type, $matches)) {
+               array_push($validators, "number");
+            }
+         }
+
+         if (count($validators) > 0) {
+            $this->replace['VALIDATE'] = "validate=\"" . implode(",", $validators) . "\" ";
+         } else {
+            $this->replace['VALIDATE'] = "";
          }
 
          $this->replace['INSERT_FIELDS_COMMA_SEP'] .= " " . $sql_field['Field'] . "\n          ,";
@@ -110,7 +133,7 @@ class MysqlCrudTemplate extends ZombieTemplate {
                $other_table_model_class = underscoreToClass($other_table . '_' . 'model');
                $this->replace['MODEL_GET_ALL'] .= 
                   "      \${$other_table}_model = new $other_table_model_class();\n" . 
-                  "      \$this->$other_table = \${$other_table}_model->getAll();\n";
+                  "      \$this->data['$other_table'] = \${$other_table}_model->getAll();\n";
                $join_field = $this->getTableJoinField($other_table);
                $this->replace['JOIN_FIELD'] = $join_field;
                if (strlen($join_field) > 0) {

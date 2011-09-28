@@ -32,3 +32,6 @@
       </table>
    </form>
 </div>
+<script type="text/javascript">
+undead.util.require('groups/main');
+</script>

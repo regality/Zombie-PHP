@@ -90,6 +90,22 @@ abstract class ZombieTemplate {
       );
    }
 
+   function addScript($script_name) {
+      array_push(
+         $this->files,
+         new TemplateFile($this->config['zombie_root'] . "/apps/" . $this->app . "/views/scripts/" . $script_name . ".js",
+                          $this->config['zombie_root'] . "/brainz/template/" . $this->template . "/app/views/scripts/" . $script_name . ".js")
+      );
+   }
+
+   function addCSS($css_name) {
+      array_push(
+         $this->files,
+         new TemplateFile($this->config['zombie_root'] . "/apps/" . $this->app . "/views/css/" . $css_name . ".css",
+                          $this->config['zombie_root'] . "/brainz/template/" . $this->template . "/app/views/css/" . $css_name . ".css")
+      );
+   }
+
    function getField($field_name) {
       $field = new TemplateFile("/dev/null",
           $this->config['zombie_root'] . "/brainz/template/fields/" . $field_name . ".php");
@@ -106,6 +122,10 @@ abstract class ZombieTemplate {
       } else {
          echo "creating directory $app_dir/views\n";
          mkdir($app_dir . "/views");
+         echo "creating directory $app_dir/views/css\n";
+         mkdir($app_dir . "/views/css");
+         echo "creating directory $app_dir/views/scripts\n";
+         mkdir($app_dir . "/views/scripts");
          return true;
       }
    }

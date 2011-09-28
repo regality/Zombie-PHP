@@ -36,15 +36,19 @@ undead.stack.loadDefault = function () {
 // focus on a stack
 undead.stack.focus = function (appStack) {
    var newHash;
-   $(".app-stack:visible").hide().attr("active",null);
-   $("#" + appStack + "-stack").show().attr("active","true");
-   $("#" + appStack + "-stack").find(".app-content").hide();
-   $("#" + appStack + "-stack").find(".app-content").last().show();
-   $(".item").removeClass("active");
-   $(".item[href^='/" + appStack + "']").addClass("active");
-   newHash = "/" + appStack + "/" + undead.stack.topAction(appStack);
-   if (newHash !== window.location.hash) {
-      window.location.hash = newHash;
+   if (undead.stack.size(appStack) == 0) {
+      undead.stack.push(appStack);
+   } else {
+      $(".app-stack:visible").hide().attr("active",null);
+      $("#" + appStack + "-stack").show().attr("active","true");
+      $("#" + appStack + "-stack").find(".app-content").hide();
+      $("#" + appStack + "-stack").find(".app-content").last().show();
+      $(".item").removeClass("active");
+      $(".item[href^='/" + appStack + "']").addClass("active");
+      newHash = "/" + appStack + "/" + undead.stack.topAction(appStack);
+      if (newHash !== window.location.hash) {
+         window.location.hash = newHash;
+      }
    }
 };
 
@@ -107,18 +111,27 @@ $(window).bind('hashchange', function () {
 // refresh the top of a stack
 undead.stack.refresh = function (appStack) {
    var topFrame, data;
-   topFrame = $("#" + appStack + "-stack").find(".app-content").last();
-   data = $.parseJSON(window.unescape(topFrame.attr("json")));
-   $.ajax({"data" : data,
-           "dataType" : "html",
-           success : function (data) {
-               topFrame.html(data);
-               undead.stack.focus(appStack);
-               undead.ui.logMessage("App Refreshed", "The app <i>" + 
-                                 appStack + "." + topFrame.attr("action") + 
-                                 "</i> was successfully refreshed");
-           }
-   });
+   if (undead.stack.size(appStack) == 0) {
+      undead.stack.push(appStack);
+   } else {
+      topFrame = $("#" + appStack + "-stack").find(".app-content").last();
+      if (topFrame.attr("json")) {
+         data = $.parseJSON(window.unescape(topFrame.attr("json")));
+      } else {
+         data = {"app" : appStack,
+                 "action" : undead.stack.topAction(appStack)};
+      }
+      $.ajax({"data" : data,
+              "dataType" : "html",
+              success : function (data) {
+                  topFrame.html(data);
+                  undead.stack.focus(appStack);
+                  undead.ui.logMessage("App Refreshed", "The app <i>" + 
+                                    appStack + "." + topFrame.attr("action") + 
+                                    "</i> was successfully refreshed");
+              }
+      });
+   }
 };
 
 // delete everything from a stack
@@ -127,7 +140,7 @@ undead.stack.empty = function (appStack) {
 };
 
 // pop a stack
-undead.stack.pop = function (appStack) {
+undead.stack.pop = function (appStack, allowEmpty) {
    $("#" + appStack + "-stack").find(".app-content").last().remove();
    undead.stack.focus(appStack);
 };

@@ -16,6 +16,9 @@ $(function () {
          if (typeof re[2] === "undefined") {
             if (undead.stack.size(app) === 0) {
                undead.stack.push(app);
+            } else if (undead.stack.size(app) === 1 &&
+                       $(this).attr("refresh") != "no") {
+               undead.stack.refresh(app);
             } else {
                undead.stack.focus(app);
             }
