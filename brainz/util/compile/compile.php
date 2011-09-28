@@ -210,8 +210,8 @@ function compile_css($version) {
          $all_mobile_css .= file_get_contents($css_file);
       }
    }
-   $compiled_css = compile_css_file($all_css);
-   $compiled_mobile_css = compile_css_file($all_mobile_css);
+   $compiled_css = compile_css_file($all_css, $version);
+   $compiled_mobile_css = compile_css_file($all_mobile_css, $version);
 
    $write_file = realpath(__DIR__ . "/../../../web/build/" . $version . "/css") .
                  "/main.css";
@@ -222,6 +222,26 @@ function compile_css($version) {
                  "/mobile-main.css";
    echo "writing $write_file\n\n";
    file_put_contents($write_file, $compiled_mobile_css);
+}
+
+function copy_images($version) {
+   echo "COPYING IMAGES\n\n";
+   $apps_dir = __DIR__ . "/../../../apps/";
+   $apps = get_dir_contents($apps_dir, array('dir'));
+   foreach ($apps as $app) {
+      $images_src = realpath($apps_dir . $app . "/views/images");
+      $images = get_dir_contents($images_src . "/", array("file"));
+      if (count($images) > 0) {
+         $image_dest = realpath(__DIR__ . "/../../../web/build/" . $version . "/images") . "/" . $app;
+         echo "creating dir " . $image_dest . "\n";
+         mkdir($image_dest);
+      }
+      foreach ($images as $image) {
+         echo "copying $images_src/$image\n" .
+              "to $image_dest/$image\n\n";
+         copy($images_src . '/' . $image, $image_dest . '/' . $image);
+      }
+   }
 }
 
 function write_version($version) {
@@ -241,7 +261,9 @@ function compile($options) {
    mkdir(__DIR__ . "/../../../web/build/" . $version);
    mkdir(__DIR__ . "/../../../web/build/" . $version . "/css");
    mkdir(__DIR__ . "/../../../web/build/" . $version . "/js");
+   mkdir(__DIR__ . "/../../../web/build/" . $version . "/images");
    mkdir(__DIR__ . "/tmp");
+   copy_images($version);
    compile_css($version);
    compile_js($version);
    exec("rm -rf " . __DIR__ . "/tmp");

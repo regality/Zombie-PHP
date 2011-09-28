@@ -131,35 +131,6 @@ padding: 5px 20px;
 margin-left: 300px;
 }
 
-a.item {
-text-decoration: none;
-display: block;
-width: 170px;
-height: 15px;
-margin: 0px 10px;
-padding: 10px 5px;
-color: var(sidenav-item-color);
-font-family: 'var(font-face)';
-}
-
-.menu-title {
-margin-left: 10px;
-height: 50px;
-font-family: 'var(font-face)';
-color: var(title-color);
-}
-
-a.item:hover {
-color: var(sidenav-item-hover);
-}
-
-a.item.active {
-text-align: right;
-background: var(sidenav-item-active-bg);
-color: var(sidenav-item-active);
-font-weight: bold;
-}
-
 #alerts {
 font-family: "Courier New";
 font-weight: bold;

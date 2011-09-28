@@ -28,7 +28,7 @@
          <?php $menu->run("index", array('active' => $action)) ?>
       </div>
       <div id="header">
-         <img src="<?= $web_root ?>/images/zombie-glasses.png" alt="logo" />
+         <?= img("/images/home/zombie-glasses.png", array("alt" => "logo")) ?>
          <h1>Zombie PHP</h1>
       </div>
       <div id="content">

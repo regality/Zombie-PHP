@@ -99,7 +99,7 @@ undead.init.setupAjax = function () {
                if (data.status === "logged out") {
                   undead.stack.push("login");
                } else if (data.status === "reload") {
-                  window.location.reload();
+                  window.location.assign(undead.settings.baseUrl);
                }
                if (typeof data.query !== "undefined") {
                   undead.ui.message(data.query);

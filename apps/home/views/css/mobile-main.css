@@ -111,40 +111,6 @@ font-size: 32px;
 border-top: 1px solid var(footer-border-color);
 }
 
-
-a.item {
-text-decoration: none;
-display: inline-block;
-min-width: 120px;
-height: 25px;
-padding: 20px 5px;
-margin: 2px;
-color: var(sidenav-item-color);
-font-family: 'var(font-face)';
-text-align: center;
-border: 1px solid var(mobile-sidenav-border-color);
-background: var(mobile-sidenav-second-color);
-}
-
-.menu-title {
-height: 10px;
-padding: 10px 5px;
-margin: 0px;
-font-family: 'var(font-face)';
-color: var(title-color);
-display: none; /* maybe? */
-}
-
-a.item:hover {
-color: var(sidenav-item-hover);
-}
-
-a.item.active {
-background: var(sidenav-item-active-bg);
-color: var(sidenav-item-active);
-font-weight: bold;
-}
-
 #alerts {
 font-family: "Courier New";
 font-weight: bold;

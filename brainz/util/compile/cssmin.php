@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . "/../../../config/config.php");
+
 function strip_css_comments($css) {
    $css = preg_replace('/\/\*(.|\n)*?\*\//', '', $css);
    return $css . "\n";
@@ -16,7 +18,7 @@ function substitue_css_includes($css) {
    return $css;
 }
 
-function substitue_css_variables($css) {
+function substitue_css_variables($css, $version = false) {
    $matches = array();
    preg_match_all('/@variables {([^}]+)(?:\s+)?}(?:\s+)?/', $css, $matches);
    $vars = array();
@@ -33,6 +35,14 @@ function substitue_css_variables($css) {
    foreach ($vars as $key => $value) {
       $css = str_replace('var(' . $key . ')', $value, $css);
    }
+   if ($version !== false) {
+      $build = "/build/$version";
+      preg_match_all("/url\(['\"]?(\/images\/[a-z0-9_]+\/[a-z_-]+\.[a-z]+)['\"]?\)/i", $css, $matches);
+      for ($i = 0; $i < count($matches[0]); ++$i) {
+         $new_url = "url('" . $build . $matches[1][$i] . "')";
+         $css = str_replace($matches[0][$i], $new_url, $css);
+      }
+   }
    return $css;
 }
 
@@ -48,10 +58,10 @@ function minify_css($css) {
    return $css . "\n";
 }
 
-function compile_css_file($css) {
+function compile_css_file($css, $version = false) {
    $css = strip_css_comments($css);
    $css = substitue_css_includes($css);
-   $css = substitue_css_variables($css);
+   $css = substitue_css_variables($css, $version);
    $css = minify_css($css);
    return $css;
 }

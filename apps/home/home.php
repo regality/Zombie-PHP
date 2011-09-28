@@ -13,16 +13,16 @@ class Home extends PageController {
       $this->data['action'] = $this->action;
       $this->data['preload_action'] = (isset($request['preload_action'])
                                     ? $request['preload_action'] : "index");
+      if ($this->action == 'index') {
+         $this->action = "welcome";
+         $this->data['action'] = 'welcome';
+      }
 
       if ($this->config['env'] == 'prod') {
          require_once($this->config['zombie_root'] . "/config/version.php");
          $this->data['version'] = version();
       } else {
          $this->data['console'] = new Console();
-      }
-
-      if ($this->action == 'index') {
-         $this->action = 'welcome';
       }
 
       if (class_exists($this->action)) {

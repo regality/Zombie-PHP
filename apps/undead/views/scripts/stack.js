@@ -26,7 +26,7 @@ undead.stack.loadDefault = function () {
       }
    }
    if (undead.stack.size(undead.stack.defaultApp) === 0 || 
-       undead.stack.topAction(undead.stack.defaultApp) !== undead.stack.defaultAction) {
+      undead.stack.topAction(undead.stack.defaultApp) !== undead.stack.defaultAction) {
       undead.stack.push(undead.stack.defaultApp, undead.stack.defaultAction);
    } else {
       undead.stack.focus(undead.stack.defaultApp);
