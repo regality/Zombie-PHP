@@ -1,1 +1,3 @@
 config/config.php
+config/version.php
+web/build/*

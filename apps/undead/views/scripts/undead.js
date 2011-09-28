@@ -1,23 +1,23 @@
-var undead = {};
+var undead = undead || {};
 
 /**************************************************
  * Undead settings                                *
  **************************************************/
 
-undead.settings = {};
+undead.settings = undead.settings || {};
 
-undead.settings.debug = false;
-undead.settings.mode = 'dev';
-undead.settings.baseUrl = '';
+undead.settings.mode = undead.settings.mode || 'dev';
+undead.settings.debug = undead.settings.debug || false;
+undead.settings.baseUrl = undead.settings.baseUrl || '';
 
 /**************************************************
  * Util functions                                *
  **************************************************/
 
-undead.util = {};
+undead.util = undead.util || {};
 
-undead.util.scripts = [];
-undead.util.stylesheets = [];
+undead.util.scripts = undead.util.scripts || {};
+undead.util.stylesheets = undead.util.stylesheets || {};
 
 undead.util.require = function (js, callback) {
    var sp = js.split('/', 2);
@@ -25,9 +25,9 @@ undead.util.require = function (js, callback) {
    var file = sp[1];
    if (undead.settings.mode == 'dev') {
       url = '/js/' + module + '/' + file + '.js';
-   } else {
-      url = '/js/compiled/' + '/' + undead.settings.verion + 
-            '/' + module + '/' + file + '.js';
+   } else if (undead.settings.mode == 'prod') {
+      url = '/build/' + undead.settings.version + '/js/' + 
+            module + '/' + file + '.js';
    }
    undead.util.importJs(url, callback);
 };
@@ -35,7 +35,8 @@ undead.util.require = function (js, callback) {
 undead.util.importJs = function (url, callback) {
    if (typeof undead.util.scripts[url] === "undefined") {
       var ajaxData = {"url" : undead.settings.baseUrl + url,
-                      "dataType" : "script"};
+                      "dataType" : "script",
+                      "cache" : true};
       if (typeof callback == "function") {
          ajaxData.success = callback;
       } else {

@@ -10,7 +10,7 @@ function substitue_css_includes($css) {
    preg_match_all('/@include ([a-z0-9\/]+).css;(\s+)?/', $css, $matches);
    for ($i = 0; $i < count($matches[0]); ++$i) {
       $sp = explode('/', $matches[1][$i]);
-      $include_file = file_get_contents(__DIR__ . "/../../apps/" . $sp[0] . "/views/css/" . $sp[1] . ".css");
+      $include_file = file_get_contents(__DIR__ . "/../../../apps/" . $sp[0] . "/views/css/" . $sp[1] . ".css");
       $css = str_replace($matches[0][$i], $include_file . "\n", $css);
    }
    return $css;
@@ -18,10 +18,20 @@ function substitue_css_includes($css) {
 
 function substitue_css_variables($css) {
    $matches = array();
-   preg_match_all('/@variable ([0-9a-z-]+) (.*);(\s+)?/', $css, $matches);
+   preg_match_all('/@variables {([^}]+)(?:\s+)?}(?:\s+)?/', $css, $matches);
+   $vars = array();
    for ($i = 0; $i < count($matches[0]); ++$i) {
+      $var_list = explode(';', $matches[1][$i]);
+      foreach ($var_list as $var) {
+         $kv = explode(':', $var, 2);
+         if (strlen(trim($kv[0])) && strlen(trim($kv[1]))) {
+            $vars[trim($kv[0])]= trim($kv[1]);
+         }
+      }
       $css = str_replace($matches[0][$i], '', $css);
-      $css = str_replace('$' . $matches[1][$i], $matches[2][$i], $css);
+   }
+   foreach ($vars as $key => $value) {
+      $css = str_replace('var(' . $key . ')', $value, $css);
    }
    return $css;
 }
@@ -38,8 +48,9 @@ function minify_css($css) {
    return $css . "\n";
 }
 
-function compile_css($css) {
+function compile_css_file($css) {
    $css = strip_css_comments($css);
+   $css = substitue_css_includes($css);
    $css = substitue_css_variables($css);
    $css = minify_css($css);
    return $css;

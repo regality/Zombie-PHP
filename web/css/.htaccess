@@ -1,8 +1,7 @@
 <ifModule mod_rewrite.c>
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteCond %{REQUEST_FILENAME} !-d
-   #RewriteRule ^([0-9a-zA-Z_]+)/([0-9a-zA-Z_\/]+)\.css$ css.php?app=$1&css=$2 [L,QSA]
-   RewriteRule ^main.css$ css.php?type=main [L,QSA]
+   RewriteRule ^main.css$ css.php?type=main [L]
+   RewriteRule ^mobile-main.css$ css.php?type=mobile [L]
 </ifModule>
 AddOutputFilterByType DEFLATE text/css

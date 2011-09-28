@@ -35,6 +35,11 @@ ZOMBIE PHP
    - fix it or leave it?
       - is it more secure?
 
+ - CSS compiler needs to check for includes within includes
+
+ - compile code looks like death
+   - compile output is just as ugly
+
  - NEEDS unit tests for EVERYTHING
 
 UNDEAD JS

@@ -2,6 +2,10 @@
 
 class Home extends PageController {
    public function defaultRun($request) {
+      if ($this->config['env'] == 'prod') {
+         require_once($this->config['zombie_root'] . "/config/version.php");
+         $this->version = version();
+      }
       $this->token = $this->getCsrfToken();
       $this->request = $request;
 
