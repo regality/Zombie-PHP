@@ -54,19 +54,14 @@ UNDEAD JS
 
  - abstract out alert,logged in,etc, for ajax requests and make extensible
 
- - add refresh attribute to app launchers
-
  - NEEDS unit tests for EVERYTHING
 
 FRONTEND
 ========
 
  - beautify mobile version
-   - buttons break with larger content
    - wrong scale in mobile firefox
    - needs testing in iphone, windows ce, etc
-
- - welcome page should be quick-start instructions
 
 TEMPLATING SYSTEM
 =================
@@ -82,7 +77,7 @@ TEMPLATING SYSTEM
  - Check mysql_frontend_form for bugs
    - it was copied from mysql_crud and modified
 
- - abstract out database
+ - abstract out database?
    - use template=crud instead of template=mysql_crud and check config
 
 DATABASE
@@ -103,8 +98,6 @@ GENERAL
 
  - organize everything to upgradable and not upgradable
 
- - move config to top level for easier novice access?
-
 FUTURE FEATURES
 ===============
 
@@ -123,6 +116,3 @@ FUTURE FEATURES
 
  - add a before_filter like rails?
 
- - integrate closure compiler or similar tool
-
- - form validation
