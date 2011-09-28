@@ -1,5 +1,7 @@
 <div class="welcome">
 <h2>Zombie PHP</h2>
-Zombie PHP is a framework that let's you get right to<br />
-hacking out code. We'll worry about the boring stuff.<br />
+<br />
+<pre style="font-size: medium;">
+<?php echo htmlentities(file_get_contents(__DIR__ . "/../../../GETTING-STARTED")) ?>
+</pre>
 </div>

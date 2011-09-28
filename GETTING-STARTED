@@ -135,6 +135,7 @@ Requirements:
             home - landing page, also loads undead js and default module
             login - login page
             passowrd - allows non-admin users to change their own password
+            undead - core javascript library
             users - manage users in the system.
             welcome - default module to be shown
 
@@ -144,6 +145,18 @@ Requirements:
          Each directory in apps has directory called 'views',
          this is where the html templates are stored. They have
          the .php extension.
+
+         Each views directory should also contain a css and a js directory.
+         The javascript and stylesheets for each module should be stored
+         in these. css is automagically compiled. Just put a main.css in the
+         css directory. Javascript should be loaded with the undead require
+         function:
+
+            <script type="text/javascript">
+            undead.util.require("mymodule/myjs");
+            </script>
+
+         That snippet would include myjs.js from the mymodule app.
 
       zombie/brainz
          This is the guts of the system. Unless you know what 
