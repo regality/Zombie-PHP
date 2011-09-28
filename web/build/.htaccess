@@ -1,0 +1,14 @@
+<ifModule mod_headers.c>
+   Header add Cache-Control "public"
+   Header add Vary "Accept-Encoding"
+   Header add Expires "Expires: Thu, 1 Jan 2030 00:00:01 GMT"
+</ifModule>
+<ifModule mod_rewrite.c>
+   RewriteEngine On
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteRule ^([0-9a-f]+)/js/([0-9a-zA-z_]+)/([0-9a-zA-Z_]+)\.js$ $1/js/$2/main.js [L]
+</ifModule>
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE text/javascript
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript

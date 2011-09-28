@@ -2,9 +2,8 @@
 
 class Csrf extends Controller {
    public function indexRun($request) {
-      $csrf = $this->getCsrfToken();
-      $this->json = array("status" => "success",
-                          "token" => $csrf);
+      $this->json['token'] = $this->getCsrfToken();
+      $this->json['status'] = 'success';
    }
 }
 

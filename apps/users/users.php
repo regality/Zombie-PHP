@@ -5,25 +5,25 @@ class Users extends SecureController {
 
    public function indexRun($request) {
       $users_model = new UsersModel();
-      $this->users = $users_model->getAll();
+      $this->data['users'] = $users_model->getAll();
    }
 
    public function editRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->getAll();
+      $this->data['groups'] = $groups_model->getAll();
 
       $users_model = new UsersModel();
-      $this->users = $users_model->getOne($request['id']);
+      $this->data['users'] = $users_model->getOne($request['id']);
 
-      $this->form_action = 'update';
+      $this->data['form_action'] = 'update';
    }
 
    public function newRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->getAll();
+      $this->data['groups'] = $groups_model->getAll();
 
       $this->view = 'edit';
-      $this->form_action = 'create';
+      $this->data['form_action'] = 'create';
    }
 
    public function updateRun($request) {
@@ -38,7 +38,7 @@ class Users extends SecureController {
    public function passwordRun($request) {
       $users_model = new UsersModel();
       $user = $users_model->getOne($request['id']);
-      $this->username = $user['username'];
+      $this->data['username'] = $user['username'];
    }
 
    public function passwordUpdateRun($request) {
@@ -47,7 +47,7 @@ class Users extends SecureController {
    public function passwordUpdateSave($request) {
       $users_model = new UsersModel();
       $success = $users_model->updatePassword($request['id'],
-                                               $request['new_password']);
+                                              $request['new_password']);
       if ($success) {
          $this->json['status'] = "success";
       } else {

@@ -12,6 +12,7 @@ abstract class Controller {
    protected $session;
    protected $save_status;
    protected $json;
+   protected $data;
    static protected $mobile_set = false;
 
    public function __construct() {
@@ -22,9 +23,6 @@ abstract class Controller {
       $sess_class = underscoreToClass($this->config['session']['type'] . '_' . 'session');
       $this->session = $sess_class::getSession();
       $this->mobileInit();
-   }
-
-   public function __destruct() {
    }
 
    public function mobileInit() {
@@ -61,6 +59,7 @@ abstract class Controller {
    }
 
    public function prepare($action, $request) {
+      $this->data = array();
       if (is_null($action) && !empty($_REQUEST['action'])) {
          $this->action = $_REQUEST['action'];
       } else if (is_null($action)) {
@@ -118,7 +117,7 @@ abstract class Controller {
          $file = $this->config['zombie_root'] . "/apps/" . $this->view_base . 
                  "/views/" . $this->view . ".php";
          if (file_exists($file)) {
-            foreach (get_object_vars($this) as $var => $val) {
+            foreach ($this->data as $var => $val) {
                $$var = $val;
             }
             if ($this->is_page) {

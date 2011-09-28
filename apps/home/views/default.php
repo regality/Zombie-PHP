@@ -3,7 +3,7 @@
       <?php $preload->run($preload_action, $request) ?>
    </div>
 </div>
-<?php if ($action != 'console' && $config['env'] == 'dev'): ?>
+<?php if ($action != 'console' && $env == 'dev'): ?>
    <div class="app-stack" id="console-stack" app="console" style="display:none;">
       <div class="app-content" action="index">
          <?php $console->run("index") ?>

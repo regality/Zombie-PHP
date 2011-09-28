@@ -8,10 +8,11 @@ Requirements:
    PHP 5.3+
 
    Apache with mod_rewrite or a comparable rewriting engine.
+   Having mod_headers installed is recommended.
 
    Mysql. Version 5+ recommended. Support for PostgreSQL and other dbms coming.
 
-   NOTE: ZombiePHP can be coerced to work with PHP 5+, 
+   NOTE: ZombiePHP can be coerced to work with PHP 5.x, 
          but this isn't recommended.
 
 1. Download the latest version 

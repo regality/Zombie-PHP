@@ -10,18 +10,18 @@ class Groups extends Controller {
 
    public function indexRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->getAll();
+      $this->data['groups'] = $groups_model->getAll();
    }
 
    public function editRun($request) {
       $groups_model = new GroupsModel();
-      $this->groups = $groups_model->getOne($request['id']);
-      $this->form_action = 'update';
+      $this->data['groups'] = $groups_model->getOne($request['id']);
+      $this->data['form_action'] = 'update';
    }
 
    public function newRun($request) {
       $this->view = 'edit';
-      $this->form_action = 'create';
+      $this->data['form_action'] = 'create';
    }
 
    public function updateRun($request) {
