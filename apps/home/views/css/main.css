@@ -101,6 +101,14 @@ float: left;
 #header h1 {
 padding-top: 20px;
 float: left;
+text-shadow: 2px 3px 5px #555;
+}
+
+#header h1 span.h1x {
+font-size: 70px;
+}
+
+#header h1 span.h1u {
 }
 
 #header img {

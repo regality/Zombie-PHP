@@ -10,7 +10,7 @@ class Menu extends Controller {
 
       $this->data['logged_in'] = $this->session->exists("username");
       $this->data['apps'] = array();
-      $this->data['apps']['welcome'] = array("name" => "Home");
+      $this->data['apps']['welcome'] = array("name" => "Home", "refresh" => "no");
       if ($this->inGroup('admin')) {
          $this->data['apps']['users'] = array("name" => "Users");
          $this->data['apps']['groups'] = array("name" => "Groups");

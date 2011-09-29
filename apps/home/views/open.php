@@ -6,15 +6,18 @@
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
    <?php if ($env == 'dev'): ?>
       <link rel="stylesheet" href="/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+   <?php elseif ($env == 'prod'): ?>
+      <link rel="stylesheet" href="/build/<?= $version ?>/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+   <?php endif ?>
+</head>
+<body>
+   <?php if ($env == 'dev'): ?>
       <script type="text/javascript" src="/js/undead/jquery.js"></script>
       <script type="text/javascript" src="/js/undead/undead.js"></script>
       <script type="text/javascript" src="/js/home/main.js"></script>
    <?php elseif ($env == 'prod'): ?>
-      <link rel="stylesheet" href="/build/<?= $version ?>/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
       <script type="text/javascript" src="/build/<?= $version ?>/js/main.js"></script>
    <?php endif ?>
-</head>
-<body>
    <script type="text/javascript">
    $(function() {
       undead.settings.baseUrl = "<?= $web_root ?>";
@@ -28,8 +31,8 @@
          <?php $menu->run("index", array('active' => $action)) ?>
       </div>
       <div id="header">
-         <?= img("/images/home/zombie-glasses.png", array("alt" => "logo")) ?>
-         <h1>Zombie PHP</h1>
+         <?= img("/images/home/zombie-glasses.png", array("alt" => "logo", "height" => 95, "width" => 90)) ?>
+         <h1><span class="h1x">Z</span><span class="h1u">ombie</span><span class="h1x">PHP</span></h1>
       </div>
       <div id="content">
          <div id="alerts"></div>
