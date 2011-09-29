@@ -1,7 +1,7 @@
 <?php
 
-require_once("../brainz/util/util.php");
-require_once("../brainz/util/autoload.php");
+require_once("../zombie-core/util/util.php");
+require_once("../zombie-core/util/autoload.php");
 
 if (isset($_GET['app'])) {
    // sanitize the app name: only letters, numbers, and underscores

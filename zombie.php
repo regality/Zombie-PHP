@@ -3,8 +3,8 @@
 # licensed under the General Public License version 3.
 # See the LICENSE file.
 
-require_once("brainz/util/util.php");
-require_once("brainz/util/autoload.php");
+require_once("zombie-core/util/util.php");
+require_once("zombie-core/util/autoload.php");
 
 function cli_main($argv) {
    $argc = count($argv);
@@ -32,18 +32,18 @@ function cli_main($argv) {
       }
 
       $template = (isset($options['template']) ? $options['template'] : 'basic');
-      if (!file_exists("brainz/template/" . $template . "/template.php")) {
+      if (!file_exists("zombie-core/template/" . $template . "/template.php")) {
          die("unknown template: " . $template . "\n");
       }
 
       $app = $options['app'];
 
-      require(__DIR__ . "/brainz/template/" . $template . "/template.php");
+      require(__DIR__ . "/zombie-core/template/" . $template . "/template.php");
       $template_class = underscoreToClass($template . "_template");
       $template = new $template_class($template, $app, $options);
       $template->run();
    } else if ($action == "compile") {
-      require(__DIR__ . "/brainz/util/compile/compile.php");
+      require(__DIR__ . "/zombie-core/util/compile/compile.php");
       compile($options);
    } else if ($action == "kachow") {
       echo "kachow!\n";

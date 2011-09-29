@@ -76,7 +76,7 @@ Requirements:
    Presently there is only an install script for mysql.
    The script create some mysql tables and your first user.
 
-      bash> php brainz/install/install.php
+      bash> php zombie-core/install/install.php
 
    At this point ZombiePHP should be up and running.
    Open it in your browser and check if you can log in.
@@ -158,7 +158,7 @@ Requirements:
 
          That snippet would include myjs.js from the mymodule app.
 
-      zombie/brainz
+      zombie/zombie-core
          This is the guts of the system. Unless you know what 
          you are doing or are a dev for zombie, you probably
          shouldn't touch anything in here.

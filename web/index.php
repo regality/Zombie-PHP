@@ -1,6 +1,6 @@
 <?php
 
-require("../brainz/util/autoload.php");
+require("../zombie-core/util/autoload.php");
 require("../apps/home/home.php");
 header("Content-Type: charset=utf-8");
 

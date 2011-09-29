@@ -1,0 +1,3 @@
+[submodule "zombie-core"]
+	path = zombie-core
+	url = git@github.com:regality/zombie-core.git

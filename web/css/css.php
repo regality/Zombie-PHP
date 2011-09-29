@@ -1,7 +1,7 @@
 <?php
 
-require(__DIR__ . '/../../brainz/util/compile/compile.php');
-require(__DIR__ . '/../../brainz/util/compile/cssmin.php');
+require(__DIR__ . '/../../zombie-core/util/compile/compile.php');
+require(__DIR__ . '/../../zombie-core/util/compile/cssmin.php');
 
 header("Content-type: text/css");
 if (isset($_GET['type'])) {
