@@ -9,11 +9,14 @@ function strip_css_comments($css) {
 
 function substitue_css_includes($css) {
    $matches = array();
-   preg_match_all('/@include ([a-z0-9\/]+).css;(\s+)?/', $css, $matches);
-   for ($i = 0; $i < count($matches[0]); ++$i) {
-      $sp = explode('/', $matches[1][$i]);
-      $include_file = file_get_contents(__DIR__ . "/../../../apps/" . $sp[0] . "/views/css/" . $sp[1] . ".css");
-      $css = str_replace($matches[0][$i], $include_file . "\n", $css);
+   while (preg_match_all('/@include ([a-z0-9\/]+).css;(\s+)?/', $css, $matches) > 0) {
+      for ($i = 0; $i < count($matches[0]); ++$i) {
+         $sp = explode('/', $matches[1][$i]);
+         $include_file_name = __DIR__ . "/../../../apps/" . $sp[0] . "/views/css/" . $sp[1] . ".css";
+         $include_file = file_get_contents($include_file_name);
+         $include_file = strip_css_comments($include_file);
+         $css = str_replace($matches[0][$i], $include_file . "\n", $css);
+      }
    }
    return $css;
 }

@@ -1,4 +1,4 @@
-@include home/light.css;
+@include home/var.css;
 
 .menu-title {
 margin-left: 10px;

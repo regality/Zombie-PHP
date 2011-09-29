@@ -27,15 +27,14 @@ ZOMBIE PHP
 
  - SessionModel only allows for mysql, see clear_old()
 
- - session id is not cyrpto-strong
+ - session id is not crypto-strong
    - fix it
-   - piggyback off php session?
+      - piggyback off php session?
+      - prolly use /dev/random
 
  - session cookie only works for config domain
    - fix it or leave it?
       - is it more secure?
-
- - CSS compiler needs to check for includes within includes
 
  - compile code looks like death
    - compile output is just as ugly
@@ -102,6 +101,8 @@ FUTURE FEATURES
 ===============
 
  - Testing platform
+   - integrate PHPUnit?
+      -probably
 
  - Include ORM? I don't like them, but some people do.
    - DooPHP has a really cool ORM, use or do something like that?
@@ -114,5 +115,5 @@ FUTURE FEATURES
 
  - db migration
 
- - add a before_filter like rails?
-
+ - have compiler combine images into sprites
+   - would require magic rewriting of css

@@ -23,4 +23,9 @@
          <script name="main" />
       </main>
    </app>
+   <app name="login">
+      <main>
+         <script name="main" />
+      </main>
+   </app>
 </javascript>
