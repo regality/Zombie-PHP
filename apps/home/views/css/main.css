@@ -23,6 +23,7 @@ font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
 color: var(text-color);
 height: 100%;
+background-color: var(background-color);
 }
 
 h1 {
@@ -132,7 +133,7 @@ font-size: 32px;
 
 #footer {
 border-top: 1px solid var(footer-border-color);
-background: white;
+background: var(footer-bg-color);
 padding: 5px 15px;
 }
 
