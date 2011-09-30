@@ -1,7 +1,7 @@
          </div>
       </div>
       <div class="clear"></div>
-      <div class="grid_8 push_4">
+      <div class="grid_11 prefix_5">
          <div id="footer">
             Copyright zombiephp.com<br />
             <?php if ($is_mobile): ?>

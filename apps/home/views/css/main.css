@@ -1,5 +1,6 @@
 @include home/var.css;
-@include grid960/960_12_col.css;
+@include grid960/reset.css;
+@include grid960/960_16_col.css;
 @include grid960/debug.css;
 
 @font-face {
@@ -19,7 +20,7 @@ height: 100%;
 }
 
 body {
-font: 80.5% "Trebuchet MS", sans-serif;
+font: 100% "Trebuchet MS", sans-serif;
 cursor:default;
 color: var(text-color);
 height: 100%;
@@ -39,7 +40,6 @@ color: var(second-color);
 
 h3 {
 color: var(third-color);
-text-transform: uppercase;
 }
 
 table {
@@ -62,9 +62,14 @@ border-bottom: 1px dotted var(table-border-color);
 color: var(text-color);
 }
 
-table tr td input {
+input {
 border: 1px solid var(main-border-color);
 padding: 2px;
+}
+
+label {
+display: block;
+text-align: right;
 }
 
 a {
@@ -77,6 +82,21 @@ color: var(link-visited);
 
 a:hover {
 color: var(link-hover);
+}
+
+.field {
+padding: 3px 0px;
+}
+
+.form {
+border: 1px solid var(table-border-color);
+background: var(th-bg-color);
+}
+
+hr {
+display: block;
+border-bottom: 1px solid var(table-border-color);
+margin: 3px 10px;
 }
 
 #main {
@@ -97,7 +117,6 @@ border-top-left-radius: 50px;
 #header {
 height: 90px;
 padding-bottom: 0px;
-text-align: center;
 }
 
 #header h1 {
@@ -123,7 +142,7 @@ display: inline-block;
 }
 
 #content {
-padding: 15px 20px;
+padding-top: 20px;
 border-top: 2px solid var(sidenav-bg-color);
 }
 
@@ -172,4 +191,8 @@ border-color: var(alert-warning-border);
 color: var(alert-message-color);
 background-color: var(alert-message-bg);
 border-color: var(alert-message-border);
+}
+
+.error {
+color: red;
 }

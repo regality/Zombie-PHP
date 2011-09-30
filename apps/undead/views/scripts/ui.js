@@ -105,6 +105,7 @@ undead.ui.verifyForm = function (form) {
       var formName = $(this).attr("name");
       var validatorsStr = $(this).attr("validate");
       var fail = false;
+      var errorStr = '';
       if (!validatorsStr) {
          return;
       }
@@ -119,41 +120,43 @@ undead.ui.verifyForm = function (form) {
          if (validator == "required") {
             if (!formValue) {
                fail = true;
-               undead.ui.error(formName + " is required.");
+               errorStr = formName + " is required.";
             }
          } else if (validator == "maxlen") {
             if (formValue && formValue.length > value) {
                fail = true;
-               undead.ui.error(formName + " is too long (max length " + value + ".)");
+               errorStr = formName + " is too long (max length " + value + ".)";
             }
          } else if (validator == "minlen") {
             if (formValue.length > 0 && formValue.length < value) {
                fail = true;
-               undead.ui.error(formName + " is too short (min length " + value + ".)");
+               errorStr = formName + " is too short (min length " + value + ".)";
             }
          } else if (validator == "number") {
             if (formValue && isNaN(formValue)) {
                fail = true;
-               undead.ui.error(formName + " must be a number.");
+               errorStr = formName + " must be a number.";
             }
          } else if (validator == "int") {
             if (formValue && parseInt(formValue) != formValue) {
                fail = true;
-               undead.ui.error(formName + " must be a whole number.");
+               errorStr = formName + " must be a whole number.";
             }
          } else if (validator == "format") {
             format = value;
             re = new RegExp(format);
             if (formValue && !formValue.match(re)) {
                fail = true;
-               undead.ui.error(formName + " is in the wrong format.");
+               errorStr = formName + " is in the wrong format.";
             }
          }
       }
       if (fail) {
          formDone = false;
+         $(this).parent().parent().find(".error").hide().html(errorStr).fadeIn();
          $(this).css({"background" : "#fdd"});
       } else {
+         $(this).parent().parent().find(".error").hide().html('');
          $(this).css({"background" : "#fff"});
       }
    });

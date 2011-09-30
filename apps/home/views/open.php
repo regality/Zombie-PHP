@@ -26,15 +26,15 @@
       undead.stack.loadDefault();
    });
    </script>
-   <div id="main" class="container_12">
-      <div id="header" class="grid_12">
+   <div id="main" class="container_16">
+      <div id="header" class="grid_11 prefix_5">
          <h1><span class="h1x">Z</span><span class="h1u">ombie</span><span class="h1x">PHP</span></h1>
       </div>
-      <div id="sidenav-grid" class="grid_4">
+      <div id="sidenav-grid" class="grid_5">
          <div id="sidenav">
             <?php $menu->run("index", array('active' => $action)) ?>
          </div>
       </div>
-      <div id="content-grid" class="grid_8">
+      <div id="content-grid" class="grid_11">
          <div id="content">
             <div id="alerts"></div>
