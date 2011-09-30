@@ -1,7 +1,7 @@
 <?php
 
-require(__DIR__ . '/../../zombie-core/util/compile/compile.php');
-require(__DIR__ . '/../../zombie-core/util/compile/cssmin.php');
+require_once(__DIR__ . '/../../zombie-core/util/compile/compile.php');
+require_once(__DIR__ . '/../../zombie-core/util/compile/ssp.php');
 
 header("Content-type: text/css");
 if (isset($_GET['type'])) {
@@ -17,14 +17,12 @@ if (isset($_GET['type'])) {
       }
       if (file_exists($css_file)) {
          $css_content = file_get_contents($css_file);
+         $c = new CssFile($css_content);
          if (isset($_GET['min'])) {
-            echo compile_css_file($css_content);
+            echo $c->render(true);
          } else {
-            $css_content = strip_css_comments($css_content);
-            $css_content = substitue_css_includes($css_content);
-            $css_content = substitue_css_variables($css_content);
             echo "\n/* including " . realpath($css_file) . " */\n\n";
-            echo $css_content;
+            echo $c->render();
          }
       }
    }

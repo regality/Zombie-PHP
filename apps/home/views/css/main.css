@@ -144,34 +144,33 @@ font-family: "Courier New";
 font-weight: bold;
 }
 
-#alerts div {
-width: 550px;
-position: relative;
-padding: 3px;
-z-index: 10;
-border-width: 0px 2px 2px 2px;
-border-style: solid;
-}
-
 #alerts .title {
 font-size: medium;
 text-transform: uppercase;
 font-weight: bold;
 }
 
-#alerts .error {
+.alert {
+width: 550px;
+padding: 3px;
+z-index: 10;
+border-width: 2px;
+border-style: solid;
+}
+
+#alerts .error extends .alert {
 color: var(alert-error-color);
 background-color: var(alert-error-bg);
 border-color: var(alert-error-border);
 }
 
-#alerts .warning {
+#alerts .warning extends .alert {
 color: var(alert-warning-color);
 background-color: var(alert-warning-bg);
 border-color: var(alert-warning-border);
 }
 
-#alerts .message {
+#alerts .message extends .alert {
 color: var(alert-message-color);
 background-color: var(alert-message-bg);
 border-color: var(alert-message-border);

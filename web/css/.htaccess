@@ -1,7 +1,7 @@
 <ifModule mod_rewrite.c>
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteRule ^main.css$ css.php?type=main [L]
-   RewriteRule ^mobile-main.css$ css.php?type=mobile [L]
+   RewriteRule ^main.css$ css.php?type=main [L,QSA]
+   RewriteRule ^mobile-main.css$ css.php?type=mobile [L,QSA]
 </ifModule>
 AddOutputFilterByType DEFLATE text/css
