@@ -1,4 +1,6 @@
 @include home/var.css;
+@include grid960/960_12_col.css;
+@include grid960/debug.css;
 
 @font-face {
 font-family: 'Orbitron';
@@ -19,7 +21,6 @@ height: 100%;
 body {
 font: 80.5% "Trebuchet MS", sans-serif;
 cursor:default;
-background: var(background-color) url(var(background-image)) repeat-y left top;
 color: var(text-color);
 height: 100%;
 }
@@ -78,30 +79,30 @@ color: var(link-hover);
 }
 
 #main {
-width: 900px;
-height: 90%;
+}
+
+#sidenav-grid {
+height: 100%;
 }
 
 #sidenav {
-width: 200px;
-padding-left: 100px;
-padding-top: 100px;
-height: 93%;
-float: left;
+min-height: 700px;
+padding: 30px;
+background: var(sidenav-bg-color);
+border-bottom-right-radius: 50px;
+border-top-left-radius: 50px;
 }
 
 #header {
-width: 550px;
 height: 90px;
-padding: 15px;
 padding-bottom: 0px;
-float: left;
+text-align: center;
 }
 
 #header h1 {
-padding-top: 20px;
-float: left;
+padding-top: 15px;
 text-shadow: 2px 3px 5px #555;
+display: inline-block;
 }
 
 #header h1 span.h1x {
@@ -112,16 +113,17 @@ font-size: 70px;
 }
 
 #header img {
-height: 90px;
-width: 95px;
+height: 70px;
+width: 72px;
 display: inline-block;
-float: left;
+}
+
+#content-grid {
 }
 
 #content {
-width: 550px;
 padding: 15px 20px;
-float: left;
+border-top: 2px solid var(sidenav-bg-color);
 }
 
 #content h2 {
@@ -129,14 +131,9 @@ font-size: 32px;
 }
 
 #footer {
-width: 100%;
-float: left;
-}
-
-#footer-content {
 border-top: 1px solid var(footer-border-color);
-padding: 5px 20px;
-margin-left: 300px;
+background: white;
+padding: 5px 15px;
 }
 
 #alerts {

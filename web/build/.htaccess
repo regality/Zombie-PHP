@@ -1,7 +1,7 @@
 <ifModule mod_headers.c>
    Header add Cache-Control "public"
    Header add Vary "Accept-Encoding"
-   Header add Expires "Expires: Thu, 1 Jan 2030 00:00:01 GMT"
+   Header add Expires "Expires: Thu, 01 Jan 2030 00:00:01 GMT"
 </ifModule>
 <ifModule mod_rewrite.c>
    RewriteEngine On

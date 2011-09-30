@@ -1,3 +1,8 @@
+<ifModule mod_headers.c>
+   Header add Cache-Control "no-cache"
+   Header add Pragma "no-cache"
+   Header add Expires "Expires: Tue, 01 Jan 2000 00:00:01 GMT"
+</ifModule>
 <ifModule mod_rewrite.c>
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
@@ -7,3 +12,4 @@ AddOutputFilterByType DEFLATE image/jpg
 AddOutputFilterByType DEFLATE image/jpeg
 AddOutputFilterByType DEFLATE image/png
 AddOutputFilterByType DEFLATE image/gif
+AddOutputFilterByType DEFLATE image/svg
