@@ -10,13 +10,14 @@ zs.stack.ignoreHash = false;
 
 // load the default application
 zs.stack.loadDefault = function () {
-   var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?/);
+   var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?\??(.*)?$/);
    if (re === null) {
       re = window.location.pathname.match(/([a-z_]+)\/?([a-z_]+)?/);
       if (typeof window.history.replaceState === "function") {
          window.history.replaceState({}, "", "/");
       }
    }
+   var data = {};
    if (re !== null) {
       if (typeof re[1] !== "undefined") {
          zs.stack.defaultApp = re[1];
@@ -24,10 +25,21 @@ zs.stack.loadDefault = function () {
       if (typeof re[2] !== "undefined") {
          zs.stack.defaultAction = re[2];
       }
+      if (typeof re[3] !== "undefined") {
+         var pairs = re[3].split('&');
+         for (i = 0; i < pairs.length; i += 1) {
+            pair = pairs[i].split('=');
+            if (typeof pair[1] === "undefined") {
+               data[pair[0]] = '';
+            } else {
+               data[pair[0]] = pair[1];
+            }
+         }
+      }
    }
    if (zs.stack.size(zs.stack.defaultApp) === 0 || 
       zs.stack.topAction(zs.stack.defaultApp) !== zs.stack.defaultAction) {
-      zs.stack.push(zs.stack.defaultApp, zs.stack.defaultAction);
+      zs.stack.push(zs.stack.defaultApp, zs.stack.defaultAction, data);
    } else {
       zs.stack.focus(zs.stack.defaultApp);
    }
@@ -46,7 +58,8 @@ zs.stack.focus = function (appStack) {
       $(".item").removeClass("active");
       $(".item[href^='/" + appStack + "']").addClass("active");
       newHash = "/" + appStack + "/" + zs.stack.topAction(appStack);
-      if (newHash !== window.location.hash) {
+      //if (newHash !== window.location.hash) {
+      if (!window.location.hash.match(newHash)) {
          window.location.hash = newHash;
       }
    }
@@ -147,7 +160,8 @@ zs.stack.pop = function (appStack, allowEmpty) {
 
 // push onto a stack
 zs.stack.push = function (appStack, appAction, data) {
-   var stackDiv, jsonStr;
+   var stackDiv, jsonStr, getParams, tmp;
+   getParams = "";
    if (typeof appAction === "undefined") {
       appAction = "index";
    }
@@ -155,6 +169,13 @@ zs.stack.push = function (appStack, appAction, data) {
       data = {"app" : appStack,
               "action" : appAction};
    } else {
+      tmp = [];
+      for (key in data) {
+         tmp.push(key + "=" + data[key]);
+      }
+      if (tmp.length > 0) {
+         getParams = "?" + tmp.join("&");
+      }
       data.app = appStack;
       data.action = appAction;
    }
@@ -169,7 +190,7 @@ zs.stack.push = function (appStack, appAction, data) {
            "success" : function callback (data) {
                var div;
                zs.stack.ignoreHash = true;
-               window.location.hash = "/" + appStack + "/" + appAction;
+               window.location.hash = "/" + appStack + "/" + appAction + getParams;
                div = '<div class="app-content" json="' + jsonStr + '" action="' + appAction + '">' + data + '</div>';
                stackDiv.append(div);
                stackDiv.show();
