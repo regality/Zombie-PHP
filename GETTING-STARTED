@@ -73,6 +73,11 @@ Requirements:
 
 4. Run install script
 
+   You need to have the database created before running
+   this script, so open your mysql shell:
+
+      mysql> CREATE DATABASE your_db_name;
+
    Presently there is only an install script for mysql.
    The script create some mysql tables and your first user.
 

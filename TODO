@@ -23,7 +23,7 @@ ZOMBIE PHP
    - create database?
    - only allows mysql right now
 
- - update PgsqlDatabase
+ - update PgsqlQuery class
 
  - SessionModel only allows for mysql, see clear_old()
 
@@ -49,8 +49,6 @@ UNDEAD JS
  - improve performance (everything is too slow in IE)
    - May M$ burn in hell for their atrocities!
 
- - put get params in hash
-
  - abstract out alert,logged in,etc, for ajax requests and make extensible
 
  - NEEDS unit tests for EVERYTHING
@@ -59,7 +57,6 @@ FRONTEND
 ========
 
  - beautify mobile version
-   - wrong scale in mobile firefox
    - needs testing in iphone, windows ce, etc
 
 TEMPLATING SYSTEM
