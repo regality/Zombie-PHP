@@ -1,10 +1,10 @@
 <?xml version="1.0" standalone="yes"?>
 <javascript>
-   <app name="undead">
+   <app name="zs">
       <main>
          <script name="jquery" />
          <script name="sha256" />
-         <script name="undead" />
+         <script name="main" />
          <script name="ui" />
          <script name="stack" />
          <script name="token" />

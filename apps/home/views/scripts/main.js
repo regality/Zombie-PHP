@@ -14,13 +14,13 @@ $(function () {
          e.preventDefault();
          app = re[1];
          if (typeof re[2] === "undefined") {
-            if (undead.stack.size(app) === 0) {
-               undead.stack.push(app);
-            } else if (undead.stack.size(app) === 1 &&
+            if (zs.stack.size(app) === 0) {
+               zs.stack.push(app);
+            } else if (zs.stack.size(app) === 1 &&
                        $(this).attr("refresh") != "no") {
-               undead.stack.refresh(app);
+               zs.stack.refresh(app);
             } else {
-               undead.stack.focus(app);
+               zs.stack.focus(app);
             }
          } else {
             action = re[2];
@@ -36,7 +36,7 @@ $(function () {
                   }
                }
             }
-            undead.stack.push(app, action, data);
+            zs.stack.push(app, action, data);
          }
       }
    });

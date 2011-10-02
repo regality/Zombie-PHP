@@ -2,9 +2,9 @@
  * Crypt functions                                *
  **************************************************/
 
-undead.crypt = {};
+zs.crypt = {};
 
-undead.crypt.hash = function (m) {
-   undead.util.require("undead/sha256");
+zs.crypt.hash = function (m) {
+   zs.util.require("zombiescript/sha256");
    return Sha256.hash(m);
 };

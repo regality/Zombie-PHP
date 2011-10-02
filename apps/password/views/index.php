@@ -1,6 +1,6 @@
 <form>
    <div class="grid_7 form alpha omega form">
-      <div class="grid_11">
+      <div class="grid_10 prefix_1 field alpha omega">
          <h3>Changing Your Password</h3>
       </div>
 
@@ -45,5 +45,5 @@
    </div>
 </form>
 <script type="text/javascript">
-undead.util.require("password/main");
+zs.util.require("password/main");
 </script>

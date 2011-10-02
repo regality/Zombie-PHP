@@ -9,7 +9,7 @@ $(function() {
                  if (data.status == "success") {
                     row.remove();
                  } else {
-                    undead.ui.error("Could not delete user.");
+                    zs.ui.error("Could not delete user.");
                  }
               }
       });
@@ -17,7 +17,7 @@ $(function() {
 
    $(".users-create").live('click', function() {
       var form = $(this).parents("div.form");
-      if (!undead.ui.verifyForm(form)) {
+      if (!zs.ui.verifyForm(form)) {
          return false;
       }
       var groups = [];
@@ -25,16 +25,16 @@ $(function() {
          groups.push($(this).val());
       });
       if (groups.length == 0) {
-         undead.ui.error("You must select at least one group.");
+         zs.ui.error("You must select at least one group.");
          return false;
       }
       var pw1 = form.find("input[name=password1]").val();
       var pw2 = form.find("input[name=password2]").val();
       if (pw1 != pw2) {
-         undead.ui.error('Passwords do not match');
+         zs.ui.error('Passwords do not match');
          return false;
       }
-      var hex_pass = undead.crypt.hash(pw1);
+      var hex_pass = zs.crypt.hash(pw1);
       $.ajax({"url":"app.php",
               "data":{"app":"users",
                       "id":form.find("input[name=id]").val(),
@@ -46,10 +46,10 @@ $(function() {
                       "action":"create"},
               "success":function(data) {
                  if (data.status == "success") {
-                    undead.stack.pop("users");
-                    undead.stack.refresh("users");
+                    zs.stack.pop("users");
+                    zs.stack.refresh("users");
                  } else {
-                    undead.ui.error("Could not create user.");
+                    zs.ui.error("Could not create user.");
                  }
               }
       });
@@ -58,7 +58,7 @@ $(function() {
 
    $(".users-update").live('click', function() {
       var form = $(this).parents("div.form");
-      if (!undead.ui.verifyForm(form)) {
+      if (!zs.ui.verifyForm(form)) {
          return false;
       }
       var groups = [];
@@ -66,7 +66,7 @@ $(function() {
          groups.push($(this).val());
       });
       if (groups.length == 0) {
-         undead.ui.error("You must select at least one group.");
+         zs.ui.error("You must select at least one group.");
          return false;
       }
       $.ajax({"url":"app.php",
@@ -79,10 +79,10 @@ $(function() {
                       "action":"update"},
               "success":function(data) {
                  if (data.status == "success") {
-                    undead.stack.pop("users");
-                    undead.stack.refresh("users");
+                    zs.stack.pop("users");
+                    zs.stack.refresh("users");
                  } else {
-                    undead.ui.error("Could not update user.");
+                    zs.ui.error("Could not update user.");
                  }
               }
       });

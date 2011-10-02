@@ -2,14 +2,14 @@
  * Stack functions                                *
  **************************************************/
 
-undead.stack = {};
+zs.stack = {};
 
-undead.stack.defaultApp = "welcome";
-undead.stack.defaultAction = "index";
-undead.stack.ignoreHash = false;
+zs.stack.defaultApp = "welcome";
+zs.stack.defaultAction = "index";
+zs.stack.ignoreHash = false;
 
 // load the default application
-undead.stack.loadDefault = function () {
+zs.stack.loadDefault = function () {
    var re = window.location.hash.match(/([a-z_]+)\/?([a-z_]+)?/);
    if (re === null) {
       re = window.location.pathname.match(/([a-z_]+)\/?([a-z_]+)?/);
@@ -19,25 +19,25 @@ undead.stack.loadDefault = function () {
    }
    if (re !== null) {
       if (typeof re[1] !== "undefined") {
-         undead.stack.defaultApp = re[1];
+         zs.stack.defaultApp = re[1];
       }
       if (typeof re[2] !== "undefined") {
-         undead.stack.defaultAction = re[2];
+         zs.stack.defaultAction = re[2];
       }
    }
-   if (undead.stack.size(undead.stack.defaultApp) === 0 || 
-      undead.stack.topAction(undead.stack.defaultApp) !== undead.stack.defaultAction) {
-      undead.stack.push(undead.stack.defaultApp, undead.stack.defaultAction);
+   if (zs.stack.size(zs.stack.defaultApp) === 0 || 
+      zs.stack.topAction(zs.stack.defaultApp) !== zs.stack.defaultAction) {
+      zs.stack.push(zs.stack.defaultApp, zs.stack.defaultAction);
    } else {
-      undead.stack.focus(undead.stack.defaultApp);
+      zs.stack.focus(zs.stack.defaultApp);
    }
 };
 
 // focus on a stack
-undead.stack.focus = function (appStack) {
+zs.stack.focus = function (appStack) {
    var newHash;
-   if (undead.stack.size(appStack) == 0) {
-      undead.stack.push(appStack);
+   if (zs.stack.size(appStack) == 0) {
+      zs.stack.push(appStack);
    } else {
       $(".app-stack:visible").hide().attr("active",null);
       $("#" + appStack + "-stack").show().attr("active","true");
@@ -45,7 +45,7 @@ undead.stack.focus = function (appStack) {
       $("#" + appStack + "-stack").find(".app-content").last().show();
       $(".item").removeClass("active");
       $(".item[href^='/" + appStack + "']").addClass("active");
-      newHash = "/" + appStack + "/" + undead.stack.topAction(appStack);
+      newHash = "/" + appStack + "/" + zs.stack.topAction(appStack);
       if (newHash !== window.location.hash) {
          window.location.hash = newHash;
       }
@@ -53,80 +53,80 @@ undead.stack.focus = function (appStack) {
 };
 
 // get the name of the active stack
-undead.stack.activeName = function () {
+zs.stack.activeName = function () {
    return $(".app-stack[active=true]").attr("app");
 };
 
 // pop the active stack
-undead.stack.popActive = function () {
-   undead.stack.pop(undead.stack.activeName());
+zs.stack.popActive = function () {
+   zs.stack.pop(zs.stack.activeName());
 };
 
 // generic pop event
 $(".pop-active").live('click', function (e) {
    e.preventDefault();
-   undead.stack.popActive();
+   zs.stack.popActive();
 });
 
 // get the size of a stack
-undead.stack.size = function (appStack) {
+zs.stack.size = function (appStack) {
    return $("#" + appStack + "-stack").find(".app-content").length;
 };
 
 // get the top (most recent) action of a stack
-undead.stack.topAction = function (appStack) {
+zs.stack.topAction = function (appStack) {
    var action = $("#" + appStack + "-stack").find(".app-content").last().attr("action");
    return action;
 };
 
 // handle the changing of the hash
-undead.stack.handleHashChange = function (hash) {
+zs.stack.handleHashChange = function (hash) {
    var app, action, re;
-   if (undead.stack.ignoreHash === false) {
+   if (zs.stack.ignoreHash === false) {
       re = hash.match(/([a-z_]+)\/([a-z_]+)/);
       if (typeof re !== "undefined") {
          app = re[1];
          action = re[2];
-         if (undead.stack.size(app) > 1 && undead.stack.topAction(app) !== action) {
-            undead.stack.pop(app);
-         } else if (undead.stack.size(app) > 0) {
-            undead.stack.focus(app);
+         if (zs.stack.size(app) > 1 && zs.stack.topAction(app) !== action) {
+            zs.stack.pop(app);
+         } else if (zs.stack.size(app) > 0) {
+            zs.stack.focus(app);
          }
       } else {
-         if (undead.stack.activeName() !== undead.stack.defaultApp) {
-            undead.stack.focus(undead.stack.defaultApp);
-         } else if (undead.stack.size(undead.stack.defaultApp) > 1) {
-            undead.stack.pop(undead.stack.defaultApp);
+         if (zs.stack.activeName() !== zs.stack.defaultApp) {
+            zs.stack.focus(zs.stack.defaultApp);
+         } else if (zs.stack.size(zs.stack.defaultApp) > 1) {
+            zs.stack.pop(zs.stack.defaultApp);
          }
       }
    } else {
-      undead.stack.ignoreHash = false;
+      zs.stack.ignoreHash = false;
    }
 };
 
 $(window).bind('hashchange', function () {
-   undead.stack.handleHashChange(window.location.hash);
+   zs.stack.handleHashChange(window.location.hash);
 });
 
 // refresh the top of a stack
-undead.stack.refresh = function (appStack) {
+zs.stack.refresh = function (appStack) {
    var topFrame, data;
-   if (undead.stack.size(appStack) == 0) {
-      undead.stack.push(appStack);
+   if (zs.stack.size(appStack) == 0) {
+      zs.stack.push(appStack);
    } else {
       topFrame = $("#" + appStack + "-stack").find(".app-content").last();
       if (topFrame.attr("json")) {
          data = $.parseJSON(window.unescape(topFrame.attr("json")));
       } else {
          data = {"app" : appStack,
-                 "action" : undead.stack.topAction(appStack)};
+                 "action" : zs.stack.topAction(appStack)};
       }
       $.ajax({"data" : data,
               "dataType" : "html",
               success : function (data) {
                   topFrame.html(data);
-                  undead.stack.focus(appStack);
-                  undead.ui.logMessage("App Refreshed", "The app <i>" + 
+                  zs.stack.focus(appStack);
+                  zs.ui.logMessage("App Refreshed", "The app <i>" + 
                                     appStack + "." + topFrame.attr("action") + 
                                     "</i> was successfully refreshed");
               }
@@ -135,18 +135,18 @@ undead.stack.refresh = function (appStack) {
 };
 
 // delete everything from a stack
-undead.stack.empty = function (appStack) {
+zs.stack.empty = function (appStack) {
    $("#" + appStack + "-stack").find(".app-content").remove();
 };
 
 // pop a stack
-undead.stack.pop = function (appStack, allowEmpty) {
+zs.stack.pop = function (appStack, allowEmpty) {
    $("#" + appStack + "-stack").find(".app-content").last().remove();
-   undead.stack.focus(appStack);
+   zs.stack.focus(appStack);
 };
 
 // push onto a stack
-undead.stack.push = function (appStack, appAction, data) {
+zs.stack.push = function (appStack, appAction, data) {
    var stackDiv, jsonStr;
    if (typeof appAction === "undefined") {
       appAction = "index";
@@ -168,13 +168,13 @@ undead.stack.push = function (appStack, appAction, data) {
            "dataType" : "html",
            "success" : function callback (data) {
                var div;
-               undead.stack.ignoreHash = true;
+               zs.stack.ignoreHash = true;
                window.location.hash = "/" + appStack + "/" + appAction;
                div = '<div class="app-content" json="' + jsonStr + '" action="' + appAction + '">' + data + '</div>';
                stackDiv.append(div);
                stackDiv.show();
-               undead.stack.focus(appStack);
-               undead.ui.logMessage("App Loaded", "The app " + 
+               zs.stack.focus(appStack);
+               zs.ui.logMessage("App Loaded", "The app " + 
                                  appStack + "." + appAction + 
                                  " was successfully loaded");
            }

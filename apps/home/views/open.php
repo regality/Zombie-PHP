@@ -12,18 +12,18 @@
 </head>
 <body>
    <?php if ($env == 'dev'): ?>
-      <script type="text/javascript" src="/js/undead/jquery.js"></script>
-      <script type="text/javascript" src="/js/undead/undead.js"></script>
+      <script type="text/javascript" src="/js/zombiescript/jquery.js"></script>
+      <script type="text/javascript" src="/js/zombiescript/main.js"></script>
       <script type="text/javascript" src="/js/home/main.js"></script>
    <?php elseif ($env == 'prod'): ?>
       <script type="text/javascript" src="/build/<?= $version ?>/js/main.js"></script>
    <?php endif ?>
    <script type="text/javascript">
    $(function() {
-      undead.settings.baseUrl = "<?= $web_root ?>";
-      undead.init.init();
-      undead.token.set("<?= $token ?>");
-      undead.stack.loadDefault();
+      zs.settings.baseUrl = "<?= $web_root ?>";
+      zs.init.init();
+      zs.token.set("<?= $token ?>");
+      zs.stack.loadDefault();
    });
    </script>
    <div id="main" class="container_16">

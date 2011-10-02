@@ -9,5 +9,5 @@
    </table>
 </div>
 <script type="text/javascript">
-undead.util.require("console/main");
+zs.util.require("console/main");
 </script>

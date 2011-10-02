@@ -44,5 +44,5 @@
    </div>
 </form>
 <script type="text/javascript">
-undead.util.require("users/password");
+zs.util.require("users/password");
 </script>

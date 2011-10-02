@@ -9,7 +9,7 @@ $(function() {
                   if (data.status == "success") {
                      row.remove();
                   } else {
-                     undead.ui.error("Could not delete.");
+                     zs.ui.error("Could not delete.");
                   }
               }
       });
@@ -17,7 +17,7 @@ $(function() {
 
    $(".groups-create").live('click', function() {
       var form = $(this).parents("form");
-      if (!undead.ui.verifyForm(form)) {
+      if (!zs.ui.verifyForm(form)) {
          return false;
       }
       $.ajax({"url":"app.php",
@@ -26,10 +26,10 @@ $(function() {
                       "action":"create"},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.stack.pop("groups");
-                     undead.stack.refresh("groups");
+                     zs.stack.pop("groups");
+                     zs.stack.refresh("groups");
                   } else {
-                     undead.ui.error("Could not create.");
+                     zs.ui.error("Could not create.");
                   }
               }
       });
@@ -38,7 +38,7 @@ $(function() {
 
    $(".groups-update").live('click', function() {
       var form = $(this).parents("form");
-      if (!undead.ui.verifyForm(form)) {
+      if (!zs.ui.verifyForm(form)) {
          return false;
       }
       $.ajax({"url":"app.php",
@@ -48,10 +48,10 @@ $(function() {
                       "action":"update"},
               "success":function(data) {
                   if (data.status == "success") {
-                     undead.stack.pop("groups");
-                     undead.stack.refresh("groups");
+                     zs.stack.pop("groups");
+                     zs.stack.refresh("groups");
                   } else {
-                     undead.ui.error("Could not update.");
+                     zs.ui.error("Could not update.");
                   }
               }
       });

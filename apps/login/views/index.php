@@ -7,5 +7,5 @@
    </form>
 </div>
 <script type="text/javascript">
-undead.util.require("login/main");
+zs.util.require("login/main");
 </script>

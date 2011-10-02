@@ -1,15 +1,15 @@
 $(function() {
    $(".password-update").live('click', function() {
       var form = $(this).parents("div.form");
-      if (!undead.ui.verifyForm(form)) {
+      if (!zs.ui.verifyForm(form)) {
          return false;
       }
       if (form.find("input[name=new_password_a]").val() !==
           form.find("input[name=new_password_b]").val()) {
-         undead.ui.error("Passwords do not match.");
+         zs.ui.error("Passwords do not match.");
          return false;
       }
-      var newPass = undead.crypt.hash(form.find("input[name=new_password_a]").val());
+      var newPass = zs.crypt.hash(form.find("input[name=new_password_a]").val());
       var id = form.find("input[name=id]").val();
       $.ajax({"url":"app.php",
               "data":{"app":"users",
@@ -18,8 +18,8 @@ $(function() {
                       "action":"password_update"},
               "success":function(data) {
                   if (data.status === "success") {
-                     undead.stack.pop("users");
-                     undead.stack.refresh("users");
+                     zs.stack.pop("users");
+                     zs.stack.refresh("users");
                   }
               }
       });

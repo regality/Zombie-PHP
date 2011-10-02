@@ -23,5 +23,5 @@
    <?php endforeach ?>
 </table>
 <script type="text/javascript">
-undead.util.require("users/main");
+zs.util.require("users/main");
 </script>

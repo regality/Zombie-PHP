@@ -9,7 +9,7 @@ $(function () {
       $(this).parent().remove();
    });
 
-   undead.util.require("undead/defaultvalue");
+   zs.util.require("zombiescript/defaultvalue");
    $("#console-run").defaultvalue("Console...", "#999999", "#000000");
 
    $("#console-run").keydown(function(e) {
@@ -18,7 +18,7 @@ $(function () {
       var DOWN = 40;
       if (e.keyCode == ENTER) {
          var ret = eval($(this).val());
-         undead.ui.logMessage($(this).val(), String(ret));
+         zs.ui.logMessage($(this).val(), String(ret));
          $(this).val("");
       }
    });

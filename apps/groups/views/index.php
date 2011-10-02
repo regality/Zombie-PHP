@@ -14,5 +14,5 @@
    <?php endforeach ?>
 </table>
 <script type="text/javascript">
-undead.util.require('groups/main');
+zs.util.require('groups/main');
 </script>
