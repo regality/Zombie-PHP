@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <javascript>
-   <app name="zs">
+   <app name="zombiescript">
       <main>
          <script name="jquery" />
          <script name="sha256" />
