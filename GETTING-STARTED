@@ -17,15 +17,12 @@ Requirements:
 
 1. Download the latest version 
 
-   bash> wget http://github.com/regality/Zombie-PHP/tarball/master
+   bash> git clone git://github.com/regality/Zombie-PHP.git zombie
+   bash> cd zombie
+   bash> git submodule init
+   bash> git submodule update
 
-2. Unpack the source
-
-      bash> mv master zombie.tgz
-      bash> tar -xzvf zombie.tgz
-      bash> mv regality-Zombie-PHP-<version> zombie
-
-3. Set up your webroot to zombie/web
+2. Set up your webroot to zombie/web
 
    Each web server will have it's own way of doing this.
    If you are running apache with the apache config file at
@@ -37,6 +34,9 @@ Requirements:
       <VirtualHost *:80>
           DocumentRoot /var/www/zombie/web
           ServerName yourwebsite.com
+          <Directory />
+            AllowOverride All
+          </Directory>
       </VirtualHost>
 
    If you are running on your local machine yourwebsite.com can 
@@ -46,7 +46,7 @@ Requirements:
 
       bash> sudo /etc/init.d/apache2 restart
 
-4. Edit zombie config
+3. Edit zombie config
 
    To get started you will need to create a config file.
    The easiest thing is to copy the sample config and make
@@ -71,7 +71,7 @@ Requirements:
    NOTE: The domain is used when setting the session cookie,
          so an incorrect domain will prevent you from logging in.
 
-5. Run install script
+4. Run install script
 
    Presently there is only an install script for mysql.
    The script create some mysql tables and your first user.
@@ -81,7 +81,7 @@ Requirements:
    At this point ZombiePHP should be up and running.
    Open it in your browser and check if you can log in.
 
-6. Run the code generator.
+5. Run the code generator.
 
    Once you have ZombiePHP installed, you can generate modules
    with the zombie code generator.
@@ -95,7 +95,7 @@ Requirements:
    It can be found in zombie/apps/foo/
    You can open it in your browser by going to yourwebsite.com/foo
 
-7. Create a CRUD module.
+6. Create a CRUD module.
 
    To save time zombie comes with templates for basic
    CRUD (Create Replace Update Delete) modules.
@@ -119,7 +119,7 @@ Requirements:
    and see the code in action. You can also edit zombie/apps/menu/menu.php
    to add them to the side menu.
 
-8. Good job.
+7. Good job.
 
    Here is a basic layout of zombie to help you as you keep coding:
 
@@ -135,7 +135,7 @@ Requirements:
             home - landing page, also loads zs js and default module
             login - login page
             passowrd - allows non-admin users to change their own password
-            zs - core javascript library
+            zombiescript - core javascript library
             users - manage users in the system.
             welcome - default module to be shown
 
