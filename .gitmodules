@@ -1,3 +1,6 @@
 [submodule "zombie-core"]
 	path = zombie-core
 	url = git://github.com/regality/zombie-core.git
+[submodule "apps/zombiescript/views/scripts"]
+	path = apps/zombiescript/views/scripts
+	url = git://github.com/regality/zombiescript.git
