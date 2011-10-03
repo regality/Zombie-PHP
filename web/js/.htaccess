@@ -7,7 +7,7 @@
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteCond %{REQUEST_FILENAME} !-d
-   RewriteRule ^([0-9a-zA-Z_]+)/([0-9a-zA-Z_\/]+)\.js$ js.php?app=$1&js=$2 [L,QSA]
+   RewriteRule ^([0-9a-zA-Z_]+)/([0-9a-zA-Z_\/\.]+)\.js$ js.php?app=$1&js=$2 [L,QSA]
 </ifModule>
 AddOutputFilterByType DEFLATE text/javascript
 AddOutputFilterByType DEFLATE application/javascript

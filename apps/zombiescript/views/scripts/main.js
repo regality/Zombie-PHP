@@ -69,6 +69,7 @@ zs.util.loadCSS = function (url) {
 zs.init = {};
 
 zs.init.init = function () {
+   zs.util.require('zombiescript/jquery.class');
    zs.util.require('zombiescript/ui');
    zs.util.require('zombiescript/crypt');
    zs.util.require('zombiescript/stack');
