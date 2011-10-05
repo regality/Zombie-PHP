@@ -1,10 +1,24 @@
-Zombie PHP is a PHP framework.
-It is a AJAX/jQuery/multi-user/multi-group environment out of the box,
-provides and MVC architecture and security features built-in.
+ZombiePHP is a PHP framework designed for rapid web development
+in a way that no other framework allows. It intends to do all
+of the tasks that other frameworks should, but don't.
 
-It is still in the early stages of development. We could use
-some contributors. Can't code? We still need documentation
-and testers. All help is appreciated.
+The modular design allows you to group not just PHP code together,
+but also group css, javascript, and images with their modules.
+It comes with a custom css compiler, a javascript compiler, built-in
+support for mobile templates, and many other features which are
+absent in most frameworks.
 
-Peace,
-Adam
+It is designed to be secure from the ground up and comes with
+built-in authentication modules. It also provides protection
+against CSRF, XSS, SQL injection, session hijacking.
+
+Scalability is one of the main goals of ZombiePHP and as such
+it is designed to be fast. It also comes with database backed
+sessions to make scaling across multiple servers as easy as
+changing a configuration file.
+
+We are still under development, and so ZombiePHP is constantly
+changing, but we are rapidly approaching version 1.0. All of
+the code is licensed under the GPL with the exception of some
+included libraries. Being open source means that contributions
+are welcome. Feel free to contribute and make a pull request

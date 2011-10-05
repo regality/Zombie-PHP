@@ -19,13 +19,7 @@ ZOMBIE PHP
 
  - make salt gen in user model os independent (linux/unix only right now)
 
- - install.php
-   - create database?
-   - only allows mysql right now
-
  - update PgsqlQuery class
-
- - SessionModel only allows for mysql, see clear_old()
 
  - session id is not crypto-strong
    - fix it
@@ -38,6 +32,8 @@ ZOMBIE PHP
 
  - compile code looks like death
    - compile output is just as ugly
+
+ - Clone zombie-php to zombie-php-psql
 
  - NEEDS unit tests for EVERYTHING
 
@@ -78,9 +74,6 @@ TEMPLATING SYSTEM
  - Check mysql_frontend_form for bugs
    - it was copied from mysql_crud and modified
 
- - abstract out database?
-   - use template=crud instead of template=mysql_crud and check config
-
 DATABASE
 ========
 
@@ -97,8 +90,6 @@ GENERAL
 
  - Somebody please make a new logo
 
- - organize everything to upgradable and not upgradable
-
 FUTURE FEATURES
 ===============
 
@@ -110,8 +101,6 @@ FUTURE FEATURES
    - DooPHP has a really cool ORM, use or do something like that?
    - Doctrine or propel?
       - propel looks more cooler
-
- - automagic upgrade zombie
 
  - put a stack within a stack (zs)
 
