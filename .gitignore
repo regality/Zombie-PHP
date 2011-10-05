@@ -1,3 +1,5 @@
 config/config.php
+config/migrate.xml
 config/version.php
+model/migrate/*.php
 web/build/*

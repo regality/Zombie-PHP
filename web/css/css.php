@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/../../zombie-core/util/compile/compile.php');
+require_once(__DIR__ . '/../../zombie-core/util/dir.php');
 require_once(__DIR__ . '/../../zombie-core/util/compile/ssp.php');
 
 header("Content-type: text/css");

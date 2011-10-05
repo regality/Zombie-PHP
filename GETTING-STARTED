@@ -12,10 +12,10 @@ Requirements:
 
    Mysql. Version 5+ recommended. Support for PostgreSQL and other dbms coming.
 
-   NOTE: ZombiePHP can be coerced to work with PHP 5.x, 
+   NOTE: ZombiePHP can be coerced to work with PHP 5.x,
          but this isn't recommended.
 
-1. Download the latest version 
+1. Download the latest version
 
    bash> git clone git://github.com/regality/Zombie-PHP.git zombie
    bash> cd zombie
@@ -39,7 +39,7 @@ Requirements:
           </Directory>
       </VirtualHost>
 
-   If you are running on your local machine yourwebsite.com can 
+   If you are running on your local machine yourwebsite.com can
    be replaced with 'localhost'
 
    Once you've added the virtual host run
@@ -54,7 +54,7 @@ Requirements:
 
       bash> cd config/
       bash> mv config-sample.php config.php
- 
+
    Open config.php with your favorite editor (vim is recommended)
 
    Change the following lines in the config:
@@ -78,9 +78,10 @@ Requirements:
 
       mysql> CREATE DATABASE your_db_name;
 
-   Presently there is only an install script for mysql.
-   The script create some mysql tables and your first user.
+   Before running the script, you need to run migrate
+   to create the basic tables.
 
+      bash> php zombie.php migrate action=run
       bash> php zombie-core/install/install.php
 
    At this point ZombiePHP should be up and running.
@@ -105,17 +106,29 @@ Requirements:
    To save time zombie comes with templates for basic
    CRUD (Create Replace Update Delete) modules.
 
-   To create a crud module, first create your tables in mysql.
    Here is an example to create a kittens module:
 
-      mysql> CREATE TABLE kitten(id int not null auto_increment primary key,
-                                 name varchar(100) not null,
-                                 color_id int,
-                                 size enum('small', 'medium', 'large'));
-      mysql> CREATE TABLE color(id int not null auto_increment primary key,
-                                name varchar(100) not null);
+   To create a crud module, first create your tables.
+   You can create this directly in mysql, but if you
+   plan on deploying this with another database, use
+   migrations instead.
 
-   Once those are created, run the code generator:
+      bash> php zombie.php migrate action=new name=kitten
+      bash> php zombie.php migrate action=add-table name=kitten table=kitten
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten
+                                   column=name type="varchar(100)" extra="not null"
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten
+                                   column=color_id type=int
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten
+                                   column=size
+                                   type="enum('small', 'medium', 'large')"
+      bash> php zombie.php migrate action=add-table name=kitten table=color
+      bash> php zombie.php migrate action=add-column name=kitten table=color
+                                   column=name type="varchar(100)" extra="not null"
+      bash> php zombie.php migrate action=apply name=kitten
+      bash> php zombie.php migrate action=run
+
+   Once the tables are created, run the code generator:
 
       bash> php zombie.php create-app app=color template=mysql_crud table=color
       bash> php zombie.php create-app app=kitten template=mysql_crud table=kitten
@@ -151,11 +164,11 @@ Requirements:
          this is where the html templates are stored. They have
          the .php extension.
 
-         Each views directory should also contain a css and a js directory.
-         The javascript and stylesheets for each module should be stored
-         in these. css is automagically compiled. Just put a main.css in the
-         css directory. Javascript should be loaded with the zs require
-         function:
+         Each views directory should also contain a css, images and js
+         directory. The javascript and stylesheets and images for each
+         module should be stored in these. css is automagically compiled.
+         Just put a main.css in the css directory. Javascript should be
+         loaded with the zs require function:
 
             <script type="text/javascript">
             zs.util.require("mymodule/myjs");
@@ -164,7 +177,7 @@ Requirements:
          That snippet would include myjs.js from the mymodule app.
 
       zombie/zombie-core
-         This is the guts of the system. Unless you know what 
+         This is the guts of the system. Unless you know what
          you are doing or are a dev for zombie, you probably
          shouldn't touch anything in here.
 
@@ -175,6 +188,10 @@ Requirements:
          This is where all models are stored. Each model typically
          contains methods for database interaction and other
          persistent storage.
+
+         The model directory also contains migrations.
+         Files inside of zombie/model/migrate/applied are marked 
+         with a timestamp and should not be renamed or altered.
 
       zombie/web
          This is visible to the interblag.
