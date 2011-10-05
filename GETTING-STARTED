@@ -71,18 +71,17 @@ Requirements:
    NOTE: The domain is used when setting the session cookie,
          so an incorrect domain will prevent you from logging in.
 
-4. Run install script
+4. Run migrate
 
    You need to have the database created before running
-   this script, so open your mysql shell:
+   migrate, so open your mysql shell:
 
       mysql> CREATE DATABASE your_db_name;
 
-   Before running the script, you need to run migrate
-   to create the basic tables.
+   You can now run migrate to generate tables
+   and your first user. Do this from the zombie root.
 
       bash> php zombie.php migrate action=run
-      bash> php zombie-core/install/install.php
 
    At this point ZombiePHP should be up and running.
    Open it in your browser and check if you can log in.
@@ -103,7 +102,7 @@ Requirements:
 
 6. Create a CRUD module.
 
-   To save time zombie comes with templates for basic
+   To save time, zombie comes with templates for basic
    CRUD (Create Replace Update Delete) modules.
 
    Here is an example to create a kittens module:
