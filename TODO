@@ -53,6 +53,11 @@ UNDEAD JS
 
  - NEEDS unit tests for EVERYTHING
 
+MIGRATIONS
+==========
+
+ - command line isn't user friendly. fix this.
+
 FRONTEND
 ========
 
@@ -109,8 +114,6 @@ FUTURE FEATURES
  - automagic upgrade zombie
 
  - put a stack within a stack (zs)
-
- - db migration
 
  - have compiler combine images into sprites
    - would require magic rewriting of css
