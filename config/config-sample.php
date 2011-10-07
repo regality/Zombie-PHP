@@ -14,6 +14,10 @@ function getZombieConfig() {
    $config['mysql']['pass'] = 'password';
    $config['mysql']['database'] = 'zombie';
 
+   $config['crypt'] = array();
+   $config['crypt']['type'] = 'aes128';
+   $config['crypt']['pass'] = 'secret';
+
    $config['session'] = array();
    $config['session']['type'] = 'php';
    $config['session']['timeout'] = 3600;

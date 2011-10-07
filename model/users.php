@@ -1,5 +1,7 @@
 <?php
 
+require_once($this->config['zombie_root'] . "/zombie-core/util/rand.php");
+
 class UsersModel extends ModelBase {
    public function getAll() {
       $query = new MysqlQuery(
@@ -102,7 +104,7 @@ class UsersModel extends ModelBase {
          'private_key_type' => OPENSSL_KEYTYPE_RSA,
       ));
       openssl_pkey_export($privateKey, $privateKeyStr, $passphrase);
-       
+
       // get the public key $keyDetails['key'] from the private key;
       $keyDetails = openssl_pkey_get_details($privateKey);
       $publicKeyStr = $keyDetails['key'];
@@ -112,8 +114,7 @@ class UsersModel extends ModelBase {
    }
 
    public function genBcryptSalt() {
-      $rand_bits = fread(fopen('/dev/urandom', 'r'), 32);
-      $rand_bits = base64_encode($rand_bits);
+      $rand_bits = strongRand(32);
       $rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
       $rand_bits = substr($rand_bits, 0, 22);
       $salt = '$2a$07$' . $rand_bits . '$';
@@ -150,9 +151,9 @@ class UsersModel extends ModelBase {
                           $lastname, array $groups) {
       $query = new MysqlQuery(
          'UPDATE users
-          SET username = $2 
-            , firstname = $3 
-            , lastname = $4 
+          SET username = $2
+            , firstname = $3
+            , lastname = $4
           WHERE id = $1'
       );
       $query->addParam($id);
