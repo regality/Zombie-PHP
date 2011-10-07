@@ -17,14 +17,7 @@ ZOMBIE PHP
    - register/signup app
    - captcha, add as option under frontend template
 
- - make salt gen in user model os independent (linux/unix only right now)
-
  - update PgsqlQuery class
-
- - session id is not crypto-strong
-   - fix it
-      - piggyback off php session?
-      - prolly use /dev/random
 
  - session cookie only works for config domain
    - fix it or leave it?
@@ -96,11 +89,6 @@ FUTURE FEATURES
  - Testing platform
    - integrate PHPUnit?
       -probably
-
- - Include ORM? I don't like them, but some people do.
-   - DooPHP has a really cool ORM, use or do something like that?
-   - Doctrine or propel?
-      - propel looks more cooler
 
  - put a stack within a stack (zs)
 
