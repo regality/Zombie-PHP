@@ -1,7 +1,5 @@
 <?php
 
-require_once($this->config['zombie_root'] . "/zombie-core/util/rand.php");
-
 class UsersModel extends ModelBase {
    public function getAll() {
       $query = new MysqlQuery(
@@ -114,6 +112,7 @@ class UsersModel extends ModelBase {
    }
 
    public function genBcryptSalt() {
+      require_once($this->config['zombie_root'] . "/zombie-core/util/rand.php");
       $rand_bits = strongRand(32);
       $rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
       $rand_bits = substr($rand_bits, 0, 22);

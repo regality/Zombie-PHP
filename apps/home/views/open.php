@@ -14,7 +14,6 @@
    <?php if ($env == 'dev'): ?>
       <script type="text/javascript" src="/js/zombiescript/jquery.js"></script>
       <script type="text/javascript" src="/js/zombiescript/main.js"></script>
-      <script type="text/javascript" src="/js/home/main.js"></script>
    <?php elseif ($env == 'prod'): ?>
       <script type="text/javascript" src="/build/<?= $version ?>/js/main.js"></script>
    <?php endif ?>

@@ -9,3 +9,6 @@
 <?php if ($logged_in): ?>
    <a href="javascript:void(0)" class="item" id="logout">Logout</a>
 <?php endif ?>
+<script type="text/javascript">
+zs.util.require("menu/main");
+</script>

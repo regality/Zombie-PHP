@@ -40,12 +40,16 @@ UNDEAD JS
 
  - abstract out alert,logged in,etc, for ajax requests and make extensible
 
+ - retrieve new csrf when session expires
+
  - NEEDS unit tests for EVERYTHING
 
 MIGRATIONS
 ==========
 
  - command line isn't user friendly. fix this.
+
+ - add ability to downgrade
 
 FRONTEND
 ========
@@ -77,6 +81,8 @@ DATABASE
  - Update sql install files
 
  - Add functions to encrypt/decrypt data for storage
+   - single password AES is done
+   - need per user asymetric encryption
 
 GENERAL
 =======

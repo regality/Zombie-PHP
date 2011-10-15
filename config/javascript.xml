@@ -18,7 +18,7 @@
          <script name="jquery-ui-1.8.6.custom.min" />
       </nocompile>
    </app>
-   <app name="home">
+   <app name="menu">
       <main>
          <script name="main" />
       </main>
