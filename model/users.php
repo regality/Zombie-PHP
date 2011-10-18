@@ -1,5 +1,7 @@
 <?php
 
+class WrongPasswordException extends Exception { }
+
 class UsersModel extends ModelBase {
    public function getAll() {
       $query = new MysqlQuery(
@@ -199,7 +201,7 @@ class UsersModel extends ModelBase {
          $user_id = $user['id'];
          return $this->updatePassword($user_id, $new_password);
       } else {
-         throw new Exception("Wrong password");
+         throw new WrongPasswordException("Wrong password");
       }
    }
 

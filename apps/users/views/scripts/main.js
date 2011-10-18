@@ -24,14 +24,18 @@ $(function() {
       $.each(form.find("input[name='groups[]']:checked"), function() {
          groups.push($(this).val());
       });
+      var fg = form.find("input[name='groups[]']:first");
       if (groups.length == 0) {
-         zs.ui.error("You must select at least one group.");
+         zs.ui.showFieldError(fg, "count", "You must select at least one group.");
          return false;
+      } else {
+         zs.ui.hideFieldErrors(fg);
       }
-      var pw1 = form.find("input[name=password1]").val();
+      var pwf1 = form.find("input[name=password1]");
+      var pw1 = pwf1.val();
       var pw2 = form.find("input[name=password2]").val();
       if (pw1 != pw2) {
-         zs.ui.error('Passwords do not match');
+         zs.ui.showFieldError(pwf1, "match", "Passwords do not match.");
          return false;
       }
       var hex_pass = zs.crypt.hash(pw1);
@@ -48,6 +52,8 @@ $(function() {
                  if (data.status == "success") {
                     zs.stack.pop("users");
                     zs.stack.refresh("users");
+                 } else if (data.reason == "username taken") {
+                    zs.ui.showFieldError(form.find("input[name=username]"), "exists", "Username already exists");
                  } else {
                     zs.ui.error("Could not create user.");
                  }

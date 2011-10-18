@@ -59,11 +59,16 @@ class Users extends SecureController {
 
    public function createSave($request) {
       $users_model = new UsersModel();
-      $status = $users_model->insert($request['username'],
-                                     $request['firstname'],
-                                     $request['lastname'],
-                                     $request['password'],
-                                     $request['groups']);
+      try {
+         $status = $users_model->insert($request['username'],
+                                        $request['firstname'],
+                                        $request['lastname'],
+                                        $request['password'],
+                                        $request['groups']);
+      } catch (MysqlDuplicateEntryException $e) {
+         $status = false;
+         $this->json['reason'] = "username taken";
+      }
       if ($status) {
          $this->json['status'] = "success";
       } else {

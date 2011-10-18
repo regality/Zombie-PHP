@@ -21,14 +21,18 @@ class Password extends SecureController {
 
    public function updateSave($request) {
       $users_model = new UsersModel();
-      $success = $users_model->updateMyPassword($this->session->get("username"),
-                                                  $request['old_password'],
-                                                  $request['new_password']);
+      try {
+         $success = $users_model->updateMyPassword($this->session->get("username"),
+                                                   $request['old_password'],
+                                                   $request['new_password']);
+      } catch (WrongPasswordException $e) {
+         $success = false;
+         $this->json['reason'] = "wrong password";
+      }
       if ($success) {
          $this->json['status'] = "success";
       } else {
          $this->json['status'] = "failed";
-         $this->error('Could not update password.');
       }
    }
 
