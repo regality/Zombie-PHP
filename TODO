@@ -28,6 +28,12 @@ ZOMBIE PHP
 
  - Clone zombie-php to zombie-php-psql
 
+ - failed migration should catch exceptions and freak out
+
+ - compile should check for unchanged modules (faster compile time)
+
+ - option to compile images and scripts seperately (different version number)
+
  - NEEDS unit tests for EVERYTHING
 
 UNDEAD JS
