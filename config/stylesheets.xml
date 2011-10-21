@@ -1,0 +1,6 @@
+<?xml version="1.0" standalone="yes"?>
+<stylesheets>
+   <file name="test">
+      <source name="zombiescript/qunit" />
+   </file>
+</stylesheets>
