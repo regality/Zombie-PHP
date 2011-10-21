@@ -13,6 +13,7 @@
       </main>
       <standalone>
          <script name="json2" />
+         <script name="qunit" />
       </standalone>
       <nocompile>
          <script name="jquery-ui-1.8.6.custom.min" />

@@ -7,7 +7,7 @@
    <?php if ($env == 'dev'): ?>
       <link rel="stylesheet" href="/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
    <?php elseif ($env == 'prod'): ?>
-      <link rel="stylesheet" href="/build/<?= $version ?>/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+      <link rel="stylesheet" href="/build/css/<?= $version['css'] ?>/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
    <?php endif ?>
 </head>
 <body>
@@ -15,7 +15,7 @@
       <script type="text/javascript" src="/js/zombiescript/jquery.js"></script>
       <script type="text/javascript" src="/js/zombiescript/main.js"></script>
    <?php elseif ($env == 'prod'): ?>
-      <script type="text/javascript" src="/build/<?= $version ?>/js/main.js"></script>
+      <script type="text/javascript" src="/build/js/<?= $version['js'] ?>/main.js"></script>
    <?php endif ?>
    <script type="text/javascript">
    $(function() {
