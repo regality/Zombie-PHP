@@ -1,4 +1,7 @@
 $(function () {
+   zs.stack.onPush("login", function() {
+      $("#username").focus();
+   });
    $("#login-form").live('submit', function () {
       $.ajax({"data" : {"app" : "auth",
                         "username" : $("#username").val(),

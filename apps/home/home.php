@@ -25,8 +25,8 @@ class Home extends PageController {
          $this->data['console'] = new Console();
       }
 
-      if (class_exists($this->action)) {
-         $preload_class = underscoreToClass($this->action);
+      $preload_class = underscoreToClass($this->action);
+      if (class_exists($preload_class)) {
          $this->data['preload'] = new $preload_class();
       } else {
          $this->view = '404';
