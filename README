@@ -9,8 +9,13 @@ support for mobile templates, and many other features which are
 absent in most frameworks.
 
 It is designed to be secure from the ground up and comes with
-built-in authentication modules. It also provides protection
-against CSRF, XSS, SQL injection, session hijacking.
+built-in authentication modules. It provides protection
+against the following attacks:
+ - CSRF
+ - XSS
+ - SQL injection
+ - Session hijacking
+ - Password cracking
 
 Scalability is one of the main goals of ZombiePHP and as such
 it is designed to be fast. It also comes with database backed

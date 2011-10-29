@@ -1,0 +1,14 @@
+@include jqueryui/var.css;
+@include jqueryui/jquery.ui.core.css;
+@include jqueryui/jquery.ui.core.css;
+@include jqueryui/jquery.ui.accordion.css;
+@include jqueryui/jquery.ui.autocomplete.css;
+@include jqueryui/jquery.ui.button.css;
+@include jqueryui/jquery.ui.datepicker.css;
+@include jqueryui/jquery.ui.dialog.css;
+@include jqueryui/jquery.ui.progressbar.css;
+@include jqueryui/jquery.ui.resizable.css;
+@include jqueryui/jquery.ui.selectable.css;
+@include jqueryui/jquery.ui.slider.css;
+@include jqueryui/jquery.ui.tabs.css;
+@include jqueryui/jquery.ui.theme.css;

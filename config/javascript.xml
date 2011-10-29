@@ -15,9 +15,6 @@
          <script name="json2" />
          <script name="qunit" />
       </standalone>
-      <nocompile>
-         <script name="jquery-ui-1.8.6.custom.min" />
-      </nocompile>
    </app>
    <app name="menu">
       <main>
@@ -27,6 +24,41 @@
    <app name="login">
       <main>
          <script name="main" />
+      </main>
+   </app>
+   <app name="jqueryui">
+      <main>
+         <script name="jquery.ui.core" />
+         <script name="jquery.effects.core" />
+         <script name="jquery.ui.widget" />
+         <script name="jquery.ui.mouse" />
+         <script name="jquery.ui.position" />
+         <script name="jquery.effects.blind" />
+         <script name="jquery.effects.bounce" />
+         <script name="jquery.effects.clip" />
+         <script name="jquery.effects.drop" />
+         <script name="jquery.effects.explode" />
+         <script name="jquery.effects.fade" />
+         <script name="jquery.effects.fold" />
+         <script name="jquery.effects.highlight" />
+         <script name="jquery.effects.pulsate" />
+         <script name="jquery.effects.scale" />
+         <script name="jquery.effects.shake" />
+         <script name="jquery.effects.slide" />
+         <script name="jquery.effects.transfer" />
+         <script name="jquery.ui.accordion" />
+         <script name="jquery.ui.autocomplete" />
+         <script name="jquery.ui.button" />
+         <script name="jquery.ui.datepicker" />
+         <script name="jquery.ui.dialog" />
+         <script name="jquery.ui.draggable" />
+         <script name="jquery.ui.droppable" />
+         <script name="jquery.ui.progressbar" />
+         <script name="jquery.ui.resizable" />
+         <script name="jquery.ui.selectable" />
+         <script name="jquery.ui.slider" />
+         <script name="jquery.ui.sortable" />
+         <script name="jquery.ui.tabs" />
       </main>
    </app>
 </javascript>

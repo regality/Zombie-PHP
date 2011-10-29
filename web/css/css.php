@@ -16,7 +16,7 @@ if (!isset($file_lists[$name])) {
    header("Status: 404 Not Found");
    exit();
 } else {
-   $output = compile_css_list($file_lists[$name]);
+   $output = compile_css_list($file_lists[$name], isset($_REQUEST['min']));
    echo $output;
 }
 

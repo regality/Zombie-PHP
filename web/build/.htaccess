@@ -6,7 +6,7 @@
 <ifModule mod_rewrite.c>
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteRule ^js/([0-9a-f]+)/([0-9a-zA-z_]+)/([0-9a-zA-Z_]+)\.js$ js/$1/$2/main.js [L]
+   RewriteRule ^js/([0-9a-f]+)/([0-9a-zA-z_]+)/([0-9a-zA-Z_\-\.]+)\.js$ js/$1/$2/main.js [L]
 </ifModule>
 AddOutputFilterByType DEFLATE text/css
 AddOutputFilterByType DEFLATE text/javascript
