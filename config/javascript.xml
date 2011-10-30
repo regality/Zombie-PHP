@@ -13,6 +13,7 @@
       </main>
       <standalone>
          <script name="json2" />
+         <script name="test" />
          <script name="qunit" />
       </standalone>
    </app>
@@ -33,6 +34,8 @@
          <script name="jquery.ui.widget" />
          <script name="jquery.ui.mouse" />
          <script name="jquery.ui.position" />
+      </main>
+      <module>
          <script name="jquery.effects.blind" />
          <script name="jquery.effects.bounce" />
          <script name="jquery.effects.clip" />
@@ -59,6 +62,6 @@
          <script name="jquery.ui.slider" />
          <script name="jquery.ui.sortable" />
          <script name="jquery.ui.tabs" />
-      </main>
+      </module>
    </app>
 </javascript>
