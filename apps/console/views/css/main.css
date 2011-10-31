@@ -40,3 +40,7 @@ font-family: "Courier";
 .console-mesg-close:hover {
 color: #aaa;
 }
+
+.console-server {
+display: none;
+}

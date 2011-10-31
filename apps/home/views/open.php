@@ -5,25 +5,25 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
    <?php if ($env == 'dev'): ?>
-      <link rel="stylesheet" href="/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+      <link rel="stylesheet" href="<?= $web_root ?>/css/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
    <?php elseif ($env == 'prod'): ?>
-      <link rel="stylesheet" href="/build/css/<?= $version['css'] ?>/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
+      <link rel="stylesheet" href="<?= $web_root ?>/build/css/<?= $version['css'] ?>/<?= ($is_mobile ? "mobile-" : "") ?>main.css" type="text/css" />
    <?php endif ?>
 </head>
 <body>
    <?php if ($env == 'dev'): ?>
-      <script type="text/javascript" src="/js/zombiescript/jquery.js"></script>
-      <script type="text/javascript" src="/js/zombiescript/main.js"></script>
+      <script type="text/javascript" src="<?= $web_root ?>/js/zombiescript/jquery.js"></script>
+      <script type="text/javascript" src="<?= $web_root ?>/js/zombiescript/main.js"></script>
    <?php elseif ($env == 'prod'): ?>
-      <script type="text/javascript" src="/build/js/<?= $version['js'] ?>/main.js"></script>
+      <script type="text/javascript" src="<?= $web_root ?>/build/js/<?= $version['js'] ?>/main.js"></script>
    <?php endif ?>
    <script type="text/javascript">
-   $(function() {
+   (function() {
       zs.settings.baseUrl = "<?= $web_root ?>";
       zs.init.init();
       zs.token.set("<?= $token ?>");
       zs.stack.loadDefault();
-   });
+   })();
    </script>
    <div id="main" class="container_16">
       <div id="header" class="grid_11 prefix_5">

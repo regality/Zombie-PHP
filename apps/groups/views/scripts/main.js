@@ -20,8 +20,7 @@ $(function() {
       if (!zs.ui.verifyForm(form)) {
          return false;
       }
-      $.ajax({"url":"app.php",
-              "data":{"app":"groups",
+      $.ajax({"data":{"app":"groups",
                       "name":form.find("input[name=name]").val(),
                       "action":"create"},
               "success":function(data) {
@@ -41,8 +40,7 @@ $(function() {
       if (!zs.ui.verifyForm(form)) {
          return false;
       }
-      $.ajax({"url":"app.php",
-              "data":{"app":"groups",
+      $.ajax({"data":{"app":"groups",
                       "id":form.find("input[name=id]").val(),
                       "name":form.find("input[name=name]").val(),
                       "action":"update"},

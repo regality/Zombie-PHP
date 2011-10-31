@@ -13,8 +13,7 @@ $(function() {
       }
       var oldPass = zs.crypt.hash(oldPassField.val());
       var newPass = zs.crypt.hash(newPassFieldA.val());
-      $.ajax({"url":"app.php",
-              "data":{"app":"password",
+      $.ajax({"data":{"app":"password",
                       "old_password":oldPass,
                       "new_password":newPass,
                       "action":"update"},

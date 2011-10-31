@@ -39,8 +39,7 @@ $(function() {
          return false;
       }
       var hex_pass = zs.crypt.hash(pw1);
-      $.ajax({"url":"app.php",
-              "data":{"app":"users",
+      $.ajax({"data":{"app":"users",
                       "id":form.find("input[name=id]").val(),
                       "username":form.find("input[name=username]").val(),
                       "firstname":form.find("input[name=firstname]").val(),
@@ -75,8 +74,7 @@ $(function() {
          zs.ui.error("You must select at least one group.");
          return false;
       }
-      $.ajax({"url":"app.php",
-              "data":{"app":"users",
+      $.ajax({"data":{"app":"users",
                       "id":form.find("input[name=id]").val(),
                       "username":form.find("input[name=username]").val(),
                       "firstname":form.find("input[name=firstname]").val(),

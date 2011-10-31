@@ -11,7 +11,7 @@ $(function () {
       $.ajax({"data" : {"app" : "auth",
                       "action" : "logout"},
               "success" : function (data) {
-                  window.location = '/';
+                  window.location = zs.settings.baseUrl;
               }
       });
    });

@@ -28,6 +28,8 @@
       </main>
    </app>
    <app name="jqueryui">
+      <!-- move files you plan on using
+           from the module section to main -->
       <main>
          <script name="jquery.ui.core" />
          <script name="jquery.effects.core" />

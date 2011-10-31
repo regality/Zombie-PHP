@@ -22,4 +22,19 @@ $(function () {
          $(this).val("");
       }
    });
+
+   $("a.cookie").live("click", function(e) {
+      e.preventDefault();
+      $("pre.cookie").slideToggle();
+   });
+
+   $("a.session").live("click", function(e) {
+      e.preventDefault();
+      $("pre.session").slideToggle();
+   });
+
+   $("a.server").live("click", function(e) {
+      e.preventDefault();
+      $("pre.server").slideToggle();
+   });
 });

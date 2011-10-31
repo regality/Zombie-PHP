@@ -12,8 +12,7 @@ $(function() {
       }
       var newPass = zs.crypt.hash(pwf1.val());
       var id = form.find("input[name=id]").val();
-      $.ajax({"url":"app.php",
-              "data":{"app":"users",
+      $.ajax({"data":{"app":"users",
                       "id":id,
                       "new_password":newPass,
                       "action":"password_update"},
