@@ -1,12 +1,23 @@
 ZombiePHP is a PHP framework designed for rapid web development
 in a way that no other framework allows. It intends to do all
 of the tasks that other frameworks should, but don't.
+It is fast, powerful, feature-rich, and eats brainz.
 
 The modular design allows you to group not just PHP code together,
 but also group css, javascript, and images with their modules.
-It comes with a custom css compiler, a javascript compiler, built-in
-support for mobile templates, and many other features which are
-absent in most frameworks.
+The zombie compiler compiles css, javascript, and optimizes 
+images to make high performance web pages much easier to achieve.
+
+It comes with a custom css compiler, built-in support for mobile
+templates, and many other features which are absent in most
+frameworks. It includes the following libraries:
+ - Closure Compiler (http://code.google.com/closure/compiler)
+ - jQuery (http://jquery.com)
+ - jQuery UI (http://jqueryui.com)
+ - Qunit (http://docs.jquery.com/Qunit)
+ - Grid 960 (http://960.gs/)
+ - HTML Purifer (http://htmlpurifier.org/)
+ - TinyMCE (http://www.tinymce.com/)
 
 It is designed to be secure from the ground up and comes with
 built-in authentication modules. It provides protection
@@ -26,4 +37,4 @@ We are still under development, and so ZombiePHP is constantly
 changing, but we are rapidly approaching version 1.0. All of
 the code is licensed under the GPL with the exception of some
 included libraries. Being open source means that contributions
-are welcome. Feel free to contribute and make a pull request
+are welcome.

@@ -1,11 +1,12 @@
 $(function () {
+   zs.util.require("sjcl/convenience");
    zs.stack.onPush("login", function() {
       $("#username").focus();
    });
    $("#login-form").live('submit', function () {
       $.ajax({"data" : {"app" : "auth",
                         "username" : $("#username").val(),
-                        "password" : zs.crypt.hash($("#password").val())},
+                        "password" : sjcl.sha256($("#password").val())},
               "success" : function (data) {
                   if (data.status === "success") {
                      if (typeof data.app === "undefined") {
