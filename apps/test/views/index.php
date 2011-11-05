@@ -8,7 +8,6 @@
 </div>
 <script type="text/javascript">
 $(function() {
-   zs.util.loadCSS("test");
    zs.util.require("zombiescript/test");
    zs.test.run();
 });
