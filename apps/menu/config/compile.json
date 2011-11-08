@@ -1,0 +1,12 @@
+{
+   "javascript" : {
+      "dependencies" : [
+         "zombiescript"
+      ],
+      "main" : [
+         "main"
+      ]
+   },
+   "stylesheets" : [ ],
+   "images" : [ ]
+}

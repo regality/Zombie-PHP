@@ -1,0 +1,44 @@
+{
+   "javascript" : {
+      "dependencies" : [
+         "zombiescript"
+      ],
+      "main" : [
+         "jquery.ui.core",
+         "jquery.effects.core",
+         "jquery.ui.widget",
+         "jquery.ui.mouse",
+         "jquery.ui.position"
+      ],
+      "module" : [
+         "jquery.effects.blind",
+         "jquery.effects.bounce",
+         "jquery.effects.clip",
+         "jquery.effects.drop",
+         "jquery.effects.explode",
+         "jquery.effects.fade",
+         "jquery.effects.fold",
+         "jquery.effects.highlight",
+         "jquery.effects.pulsate",
+         "jquery.effects.scale",
+         "jquery.effects.shake",
+         "jquery.effects.slide",
+         "jquery.effects.transfer",
+         "jquery.ui.accordion",
+         "jquery.ui.autocomplete",
+         "jquery.ui.button",
+         "jquery.ui.datepicker",
+         "jquery.ui.dialog",
+         "jquery.ui.draggable",
+         "jquery.ui.droppable",
+         "jquery.ui.progressbar",
+         "jquery.ui.resizable",
+         "jquery.ui.selectable",
+         "jquery.ui.slider",
+         "jquery.ui.sortable",
+         "jquery.ui.tabs"
+      ]
+   },
+   "stylesheets" : [ ],
+   "images" : [ ]
+}
