@@ -1,4 +1,5 @@
 zs.util.require("sjcl/codecString");
+zs.util.require("sjcl/codecHex");
 
 /** @fileOverview Javascript SHA-256 implementation.
  *
@@ -14,6 +15,17 @@ zs.util.require("sjcl/codecString");
  * @author Mike Hamburg
  * @author Dan Boneh
  */
+
+/**
+ * Shortcut to get a sha256 hex string.
+ * @param {String} str The data to hash.
+ * @return {String} The hashed hex string.
+ */
+sjcl.sha256 = function (str) {
+    var bits = sjcl.hash.sha256.hash(str);
+    var hash = sjcl.codec.hex.fromBits(bits);
+    return hash;
+};
 
 /**
  * Context for a SHA-256 operation in progress.

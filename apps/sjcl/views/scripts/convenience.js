@@ -1,9 +1,7 @@
 zs.util.require("sjcl/ccm");
 zs.util.require("sjcl/pbkdf2");
 zs.util.require("sjcl/random");
-zs.util.require("sjcl/sha256");
 zs.util.require("sjcl/codecBase64");
-zs.util.require("sjcl/codecHex");
 
 /** @fileOverview Convenince functions centered around JSON encapsulation.
  *
@@ -179,17 +177,6 @@ zs.util.require("sjcl/codecHex");
     return out;
   },
   
-  /** Generate a sha256 hash as a hex string.
-   * @param {String} str The string.
-   * @return {String} hmac.
-   */
-  sha256: function (str) {
-    //var sha256 = new sjcl.hash.sha256;
-    var bits = sjcl.hash.sha256.hash(str);
-    var hash = sjcl.codec.hex.fromBits(bits);
-    return hash;
-  },
-
   /** Insert all elements of src into target, modifying and returning target.
    * @param {Object} target The object to be modified.
    * @param {Object} src The object to pull data from.
@@ -258,12 +245,6 @@ sjcl.encrypt = sjcl.json.encrypt;
  * @return {String} The plaintext.
  */
 sjcl.decrypt = sjcl.json.decrypt;
-
-/** Generate a sha256 hash as a hex string.
-* @param {String} str The string.
-* @return {String} hmac.
-*/
-sjcl.sha256 = sjcl.json.sha256;
 
 /** The cache for cachedPbkdf2.
  * @private

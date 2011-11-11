@@ -1,7 +1,7 @@
 {
    "javascript" : {
       "dependencies" : [
-         "zombiescript"
+         "sjcl"
       ],
       "main" : [
          "main"

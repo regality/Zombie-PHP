@@ -22,7 +22,6 @@
       zs.settings.baseUrl = "<?= $web_root ?>";
       zs.init.init();
       zs.token.set("<?= $token ?>");
-      zs.stack.loadDefault();
    })();
    </script>
    <div id="main" class="container_16">

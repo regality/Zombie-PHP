@@ -22,31 +22,7 @@ Requirements:
    bash> git submodule init
    bash> git submodule update
 
-2. Set up your webroot to zombie/web
-
-   Each web server will have it's own way of doing this.
-   If you are running apache with the apache config file at
-   /etc/apache/apache.conf and the zombie root at /var/www/zombie
-   do the following:
-
-   Add this to apache.conf
-
-      <VirtualHost *:80>
-          DocumentRoot /var/www/zombie/web
-          ServerName yourwebsite.com
-          <Directory />
-            AllowOverride All
-          </Directory>
-      </VirtualHost>
-
-   If you are running on your local machine yourwebsite.com can
-   be replaced with 'localhost'
-
-   Once you've added the virtual host run
-
-      bash> sudo /etc/init.d/apache2 restart
-
-3. Edit zombie config
+2. Edit zombie config
 
    To get started you will need to create a config file.
    The easiest thing is to copy the sample config and make
@@ -60,16 +36,14 @@ Requirements:
    Change the following lines in the config:
    (The lines do not appear as follows in the sample config.)
 
-      $config['domain'] = '<your domain>';
-      $config['zombie_root'] = '<location of your zombie installation>'
+      $config['domain'] = '<your domain>'; // probably 'localhost' if 
+                                              web server is on your computer
+      $config['zombie_root'] = '<location of your zombie installation>';
+      $config['web_root'] = '<base url>'; // do not include trailing slash
       $config['mysql']['host'] = '<mysql host>';
       $config['mysql']['user'] = '<mysql user>';
       $config['mysql']['pass'] = '<mysql password>';
       $config['mysql']['database'] = '<mysql database name>';
-
-
-   NOTE: The domain is used when setting the session cookie,
-         so an incorrect domain will prevent you from logging in.
 
 4. Run migrate
 
@@ -94,7 +68,7 @@ Requirements:
    To create a basic module run the following command
    while in the zombie root.
 
-      bash> php zombie.php create-app app=foo
+      bash> php zombie.php generate-app app=foo
 
    This creates a module called 'foo'.
    It can be found in zombie/apps/foo/
@@ -129,8 +103,8 @@ Requirements:
 
    Once the tables are created, run the code generator:
 
-      bash> php zombie.php create-app app=color template=mysql_crud table=color
-      bash> php zombie.php create-app app=kitten template=mysql_crud table=kitten
+      bash> php zombie.php generate-app app=color template=mysql_crud table=color
+      bash> php zombie.php generate-app app=kitten template=mysql_crud table=kitten
 
    That's it! Go to yourwebsite.com/color and yourwebsite.com/kitten
    and see the code in action. You can also edit zombie/apps/menu/menu.php
@@ -145,26 +119,34 @@ Requirements:
 
       zombie/apps - all of the modules are stored here
          zombie comes with a couple modules already made:
-            auth - handles authentication (logging in and out)
-            console - used for logging things on the client
-            csrf - csrf protection
-            groups - manage groups that users can belong to
-            home - landing page, also loads zs js and default module
-            login - login page
-            passowrd - allows non-admin users to change their own password
+            auth         - handles authentication (logging in and out)
+            console      - used for logging things on the client
+            csrf         - csrf protection
+            groups       - manage groups that users can belong to
+            grid960      - the grid960 css framework
+            home         - landing page, also loads zs js and default module
+            jqueryui     - jquery ui library
+            login        - login page
+            menu         - menu used for navigation
+            passowrd     - allows non-admin users to change their own password
+            sjcl         - stanford javascript crpto library
+            test         - scripts for testing zombiescript
+            users        - manage users in the system.
+            welcome      - default module to be shown
             zombiescript - core javascript library
-            users - manage users in the system.
-            welcome - default module to be shown
 
          Each directory in apps has a php file with the same name,
          this file contains the controller methods for the modile.
 
+         Each directory in apps may have a config directory. This
+         can contain the compile.json file, with compilation directives.
+
          Each directory in apps has directory called 'views',
          this is where the html templates are stored. They have
-         the .php extension.
+         a .php or .html extension.
 
-         Each views directory should also contain a css, images and js
-         directory. The javascript and stylesheets and images for each
+         Each views directory should also contain a css, images and scripts
+         directory. The javascript, stylesheets, and images for each
          module should be stored in these. css is automagically compiled.
          Just put a main.css in the css directory. Javascript should be
          loaded with the zs require function:

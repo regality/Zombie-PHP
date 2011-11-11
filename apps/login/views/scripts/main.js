@@ -1,5 +1,5 @@
 $(function () {
-   zs.util.require("sjcl/convenience");
+   zs.util.require("sjcl/sha256");
    zs.stack.onPush("login", function() {
       $("#username").focus();
    });

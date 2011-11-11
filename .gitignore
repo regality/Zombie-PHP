@@ -1,3 +1,4 @@
+apps/*/views/.compiled/*
 config/config.php
 config/migrate.xml
 config/version.php

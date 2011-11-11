@@ -13,5 +13,10 @@
       </div>
    </div>
    <? renderErrorsJs() ?>
+   <script type="text/javascript">
+   (function() {
+      zs.stack.loadDefault();
+   })();
+   </script>
 </body>
 </html>
