@@ -50,9 +50,9 @@ class Users extends SecureController {
       $success = $users_model->updatePassword($request['id'],
                                               $request['new_password']);
       if ($success) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
          $this->error('Could not update password.');
       }
    }
@@ -67,12 +67,12 @@ class Users extends SecureController {
                                         $request['groups']);
       } catch (MysqlDuplicateEntryException $e) {
          $status = false;
-         $this->json['reason'] = "username taken";
+         $this->data['reason'] = "username taken";
       }
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 
@@ -84,9 +84,9 @@ class Users extends SecureController {
                                      $request['lastname'],
                                      $request['groups']);
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 
@@ -94,9 +94,9 @@ class Users extends SecureController {
       $users_model = new UsersModel();
       $status = $users_model->delete($request['id']);
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 

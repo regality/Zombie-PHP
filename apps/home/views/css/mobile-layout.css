@@ -1,0 +1,35 @@
+#sidenav {
+background: var(mobile-sidenav-main-color);
+border: 3px solid var(mobile-sidenav-border-color);
+border-width: 3px 0px;
+padding: 0px 10px;
+margin: 0px;
+}
+
+#header {
+padding: 15px;
+padding-bottom: 0px;
+}
+
+#header h1 {
+display: inline-block;
+padding-top: 20px;
+position: relative;
+top: -20px;
+}
+
+#header img {
+display: none;
+}
+
+#content {
+padding: 15px 20px;
+}
+
+#content h2 {
+font-size: 32px;
+}
+
+#footer {
+border-top: 1px solid var(footer-border-color);
+}

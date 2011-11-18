@@ -16,6 +16,7 @@ $(function() {
    });
 
    $(".users-create").live('click', function() {
+      zs.util.require("sjcl/sha256");
       var form = $(this).parents("div.form");
       if (!zs.ui.verifyForm(form)) {
          return false;
@@ -38,7 +39,7 @@ $(function() {
          zs.ui.showFieldError(pwf1, "match", "Passwords do not match.");
          return false;
       }
-      var hex_pass = zs.crypt.hash(pw1);
+      var hex_pass = sjcl.sha256(pw1);
       $.ajax({"data":{"app":"users",
                       "id":form.find("input[name=id]").val(),
                       "username":form.find("input[name=username]").val(),

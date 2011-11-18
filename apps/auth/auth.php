@@ -4,7 +4,7 @@ class Auth extends Controller {
    public function indexRun($request) {
       if (!isset($request['username']) ||
           !isset($request['password'])) {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       } else {
          $users_model = new UsersModel();
          $user = $users_model->isValidUser($request['username'],
@@ -16,17 +16,17 @@ class Auth extends Controller {
             $sess_vars['groups'] = $user['groups'];
             $this->session->set($sess_vars);
             $this->session->regenerateId();
-            $this->json['status'] = "success";
-            $this->json['app'] = "welcome";
+            $this->data['status'] = "success";
+            $this->data['app'] = "welcome";
          } else {
-            $this->json['status'] = "failed";
+            $this->data['status'] = "failed";
          }
       }
    }
 
    public function logoutRun($request) {
       $this->session->destroy();
-      $this->json['status'] = "success";
+      $this->data['status'] = "success";
    }
 }
 

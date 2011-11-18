@@ -19,10 +19,6 @@ ZOMBIE PHP
 
  - update PgsqlQuery class
 
- - session cookie only works for config domain
-   - fix it or leave it?
-      - is it more secure?
-
  - compile code looks like death
    - compile output is just as ugly
 
@@ -32,7 +28,8 @@ ZOMBIE PHP
 
  - compile should check for unchanged modules (faster compile time)
 
- - option to compile images and scripts seperately (different version number)
+ - css compiler is full of ugly hacks
+   - somebody else should fix it...
 
  - NEEDS unit tests for EVERYTHING
 
@@ -63,8 +60,8 @@ FRONTEND
  - beautify mobile version
    - needs testing in iphone, windows ce, etc
 
-TEMPLATING SYSTEM
-=================
+CODE GENERATOR
+==============
 
  - allow for overwriteing app/model (include auto backup?)
 
@@ -83,12 +80,6 @@ DATABASE
  - Create more DB classes
    - Oracle would be nice
    - Maybe some nosql: couch, mongo, hadoop?
-
- - Update sql install files
-
- - Add functions to encrypt/decrypt data for storage
-   - single password AES is done
-   - need per user asymetric encryption
 
 GENERAL
 =======

@@ -27,12 +27,12 @@ class Password extends SecureController {
                                                    $request['new_password']);
       } catch (WrongPasswordException $e) {
          $success = false;
-         $this->json['reason'] = "wrong password";
+         $this->data['reason'] = "wrong password";
       }
       if ($success) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 

@@ -40,9 +40,9 @@ class Groups extends SecureController {
       $groups_model = new GroupsModel();
       $status = $groups_model->insert($request['name']);
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 
@@ -50,9 +50,9 @@ class Groups extends SecureController {
       $groups_model = new GroupsModel();
       $status = $groups_model->update($request['id'], $request['name']);
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 
@@ -60,9 +60,9 @@ class Groups extends SecureController {
       $groups_model = new GroupsModel();
       $status = $groups_model->delete($request['id']);
       if ($status) {
-         $this->json['status'] = "success";
+         $this->data['status'] = "success";
       } else {
-         $this->json['status'] = "failed";
+         $this->data['status'] = "failed";
       }
    }
 

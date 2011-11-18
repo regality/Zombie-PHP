@@ -1,0 +1,95 @@
+@font-face {
+font-family: 'Orbitron';
+font-style: normal;
+font-weight: normal;
+src: local('Orbitron'), url('/css/fonts/Orbitron.woff') format('woff');
+}
+
+* {
+padding: 0px;
+margin: 0px;
+}
+
+html {
+height: 100%;
+}
+
+body {
+font: 100% "Trebuchet MS", sans-serif;
+cursor:default;
+color: var(text-color);
+height: 100%;
+background-color: var(background-color);
+}
+
+h1 {
+font-family: 'var(font-face)', 'Arial';
+font-size: 58px;
+color: var(title-color);
+}
+
+h2 {
+display: block;
+color: var(second-color);
+}
+
+h3 {
+color: var(third-color);
+}
+
+table {
+border-collapse: collapse;
+border: 1px solid var(table-border-color);
+}
+
+table tr th {
+padding: 5px 10px;
+border-bottom: 1px solid var(table-border-color);
+background: var(th-bg-color);
+color: var(th-text-color);
+font-weight: bold;
+}
+
+table tr td {
+padding: 4px 10px;
+background-color: var(background-color);
+border-bottom: 1px dotted var(table-border-color);
+color: var(text-color);
+}
+
+input {
+border: 1px solid var(main-border-color);
+padding: 2px;
+}
+
+label {
+display: block;
+text-align: right;
+}
+
+a {
+color: var(link-color);
+}
+
+a:visited {
+color: var(link-visited);
+}
+
+a:hover {
+color: var(link-hover);
+}
+
+hr {
+display: block;
+border-bottom: 1px solid var(table-border-color);
+margin: 3px 10px;
+}
+
+.field {
+padding: 3px 0px;
+}
+
+.form {
+border: 1px solid var(table-border-color);
+background: var(th-bg-color);
+}

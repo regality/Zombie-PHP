@@ -45,7 +45,7 @@ Requirements:
       $config['mysql']['pass'] = '<mysql password>';
       $config['mysql']['database'] = '<mysql database name>';
 
-4. Run migrate
+3. Run migrate
 
    You need to have the database created before running
    migrate, so open your mysql shell:
@@ -60,7 +60,7 @@ Requirements:
    At this point ZombiePHP should be up and running.
    Open it in your browser and check if you can log in.
 
-5. Run the code generator.
+4. Run the code generator.
 
    Once you have ZombiePHP installed, you can generate modules
    with the zombie code generator.
@@ -74,7 +74,7 @@ Requirements:
    It can be found in zombie/apps/foo/
    You can open it in your browser by going to yourwebsite.com/foo
 
-6. Create a CRUD module.
+5. Create a CRUD module.
 
    To save time, zombie comes with templates for basic
    CRUD (Create Replace Update Delete) modules.
@@ -84,19 +84,19 @@ Requirements:
    To create a crud module, first create your tables.
    You can create this directly in mysql, but if you
    plan on deploying this with another database, use
-   migrations instead.
+   migrations instead:
 
       bash> php zombie.php migrate action=new name=kitten
       bash> php zombie.php migrate action=add-table name=kitten table=kitten
-      bash> php zombie.php migrate action=add-column name=kitten table=kitten
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten \
                                    column=name type="varchar(100)" extra="not null"
-      bash> php zombie.php migrate action=add-column name=kitten table=kitten
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten \
                                    column=color_id type=int
-      bash> php zombie.php migrate action=add-column name=kitten table=kitten
-                                   column=size
+      bash> php zombie.php migrate action=add-column name=kitten table=kitten \
+                                   column=size \
                                    type="enum('small', 'medium', 'large')"
       bash> php zombie.php migrate action=add-table name=kitten table=color
-      bash> php zombie.php migrate action=add-column name=kitten table=color
+      bash> php zombie.php migrate action=add-column name=kitten table=color \
                                    column=name type="varchar(100)" extra="not null"
       bash> php zombie.php migrate action=apply name=kitten
       bash> php zombie.php migrate action=run
@@ -109,6 +109,27 @@ Requirements:
    That's it! Go to yourwebsite.com/color and yourwebsite.com/kitten
    and see the code in action. You can also edit zombie/apps/menu/menu.php
    to add them to the side menu.
+
+6. Compile resources.
+
+   Prior to deploying an app, you should run the compile task and
+   switch from development to production mode. This will optimize
+   and compile images, scripts, stylesheets, and views.
+   Just run:
+
+      bash> php zombie.php compile
+
+   Then edit config/config.php and change
+
+      $config['env'] = 'dev';
+
+   to:
+
+      $config['env'] = 'prod';
+
+   While in production mode any changes made to images, scripts,
+   stylesheets, and views WILL NOT BE REFLECTED. Switch back to
+   development mode to continue hacking.
 
 7. Good job.
 
@@ -143,7 +164,8 @@ Requirements:
 
          Each directory in apps has directory called 'views',
          this is where the html templates are stored. They have
-         a .php or .html extension.
+         a .php or .html extension. HTML files are compiled to both
+         php and javascript.
 
          Each views directory should also contain a css, images and scripts
          directory. The javascript, stylesheets, and images for each
@@ -176,7 +198,10 @@ Requirements:
 
       zombie/web
          This is visible to the interblag.
-         It contains css, images, and whatever else you put in it.
-         It also has two php files, index.php and app.php.
+         It has two php files, index.php and app.php.
          These are launchers for zombie modules. Most users
          should leave these as they are.
+         Generally, you should avoid placing resources in the
+         web directory and prefer putting them in a module in
+         the app directory..
+

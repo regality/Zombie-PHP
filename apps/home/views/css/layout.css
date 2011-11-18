@@ -1,0 +1,47 @@
+#sidenav-grid {
+height: 100%;
+}
+
+#sidenav {
+min-height: 700px;
+padding: 30px;
+background: var(sidenav-bg-color);
+border-bottom-right-radius: 50px;
+border-top-left-radius: 50px;
+}
+
+#header {
+height: 90px;
+padding-bottom: 0px;
+}
+
+#header h1 {
+padding-top: 15px;
+text-shadow: 2px 3px 5px #555;
+display: inline-block;
+}
+
+#header h1 span.h1x {
+font-size: 70px;
+}
+
+#header img {
+height: 70px;
+width: 72px;
+display: inline-block;
+}
+
+#content {
+padding-top: 20px;
+border-top: 2px solid var(sidenav-bg-color);
+}
+
+#content h2 {
+font-size: 32px;
+}
+
+#footer {
+border-top: 1px solid var(footer-border-color);
+background: var(footer-bg-color);
+padding: 5px 15px;
+}

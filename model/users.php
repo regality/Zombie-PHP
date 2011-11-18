@@ -9,7 +9,6 @@ class UsersModel extends ModelBase {
                , users.username
                , users.firstname
                , users.lastname
-               , users.password
           FROM users
           ORDER BY username'
       );
@@ -22,7 +21,6 @@ class UsersModel extends ModelBase {
                , username
                , firstname
                , lastname
-               , password
           FROM users
           WHERE id = $1'
       );

@@ -16,6 +16,7 @@ frameworks. It includes the following libraries:
  - jQuery UI (http://jqueryui.com)
  - Qunit (http://docs.jquery.com/Qunit)
  - Grid 960 (http://960.gs/)
+ - SJCL (http://crypto.stanford.edu/sjcl/)
  - HTML Purifer (http://htmlpurifier.org/)
  - TinyMCE (http://www.tinymce.com/)
 
