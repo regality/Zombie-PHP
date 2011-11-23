@@ -24,8 +24,6 @@ ZOMBIE PHP
 
  - Clone zombie-php to zombie-php-psql
 
- - failed migration should catch exceptions and freak out
-
  - compile should check for unchanged modules (faster compile time)
 
  - css compiler is full of ugly hacks
@@ -36,19 +34,17 @@ ZOMBIE PHP
 UNDEAD JS
 =========
 
- - deal with latency (loading screen)
-
  - improve performance (everything is too slow in IE)
    - May M$ burn in hell for their atrocities!
 
  - abstract out alert,logged in,etc, for ajax requests and make extensible
 
- - retrieve new csrf when session expires
-
  - NEEDS unit tests for EVERYTHING
 
 MIGRATIONS
 ==========
+
+ - failed migration should catch exceptions and freak out
 
  - command line isn't user friendly. fix this.
 

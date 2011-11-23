@@ -2,6 +2,10 @@
 
 class Password extends SecureController {
 
+   public function init() {
+      $this->allowFormat("json");
+   }
+
    /*********************************************
     * run functions
     *********************************************/

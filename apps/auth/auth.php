@@ -1,6 +1,11 @@
 <?php
 
 class Auth extends Controller {
+   public function init() {
+      $this->defaultFormat("json");
+      $this->disallowFormat("html");
+   }
+
    public function indexRun($request) {
       if (!isset($request['username']) ||
           !isset($request['password'])) {

@@ -2,6 +2,9 @@
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteRule ^ajax/([a-z_]+)$ app.php?app=$1 [L,QSA]
+   RewriteRule ^ajax/([a-z_]+)/([a-z_]+)$ app.php?app=$1&action=$2 [L,QSA]
+   RewriteRule ^ajax/([a-z_]+)/([a-z_]+)\.([a-z]+)$ app.php?app=$1&action=$2&format=$3 [L,QSA]
    RewriteRule ^([a-z_]+)$ index.php?action=$1 [L,QSA]
    RewriteRule ^([a-z_]+)/([a-z_]+)$ index.php?action=$1&preload_action=$2 [L,QSA]
 </ifModule>

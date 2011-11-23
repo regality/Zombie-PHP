@@ -3,6 +3,10 @@
 class Users extends SecureController {
    public $groups = array('admin');
 
+   public function init() {
+      $this->allowFormat("json");
+   }
+
    public function indexRun($request) {
       $users_model = new UsersModel();
       $this->data['users'] = $users_model->getAll();

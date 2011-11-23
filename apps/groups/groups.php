@@ -3,6 +3,10 @@
 class Groups extends SecureController {
    public $groups = array('admin');
 
+   public function init() {
+      $this->allowFormat("json");
+   }
+
    /*********************************************
     * run functions
     *********************************************/
