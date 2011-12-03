@@ -3,6 +3,8 @@
 # licensed under the General Public License version 3.
 # See the LICENSE file.
 
+require_once(__DIR__ . "/../../../zombie-core/util/rand.php");
+
 $query = new MysqlQuery('
    CREATE TABLE users (
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -43,20 +45,15 @@ $query = new MysqlQuery('
 ');
 $query->exec();
 
-$groups_model = new GroupsModel();
-$users_model = new UsersModel();
-
-$groups_model->insert("admin");
-$groups_model->insert("users");
-
-$groups = $groups_model->getAll();
-$user_groups = array();
-foreach ($groups as $group) {
-   if ($group['name'] == 'admin' ||
-       $group['name'] == 'users') {
-      array_push($user_groups, $group['id']);
-   }
-}
+$query = new MysqlQuery('
+   INSERT INTO groups
+   (name)
+   VALUES
+   ($1),
+   ($2)
+');
+$query->addParam("admin");
+$query->addParam("users");
 
 echo "Info for admin user:\n";
 echo "username: ";
@@ -71,10 +68,26 @@ $lastname = trim(fgets(STDIN));
 echo "password: ";
 $password = hash("sha256", trim(fgets(STDIN)));
 
-$users_model->insert($username,
-                     $firstname,
-                     $lastname,
-                     $password,
-                     $user_groups);
+$rand_bits = strongRand(32);
+$rand_bits = preg_replace('/[\/=+]/', '', $rand_bits);
+$rand_bits = substr($rand_bits, 0, 22);
+$salt = '$2a$07$' . $rand_bits . '$';
+$hash = crypt($password, $salt);
+
+$query = new MysqlQuery('
+   INSERT INTO users VALUES
+   (username,
+    firstname,
+    lastname,
+    salt,
+    password)
+   VALUES
+   ($1, $2, $3, $4, $5)
+');
+$query->addParam($username);
+$query->addParam($firstname);
+$query->addParam($lastname);
+$query->addParam($salt);
+$query->addParam($password);
 
 ?>

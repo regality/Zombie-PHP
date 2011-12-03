@@ -7,6 +7,9 @@ if (isset($_GET['app']) && isset($_GET['image']) && isset($_GET['type'])) {
 
    $image_file = __DIR__ . "/../../apps/$app/views/images/$image.$type";
    if (file_exists($image_file)) {
+      if ($type == 'jpg') {
+         $type = 'jpeg';
+      }
       header("Content-type: image/$type");
       echo file_get_contents($image_file);
    } else {
